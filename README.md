@@ -1,4 +1,4 @@
-<img align="left" style="padding-right: 10px" src="../Assets/Logo/256x256.png" width="256px">
+<img align="left" style="padding-right: 10px" src="https://github.com/Lancelotbronner/swift-raylib-workspace/blob/main/Assets/Logo/256x256.png?raw=true" width="256px">
 
 Swift bindings for [raylib](http://www.raylib.com/), **a simple and easy-to-use library to enjoy videogames programming.**
 
@@ -6,16 +6,16 @@ Swift bindings for [raylib](http://www.raylib.com/), **a simple and easy-to-use 
 >
 > ~[raysan5](https://github.com/raysan5/raylib)
 
-Ready to learn? Jump to [code examples](Examples/README.md)!
+Ready to learn? Jump to [code examples](https://github.com/Lancelotbronner/swift-raylib-examples)!
 
 [![Chat on Discord](https://img.shields.io/discord/426912293134270465.svg?logo=discord)](https://discord.gg/raylib)
-[![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/raylib?style=social)](https://www.reddit.com/r/raylib/)
+[![Chat on Reddit](https://img.shields.io/reddit/subreddit-subscribers/raylib?style=social)](https://www.reddit.com/r/raylib/)
 
 ## 📖 Documentation
 
-Documentation is available via DocC. For Xcode users simply go to `Product > Build Documentation` or press `⌃⇧⌘D`. For others the documentation is available in the [releases](https://github.com/Lancelotbronner/SwiftRaylib/releases) as a website you can run locally.
+Documentation is available via DocC. For Xcode users simply go to `Product > Build Documentation` or press `⌃⇧⌘D`. For others the documentation is available in the [releases](https://github.com/Lancelotbronner/swift-raylib/releases) as a website you can run locally.
 
-## 🏗 Installation
+## 🏗 Getting Started
 
 ### Install Raylib
 
@@ -40,25 +40,17 @@ vcpkg install raylib
 
 If package managers aren't a possibility, [check raylib's instructions](https://github.com/raysan5/raylib#build-and-installation).
 
-### Add SwiftRaylib as a Dependency
-
-Then extend the following lines in your `Package.swift` file or use it to create a new project.
+You can then add `swift-raylib` as a dependency. If using SwiftPM, add the following line to your dependencies.
 
 ```swift
-// swift-tools-version:5.5
-import PackageDescription
+.package(url: "https://github.com/Lancelotbronner/swift-raylib.git", from: "4.5.0")
+```
 
-let package = Package(
-    name: "YourPackageName",
-    dependencies: [
-        .package(url: "https://github.com/Lancelotbronner/SwiftRaylib.git", from: "4.0.0")
-    ],
-    targets: [
-        .target(
-            name: "YourTargetName",
-            dependencies: [
-                .product(name: "Raylib", package: "SwiftRaylib"),
-            ])
-    ]
-)
+You can use the following modules.
+
+```swift
+import Raylib
+
+// If you need to interop with the C library directly
+import CRaylib
 ```

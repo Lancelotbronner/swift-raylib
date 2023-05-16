@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <stdio.h>
 #include <raylib.h>
 
 // TraceLog(level.rawValue.toInt32, message)
