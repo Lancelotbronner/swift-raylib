@@ -16,5 +16,5 @@ public struct Text {
 	public static func measure(_ text: String, size: Int = Renderer.pointSize) -> Int {
 		MeasureText(text, size.toInt32).toInt
 	}
-	
+
 }

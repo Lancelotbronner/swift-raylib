@@ -13,14 +13,10 @@ let package = Package(
 	products: [
 		
 		// Libraries
+		
 		.library(
 			name: "SwiftRaylib",
 			targets: ["Raylib"]),
-		
-		.library(
-			name: "SwiftRaylib-Dynamic",
-			type: .dynamic,
-			targets: ["Raylib"])
 		
 	],
 	targets: [

@@ -23,15 +23,19 @@ public struct Font {
 	@usableFromInline var implementation: ImplementationOfFont
 	
 	//MARK: Computed Properties
-	
+
+	@inlinable public var size: Int {
+		implementation.raylib.baseSize.toInt
+	}
+
 	//MARK: Initialization
 	
 	@usableFromInline init(_ implementation: ImplementationOfFont) {
 		self.implementation = implementation
 	}
-	
+
 	/// Load font from Image (XNA style)
-	@usableFromInline init(image: Image, key: Color, firstCharacter: Int32) {
+	@inlinable public init(image: Image, key: Color, firstCharacter: Int32) {
 		implementation = LoadFontFromImage(image.toRaylib, key.toRaylib, firstCharacter).toManaged
 	}
 	
@@ -40,11 +44,16 @@ public struct Font {
 	// Font LoadFontFromMemory(const char *fileType, const unsigned char *fileData, int dataSize, int fontSize, int *fontChars, int glyphCount);
 	
 	//MARK: Methods
-	
+
+	/// Measures the string size using the current font
+	public func measure(_ text: String, size: Int = Renderer.pointSize, spacing: Float) -> Vector2f {
+		MeasureTextEx(implementation.raylib, text, size.toFloat, spacing).toSwift
+	}
+
 	// TODO: GenImageFontAtlas
 	// Generate image font atlas using chars info
 	// Image GenImageFontAtlas(const GlyphInfo *chars, Rectangle **recs, int glyphCount, int fontSize, int padding, int packMethod);
-	
+
 }
 
 //TODO: Font data

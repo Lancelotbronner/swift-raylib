@@ -28,5 +28,9 @@ extension Renderer2D {
 	@inlinable public static func text(center value: String, offset x: Int = 0, _ y: Int = 0, size: Int = Renderer.pointSize, color: Color = Renderer.textColor) {
 		text(value, at: (Window.width - Text.measure(value, size: size)) / 2 + x, (Window.height - size) / 2 + y, size: size, color: color)
 	}
-	
+
+	@inlinable public static func text(using font: Font, _ value: String, at x: Float, _ y: Float, spacing: Float, size: Int = Renderer.pointSize, color: Color = Renderer.textColor) {
+		DrawTextEx(font.toRaylib, value, Vector2f(x, y).toRaylib, size.toFloat, spacing, color.toRaylib)
+	}
+
 }
