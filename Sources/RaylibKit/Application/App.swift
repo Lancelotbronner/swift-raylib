@@ -2,8 +2,6 @@
 // TODO: Find a way to make scenes use an async load() method
 // TODO: Turn filesystem loads into async methods
 
-//MARK: - App
-
 public protocol App {
 	
 	init() throws
@@ -17,12 +15,12 @@ public protocol App {
 
 extension App {
 	
-	//MARK: Defaults
-	
+	//MARK: - Defaults
+
 	@inlinable public mutating func load() { }
 	@inlinable public mutating func unload() { }
 	
-	//MARK: Methods
+	//MARK: - @main
 	
 	@usableFromInline static func tryMain() throws {
 		var app = try Self.init()

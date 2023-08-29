@@ -72,7 +72,12 @@ public struct WindowFlags: OptionSet {
 		get { IsWindowState(rawValue) }
 		nonmutating set { (newValue ? SetWindowState : ClearWindowState)(rawValue) }
 	}
-	
+
+	/// Setup init view configuration flags
+	@inlinable public func configure() {
+		SetConfigFlags(rawValue)
+	}
+
 	//MARK: Initialization
 	
 	public init(rawValue: UInt32) {

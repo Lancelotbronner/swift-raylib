@@ -6,44 +6,38 @@ import PackageDescription
 //MARK: - Package
 
 let package = Package(
-	name: "Swift Raylib",
+	name: "RaylibKit",
 	platforms: [
 		.macOS(.v12),
 	],
 	products: [
-		
-		// Libraries
-		
 		.library(
-			name: "SwiftRaylib",
-			targets: ["Raylib"]),
-		
+			name: "RaylibKit",
+			targets: ["RaylibKit"]),
 	],
 	targets: [
-		
 		// Targets
-		
+
 		.systemLibrary(
 			name: "CRaylib",
 			pkgConfig: "raylib",
 			providers: [
 				.brew(["raylib"]),
 			]),
-		
-		.target(
-			name: "CRaylibCompatibility",
-			dependencies: ["CRaylib"]),
-		
-		.target(
-			name: "Raylib",
-			dependencies: ["CRaylib", "CRaylibCompatibility"],
-			path: "Sources/Raylib"),
-		
+
+			.target(
+				name: "CRaylibCompatibility",
+				dependencies: ["CRaylib"]),
+
+			.target(
+				name: "RaylibKit",
+				dependencies: ["CRaylib", "CRaylibCompatibility"],
+				path: "Sources/RaylibKit"),
+
 		// Tests
-		
-		.testTarget(
-			name: "RaylibTests",
-			dependencies: ["Raylib"]),
-		
+
+			.testTarget(
+				name: "RaylibTests",
+				dependencies: ["RaylibKit"]),
 	]
 )

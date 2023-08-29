@@ -1,5 +1,5 @@
     import XCTest
-    import Raylib
+    import RaylibKit
 
     final class SerializationTests: XCTestCase {
 		

@@ -103,7 +103,13 @@ public struct File {
 		// TODO: Error handling
 		LoadTexture(path.underlying).toManaged
 	}
-	
+
+	/// Load file as image
+	@inlinable public func loadAsMusic() throws -> Music {
+		// TODO: Error handling
+		LoadMusicStream(path.underlying).toSwift
+	}
+
 	//MARK: Writing Methods
 	
 	/// Save text data to file

@@ -13,7 +13,7 @@ Ready to learn? Jump to [code examples][examples]!
 
 <br>
 
-# Swift Raylib
+# RaylibKit
 
 A swifty interface and app lifecycle to ease development with raylib!
 
@@ -21,14 +21,14 @@ A swifty interface and app lifecycle to ease development with raylib!
 
 - Use a swifty interface!
 - Support for `@main` lifecycle
-- Decent examples collection with [+21 code examples][examples]!
+- Decent examples collection with [+23 code examples][examples]!
 - Extensive documentation, both in your IDE and via DocC!
 - You can still do C interop if needed, but consider opening a pull request!
 
 ```swift
-import Raylib
+import RaylibKit
 
-@main struct BasicWindow: Applet {
+@main struct MinimalWindow: Applet {
 	
 	init() {
 		Window.create(800, by: 450, title: "Example - Core - Basic Window")
@@ -36,7 +36,7 @@ import Raylib
 	}
 	
 	func draw() {
-		Renderer2D.text(center: "Congrats! You created your first window!", color: Color.lightGray)
+		Renderer2D.text(center: "Congrats! You created your first window!", color: .lightGray)
 	}
 
 }
@@ -77,10 +77,16 @@ If package managers aren't a possibility, [check raylib's instructions](https://
 
 ### Add `swift-raylib` as a package dependency
 
-Add the following line to your `Package.swift` and `import Raylib`!
+Add the following line to your `Package.swift` dependencies...
 
 ```swift
 .package(url: "https://github.com/Lancelotbronner/swift-raylib.git", from: "4.5.0")
+```
+
+...along with the following line to your target dependencies and `import RaylibKit`!
+
+```swift
+.product(name: "RaylibKit", package: "RaylibKit"),
 ```
 
 ### Interop with C

@@ -5,8 +5,6 @@
 //  Created by Christophe Bronner on 2021-12-27.
 //
 
-//MARK: - Applet
-
 public protocol Applet {
 	
 	init() throws
@@ -21,14 +19,14 @@ public protocol Applet {
 
 extension Applet {
 	
-	//MARK: Defaults
-	
+	//MARK: - Defaults
+
 	@inlinable public func load() { }
 	@inlinable public func update() { }
 	@inlinable public func render() { }
 	@inlinable public func unload() { }
 	
-	//MARK: @main
+	//MARK: - @main
 	
 	@inlinable public static func main() throws {
 		var app = try Self.init()

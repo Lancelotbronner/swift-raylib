@@ -11,15 +11,12 @@ public final class Music {
 
 	@usableFromInline var underlying: CRaylib.Music
 
-	@inlinable public init(_ underlying: CRaylib.Music) {
+	@inlinable public init(underlying: CRaylib.Music) {
 		self.underlying = underlying
 	}
 
-	/// Load music stream from file
-	///
-	/// - Parameter filepath: The path to the music file
-	@inlinable public init(load filepath: String) {
-		underlying = LoadMusicStream(filepath)
+	deinit {
+		UnloadMusicStream(underlying)
 	}
 
 	/// Wether to loop the music
@@ -31,10 +28,6 @@ public final class Music {
 	/// Wether the music is currently playing
 	@inlinable public var isPlaying: Bool {
 		IsMusicStreamPlaying(underlying)
-	}
-
-	deinit {
-		UnloadMusicStream(underlying)
 	}
 
 	@inlinable public var frames: UInt32 {
@@ -56,14 +49,25 @@ public final class Music {
 		PlayMusicStream(underlying)
 	}
 
-	/// Updates buffers for music streaming
-	@inlinable public func update() {
-		UpdateMusicStream(underlying)
-	}
-
 	/// Stop playing music
 	@inlinable public func stop() {
 		StopMusicStream(underlying)
+	}
+
+	/// Set wether the music is playing
+	@inlinable public func playing(is value: Bool) {
+		(value ? play : stop)()
+	}
+
+	/// Restarts the music from the beginning
+	@inlinable public func restart() {
+		stop()
+		play()
+	}
+
+	/// Updates buffers for music streaming
+	@inlinable public func update() {
+		UpdateMusicStream(underlying)
 	}
 
 	/// Pause the music
@@ -73,6 +77,11 @@ public final class Music {
 
 	@inlinable public func resume() {
 		ResumeMusicStream(underlying)
+	}
+
+	/// Set wether the music is paused
+	@inlinable public func paused(is value: Bool) {
+		(value ? pause : resume)()
 	}
 
 	/// Seek music to a position (in seconds)
@@ -95,4 +104,21 @@ public final class Music {
 		SetMusicPan(underlying, pan)
 	}
 	
+}
+//MARK: - Raylib Integration
+
+extension CRaylib.Music {
+
+	@_transparent public var toSwift: Music {
+		Music(underlying: self)
+	}
+
+}
+
+extension Music {
+
+	@_transparent public var toRaylib: CRaylib.Music {
+		underlying
+	}
+
 }

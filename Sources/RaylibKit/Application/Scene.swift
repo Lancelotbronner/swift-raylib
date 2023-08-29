@@ -5,8 +5,6 @@
 //  Created by Christophe Bronner on 2021-12-26.
 //
 
-//MARK: - Scene
-
 public protocol Scene {
 	
 	/// Called when the scene is first loaded
@@ -34,7 +32,7 @@ public protocol Scene {
 
 extension Scene {
 	
-	//MARK: Defaults
+	//MARK: - Defaults
 	
 	public mutating func load() { }
 	public mutating func wake() { }

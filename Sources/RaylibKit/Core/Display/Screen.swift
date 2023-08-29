@@ -7,12 +7,8 @@
 
 import CRaylib
 
-//MARK: - Screen
-
 public struct Screen {
-	
-	//MARK: Methods
-	
+
 	/// Load image from screen buffer and (screenshot)
 	@inlinable public static func screenshot() -> Image {
 		LoadImageFromScreen().toSwift

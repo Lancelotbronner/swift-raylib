@@ -9,37 +9,7 @@ import CRaylib
 
 public final class Image {
 	
-	//MARK: Properties
-	
 	@usableFromInline var underlying: CRaylib.Image
-	
-	//MARK: Computed Properties
-
-//	@inlinable public var isReady: Bool {
-//		IsImageReady(underlying)
-//	}
-	
-	@inlinable public var width: Int {
-		underlying.width.toInt
-	}
-	
-	@inlinable public var height: Int {
-		underlying.height.toInt
-	}
-	
-	@inlinable public var size: Vector2f {
-		Vector2f(underlying.width.toFloat, underlying.height.toFloat)
-	}
-	
-	@inlinable public var mipmaps: Int {
-		underlying.mipmaps.toInt
-	}
-	
-	@inlinable public var format: PixelFormat {
-		PixelFormat(raylib: underlying.format)
-	}
-	
-	//MARK: Initialization
 	
 	@inlinable public init(underlying image: CRaylib.Image) {
 		underlying = image
@@ -54,7 +24,12 @@ public final class Image {
 	@inlinable public convenience init(of text: String, size: Int, color: Color, spacing: Int, font: Font) {
 		self.init(underlying: ImageTextEx(font.toRaylib, text, size.toFloat, spacing.toFloat, color.toRaylib))
 	}
-	
+
+	/// Load image from file into CPU memory (RAM)
+	@inlinable public convenience init(at path: Path) {
+		self.init(underlying: LoadImage(path.underlying))
+	}
+
 	// TODO: LoadImageFromMemory
 	// Image LoadImageFromMemory(const char *fileType, const unsigned char *fileData, int dataSize);
 
@@ -62,15 +37,42 @@ public final class Image {
 		UnloadImage(underlying)
 	}
 
-	//MARK: Canvas Methods
+	//MARK: - Properties
+
+	/// Check if an image is ready
+	@inlinable public var isReady: Bool {
+		IsImageReady(underlying)
+	}
+
+	@inlinable public var width: Int {
+		underlying.width.toInt
+	}
+
+	@inlinable public var height: Int {
+		underlying.height.toInt
+	}
+
+	@inlinable public var size: Vector2f {
+		Vector2f(underlying.width.toFloat, underlying.height.toFloat)
+	}
+
+	@inlinable public var mipmaps: Int {
+		underlying.mipmaps.toInt
+	}
+
+	@inlinable public var format: PixelFormat {
+		PixelFormat(raylib: underlying.format)
+	}
+
+	//MARK: - Canvas Methods
 
 	@inlinable public func draw(_ block: (Canvas) -> Void) {
 		let renderer = Canvas(to: &underlying)
 		block(renderer)
 	}
 	
-	//MARK: Conversion Methods
-	
+	//MARK: - Conversion Methods
+
 	/// Upload to GPU
 	@inlinable public func upload() -> Texture {
 		LoadTextureFromImage(underlying).toManaged
@@ -96,8 +98,8 @@ public final class Image {
 		ImageDither(&underlying, rbpp.toInt32, gbpp.toInt32, bbpp.toInt32, abpp.toInt32)
 	}
 	
-	//MARK: Resize Methods
-	
+	//MARK: - Resize Methods
+
 	/// Resize image according to the specified algorithm
 	@inlinable public func resize(to width: Int, _ height: Int, using algorithm: ResizeAlgorithm) {
 		switch algorithm {
@@ -122,8 +124,8 @@ public final class Image {
 		ImageAlphaCrop(&underlying, threshold)
 	}
 	
-	//MARK: Copy Methods
-	
+	//MARK: - Copy Methods
+
 	/// Create an image duplicate (useful for transformations)
 	@inlinable public func copy() -> Image {
 		ImageCopy(underlying).toSwift
@@ -134,8 +136,8 @@ public final class Image {
 		ImageCopy(underlying).toSwift
 	}
 	
-	//MARK: Reading Methods
-	
+	//MARK: - Reading Methods
+
 	/// Create an image from another image piece
 	@inlinable public func slice(_ area: Rectangle) -> Image {
 		ImageFromImage(underlying, area.toRaylib).toSwift
@@ -151,7 +153,7 @@ public final class Image {
 		GetImageAlphaBorder(underlying, threshold).toSwift
 	}
 
-	//MARK: Transform Methods
+	//MARK: - Transform Methods
 
 	/// Flip image
 	@inlinable public func flip(on axis: Axis) {
@@ -169,7 +171,7 @@ public final class Image {
 		}
 	}
 
-	//MARK: Color Methods
+	//MARK: - Color Methods
 
 	/// Modify image color: tint
 	@inlinable public func tint(with color: Color) {
@@ -201,7 +203,7 @@ public final class Image {
 		ImageColorReplace(&underlying, color.toRaylib, other.toRaylib)
 	}
 
-	//MARK: Alpha Methods
+	//MARK: - Alpha Methods
 
 	/// Clear alpha channel to desired color
 	@inlinable public func clear(alpha threshold: Float, to color: Color) {
@@ -226,6 +228,21 @@ public final class Image {
  RLAPI Color *LoadImagePalette(Image image, int maxPaletteSize, int *colorCount);                         // Load colors palette from image as a Color array (RGBA - 32bit)
  RLAPI void UnloadImagePalette(Color *colors);                                                            // Unload colors palette loaded with LoadImagePalette()
  */
+
+//MARK: - Foundation Integration
+
+#if canImport(Foundation)
+import Foundation
+
+extension Image {
+
+	/// Load image from file into CPU memory (RAM)
+	@inlinable public convenience init(at path: Path, from bundle: Bundle) {
+		self.init(underlying: LoadImage(Filesystem.at(path, from: bundle).underlying))
+	}
+
+}
+#endif
 
 //MARK: - Raylib Integration
 

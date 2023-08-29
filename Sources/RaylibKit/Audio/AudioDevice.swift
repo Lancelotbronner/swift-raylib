@@ -7,7 +7,9 @@
 
 import CRaylib
 
-public enum Audio {
+public struct AudioDevice {
+
+	private init() { }
 
 	@inlinable public var isReady: Bool {
 		IsAudioDeviceReady()
