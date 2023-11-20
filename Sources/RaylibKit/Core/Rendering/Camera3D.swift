@@ -7,40 +7,35 @@
 
 import raylib
 
-//MARK: - Camera 3D
-
 public struct Camera3D {
-	
-	//MARK: Properties
-	
-	@usableFromInline var underlying: raylib.Camera3D
-	
-	//MARK: Computed Properties
-	
-	/// Get view matrix
-	@inlinable public var matrix: Matrix4x4f {
-		GetCameraMatrix(underlying)
+	public var rawValue: raylib.Camera3D
+
+	@inlinable public init(rawValue: raylib.Camera3D) {
+		self.rawValue = rawValue
 	}
-	
-	//MARK: Initialization
 	
 //	@inlinable public init(at position: Vector2f, offsetBy offset: Vector2f = Window.size / 2, rotation: Float = 0, zoom: Float = 1) {
 //		underlying = .init
 //	}
 	
-	//MARK: Methods
-	
-	/// Get the screen space position for a world space position
-	@inlinable public func toScreen(world position: Vector3f) -> Vector2f {
-		GetWorldToScreen(position.toRaylib, underlying).toSwift
-	}
-	
-	/// Get the screen space position for a world space position
-	@inlinable public func toScreen(world position: Vector3f, size width: Int, by height: Int) -> Vector2f {
-		GetWorldToScreenEx(position.toRaylib, underlying, width.toInt32, height.toInt32).toSwift
-	}
-	
 	// TODO: Ray hit
 	// Ray GetMouseRay(Vector2 mousePosition, Camera camera);
 	
+	//MARK: - Coordinate Conversion
+
+	/// Get view matrix
+	@inlinable public var matrix: Matrix4x4f {
+		GetCameraMatrix(rawValue)
+	}
+
+	/// Get the screen space position for a world space position
+	@inlinable public func toScreen(world position: Vector3f) -> Vector2f {
+		GetWorldToScreen(position.toRaylib, rawValue).toSwift
+	}
+
+	/// Get the screen space position for a world space position
+	@inlinable public func toScreen(world position: Vector3f, size width: Int, by height: Int) -> Vector2f {
+		GetWorldToScreenEx(position.toRaylib, rawValue, width.toInt32, height.toInt32).toSwift
+	}
+
 }

@@ -7,14 +7,9 @@
 
 import raylib
 
-//MARK: - Renderer
-
 public struct Renderer {
-	
-	//MARK: Properties
-	
-	/// Window background color when using ``Applet`` or ``App``
-	public static var background = Color.raywhite
+
+	//MARK: - Context Properties
 	
 	/// Default line thickness
 	public static var thickness: Float = 1
@@ -34,15 +29,23 @@ public struct Renderer {
 	/// Default text alignment
 	public static var textAlignment = TextAlignment.left
 	
-	//MARK: Commands
-	
+	//MARK: - Background
+
+	/// Window background color when using ``Applet`` or ``App``
+	public static var background = Color.raywhite
+
 	/// Set background color (framebuffer clear color)
 	@inlinable public static func clear(to color: Color) {
 		ClearBackground(color.toRaylib)
 	}
-	
-	//MARK: Target Methods
-	
+
+	/// Clears using the color set in``background``
+	@inlinable public static func clear() {
+		clear(to: background)
+	}
+
+	//MARK: - Targets
+
 	/// Setup canvas (framebuffer) to start drawing; End canvas drawing and swap buffers (double buffering)
 	@inlinable public static func frame(draw: () -> Void) {
 		BeginDrawing()
@@ -56,25 +59,25 @@ public struct Renderer {
 		EndTextureMode()
 	}
 	
-	//MARK: Drawing Mode Methods
-	
+	//MARK: - Drawing Modes
+
 	/// Begin blending mode; End blending mode (reset to default: alpha blending)
 	@inlinable public static func blend(_ mode: BlendMode, draw: () -> Void) {
-		BeginBlendMode(mode.toRaylib.toInt32)
+		BeginBlendMode(mode.rawValue.toInt32)
 		draw()
 		EndBlendMode()
 	}
 	
 	/// Begin 2D mode; End 2D mode
 	@inlinable public static func camera(_ camera: Camera2D, draw: () -> Void) {
-		BeginMode2D(camera.underlying)
+		BeginMode2D(camera.rawValue)
 		draw()
 		EndMode2D()
 	}
 	
 	/// Begin 3D mode; End 3D mode
 	@inlinable public static func camera(_ camera: Camera3D, draw: () -> Void) {
-		BeginMode3D(camera.underlying)
+		BeginMode3D(camera.rawValue)
 		draw()
 		EndMode3D()
 	}
@@ -86,7 +89,7 @@ public struct Renderer {
 		EndShaderMode()
 	}
 	
-	//MARK: Scissor Methods
+	//MARK: - Scissoring
 	
 	/// Begin scissor mode (define screen area for following drawing); End scissor mode
 	@inlinable public static func scissor(at x: Int, _ y: Int, size width: Int, by height: Int, draw: () -> Void) {
