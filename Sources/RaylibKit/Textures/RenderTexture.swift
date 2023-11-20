@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2021-09-07.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Render Texture
 
@@ -13,7 +13,7 @@ public final class RenderTexture {
 	
 	//MARK: Properties
 	
-	@usableFromInline var underlying: CRaylib.RenderTexture
+	@usableFromInline var underlying: raylib.RenderTexture
 	
 	//MARK: Computed Properties
 	
@@ -35,7 +35,7 @@ public final class RenderTexture {
 		self.init(underlying: LoadRenderTexture(size.x.toInt32, size.y.toInt32))
 	}
 	
-	@inlinable public init(underlying texture: CRaylib.RenderTexture) {
+	@inlinable public init(underlying texture: raylib.RenderTexture) {
 		underlying = texture
 	}
 	
@@ -47,7 +47,7 @@ public final class RenderTexture {
 
 //MARK: - Raylib Integration
 
-extension CRaylib.RenderTexture {
+extension raylib.RenderTexture {
 
 	@_transparent public var toSwift: RenderTexture {
 		RenderTexture(underlying: self)
@@ -57,7 +57,7 @@ extension CRaylib.RenderTexture {
 
 extension RenderTexture {
 
-	@_transparent public var toRaylib: CRaylib.RenderTexture {
+	@_transparent public var toRaylib: raylib.RenderTexture {
 		underlying
 	}
 

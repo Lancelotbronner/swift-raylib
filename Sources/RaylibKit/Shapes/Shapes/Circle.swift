@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2021-09-06.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Circle
 

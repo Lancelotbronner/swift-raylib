@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2022-01-12.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Image Canvas
 
@@ -13,7 +13,7 @@ public struct Canvas {
 	
 	//MARK: Properties
 	
-	@usableFromInline var underlying: UnsafeMutablePointer<CRaylib.Image>
+	@usableFromInline var underlying: UnsafeMutablePointer<raylib.Image>
 	
 	//MARK: Computed Properties
 	
@@ -23,7 +23,7 @@ public struct Canvas {
 	
 	//MARK: Initialization
 	
-	@usableFromInline init(to image: UnsafeMutablePointer<CRaylib.Image>) {
+	@usableFromInline init(to image: UnsafeMutablePointer<raylib.Image>) {
 		underlying = image
 	}
 	

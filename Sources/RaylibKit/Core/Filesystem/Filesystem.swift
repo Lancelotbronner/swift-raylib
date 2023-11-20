@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2021-11-24.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Filesystem
 
@@ -14,11 +14,11 @@ public struct Filesystem {
 	//MARK: Constants
 	
 	public static var application: Directory {
-		GetApplicationDirectory().toPath.directory
+		Path(rawValue: GetApplicationDirectory().toString).directory
 	}
 	
 	public static var current: Directory {
-		GetWorkingDirectory().toPath.directory
+		Path(rawValue: GetWorkingDirectory().toString).directory
 	}
 	
 	//MARK: Accessor Methods
@@ -35,7 +35,7 @@ public struct Filesystem {
 	
 	@inlinable public static func work(within path: Path, do block: () throws -> Void) rethrows {
 		let tmp = GetWorkingDirectory()
-		ChangeDirectory(path.underlying)
+		ChangeDirectory(path.rawValue)
 		try block()
 		ChangeDirectory(tmp)
 	}
@@ -64,7 +64,7 @@ extension Filesystem {
 	}
 	
 	@usableFromInline static func at(_ relative: Path, from bundle: Bundle) -> Path {
-		Path(at: "\(bundle.resourcePath ?? bundle.bundlePath)/\(relative.underlying)")
+		Path(rawValue: "\(bundle.resourcePath ?? bundle.bundlePath)/\(relative.rawValue)")
 	}
 	
 }

@@ -1,16 +1,16 @@
-
-//MARK: - Thickness
+//
+//  File.swift
+//
+//
+//  Created by Christophe Bronner on 2021-12-27.
+//
 
 public struct Edges<Scalar> {
-	
-	//MARK: Properties
 	
 	public var top: Scalar
 	public var right: Scalar
 	public var bottom: Scalar
 	public var left: Scalar
-	
-	//MARK: Initialization
 	
 	public init(left: Scalar, top: Scalar, right: Scalar, bottom: Scalar) {
 		self.left = left
@@ -28,8 +28,6 @@ public struct Edges<Scalar> {
 	}
 	
 }
-
-//MARK: - Literals
 
 extension Edges: ExpressibleByIntegerLiteral where Scalar: ExpressibleByIntegerLiteral, Scalar.IntegerLiteralType == Scalar {
 	

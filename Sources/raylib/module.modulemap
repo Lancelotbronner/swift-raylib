@@ -1,0 +1,35 @@
+module raylib [system] {
+	header "raylib.h"
+	link "raylib"
+	export *
+
+	explicit module config {
+		header "config.h"
+		export *
+	}
+
+	explicit module raymath {
+		header "raymath.h"
+		export *
+	}
+
+	explicit module rcamera {
+		header "rcamera.h"
+		export *
+	}
+
+	explicit module rgestures {
+		header "rgestures.h"
+		export *
+	}
+
+	explicit module rlgl {
+		header "rlgl.h"
+		export *
+	}
+
+	explicit module utils {
+		header "utils.h"
+		export *
+	}
+}

@@ -1,14 +1,14 @@
-
-//MARK: - Size
+//
+//  File.swift
+//
+//
+//  Created by Christophe Bronner on 2021-12-27.
+//
 
 public struct Size<Scalar> {
 	
-	//MARK: Properties
-	
 	public var width: Scalar
 	public var height: Scalar
-	
-	//MARK: Initialization
 	
 	public init(width: Scalar, height: Scalar) {
 		self.width = width

@@ -5,13 +5,13 @@
 //  Created by Christophe Bronner on 2022-01-08.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Implementation of Shader
 
 @usableFromInline protocol ImplementationOfShader {
 	
-	var raylib: CRaylib.Shader { get set }
+	var raylib: raylib.Shader { get set }
 	
 }
 
@@ -25,20 +25,20 @@ extension ImplementationOfShader {
 
 //MARK: - Raylib Integration
 
-extension CRaylib.Shader: MemoryManageable {
+extension raylib.Shader: MemoryManageable {
 	
-	@inlinable public static func unload(instance: CRaylib.Shader) {
+	@inlinable public static func unload(instance: raylib.Shader) {
 		UnloadShader(instance)
 	}
 	
 }
 
-extension Unmanaged: ImplementationOfShader where Subject == CRaylib.Shader { }
-extension Managed: ImplementationOfShader where Subject == CRaylib.Shader { }
+extension Unmanaged: ImplementationOfShader where Subject == raylib.Shader { }
+extension Managed: ImplementationOfShader where Subject == raylib.Shader { }
 
 extension Shader {
 	
-	@inlinable public var toRaylib: CRaylib.Shader {
+	@inlinable public var toRaylib: raylib.Shader {
 		implementation.raylib
 	}
 	

@@ -5,35 +5,47 @@
 //  Created by Christophe Bronner on 2021-09-02.
 //
 
-import CRaylib
-
-//MARK: - Directory
+import raylib
 
 public struct Directory {
 	
-	//MARK: Properties
-	
 	/// The directory's path
 	public let path: Path
-	
-	//MARK: Computed Properties
-	
+
+	public init(at path: Path) {
+		self.path = path
+	}
+
+	//MARK: - Filesystem
+
 	/// Check if a directory path exists
 	@inlinable public var exists: Bool {
 		path.isDirectory
 	}
-	
+
 	/// Get previous directory path for a given path
 	@inlinable public var parent: Directory {
 		.init(at: path.parent)
 	}
-	
+
+	/// Point to a file within the directory
+	@inlinable public func file(_ filename: String) -> File {
+		path[filename].file
+	}
+
+	/// Point to a subdirectory within the directory
+	@inlinable public func directory(_ filename: String) -> Directory {
+		path[filename].directory
+	}
+
+	//MARK: - Contents
+
 	/// Retrieves the subpaths of this directory
 	@inlinable public var contents: [Path] {
 		// TODO: Maybe make a DirectoryContentIterator for lazy processing
 		// TODO: Make a DirectoryRecursiveContentIterator for recursive iteration
-		let files = LoadDirectoryFiles(path.underlying)
-		
+		let files = LoadDirectoryFiles(path.rawValue)
+
 		guard files.paths.pointee!.pointee != 0 else {
 			return []
 		}
@@ -52,37 +64,19 @@ public struct Directory {
 	// - Files
 	// - Recursive files
 	
-	//MARK: Initialization
-	
-	@usableFromInline init(at path: Path) {
-		self.path = path
-	}
-	
-	//MARK: Methods
-	
+	//MARK: - Working Directory
+
 	/// Change working directory
 	@inlinable public func useAsWorkingDirectory() throws {
-		ChangeDirectory(path.underlying)
+		ChangeDirectory(path.rawValue)
 		// TODO: Handle error
 	}
 	
-	/// Point to a file within the directory
-	@inlinable public func file(_ filename: String) -> File {
-		path[filename].file
-	}
-	
-	/// Point to a subdirectory within the directory
-	@inlinable public func directory(_ filename: String) -> Directory {
-		path[filename].directory
-	}
-	
-	//MARK: ForEach Methods
-	
+	//MARK: - Functional Methods
+
 	@inlinable public func forEachFiles(do block: (File) throws -> Void) rethrows {
 		try walk(path: { _ in }, file: block, directory: { _ in }, paths: { _ in })
 	}
-	
-	//MARK: Map Methods
 	
 	@inlinable public func mapFiles<NewValue>(_ transform: (File) -> NewValue) -> [NewValue] {
 		var mapped: [NewValue] = []
@@ -90,8 +84,8 @@ public struct Directory {
 		return mapped
 	}
 	
-	//MARK: Utilities
-	
+	//MARK: - Internals
+
 	@usableFromInline func walk(
 		path processPath: (Path) throws -> Void,
 		file processFile: (File) throws -> Void,

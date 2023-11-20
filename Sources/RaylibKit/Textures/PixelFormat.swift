@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2021-09-17.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Pixel Format
 

@@ -5,18 +5,25 @@
 //  Created by Christophe Bronner on 2021-09-02.
 //
 
-import CRaylib
+import raylib
 
-//MARK: - Keyboard Button
+public struct MouseButton: RawRepresentable, Button {
+	public let rawValue: Int32
 
-public struct MouseButton: Button {
-	
-	//MARK: Properties
-	
-	public let keycode: Int32
-	
-	//MARK: Computed Properties
-	
+	public init(rawValue: Int32) {
+		self.rawValue = rawValue
+	}
+
+	@inlinable public init(_ mouseButton: raylib.MouseButton) {
+		self.init(rawValue: mouseButton.rawValue.toInt32)
+	}
+
+	//MARK: - Keycode
+
+	public var keycode: Int32 { rawValue }
+
+	//MARK: - State
+
 	@inlinable public var isPressed: Bool {
 		IsMouseButtonPressed(keycode)
 	}
@@ -31,16 +38,6 @@ public struct MouseButton: Button {
 	
 	@inlinable public var isUp: Bool {
 		IsMouseButtonUp(keycode)
-	}
-	
-	//MARK: Initialization
-	
-	@inlinable public init(_ keycode: Int32) {
-		self.keycode = keycode
-	}
-	
-	@inlinable public init(_ key: CRaylib.MouseButton) {
-		keycode = key.rawValue.toInt32
 	}
 	
 }

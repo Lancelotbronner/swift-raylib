@@ -54,26 +54,9 @@ Documentation is available via DocC. For Xcode users simply go to `Product > Bui
 
 ### Install `raylib` as a system library
 
-You should start by installing raylib as a system library. 
+You should start by installing raylib as a system library, see the official guide [here](https://github.com/raysan5/raylib#build-and-installation).
 
-The easiest way is via one of the [supported package managers](https://repology.org/project/raylib/versions). Here are a few common examples.
-
-**macOS - Homebrew**
-```sh
-brew install raylib
-```
-
-**Linux - AUR**
-```sh
-apt-get install raylib
-```
-
-**Windows - vcpkg**
-```sh
-vcpkg install raylib
-```
-
-If package managers aren't a possibility, [check raylib's instructions](https://github.com/raysan5/raylib#build-and-installation).
+The easiest way is via one of the [supported package managers](https://repology.org/project/raylib/versions).
 
 ### Add `swift-raylib` as a package dependency
 
@@ -91,7 +74,7 @@ Add the following line to your `Package.swift` dependencies...
 
 ### Interop with C
 
-If you still need to interop, you can `import CRaylib` and use the [cheatsheet][cheatsheet] for reference.
+If you still need to interop, you can `import raylib` and use the [cheatsheet][cheatsheet] for reference.
 
 ## 🏗 Contributing
 

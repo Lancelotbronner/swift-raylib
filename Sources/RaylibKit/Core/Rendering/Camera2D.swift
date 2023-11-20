@@ -5,16 +5,14 @@
 //  Created by Christophe Bronner on 2021-09-02.
 //
 
-import CRaylib
-
-//MARK: - Camera 2D
+import raylib
 
 public struct Camera2D {
 	
 	//MARK: Properties
 	
-	@usableFromInline var underlying: CRaylib.Camera2D
-	
+	@usableFromInline var underlying: raylib.Camera2D
+
 	//MARK: Computed Properties
 	
 	/// The camera's rotation
@@ -51,7 +49,7 @@ public struct Camera2D {
 	//MARK: Initialization
 
 	@inlinable public init(at position: Vector2f, offsetBy offset: Vector2f = .zero, rotation: Float = 0, zoom: Float = 1) {
-		underlying = CRaylib.Camera2D(offset: position.toRaylib, target: offset.toRaylib, rotation: rotation, zoom: zoom)
+		underlying = raylib.Camera2D(offset: position.toRaylib, target: offset.toRaylib, rotation: rotation, zoom: zoom)
 	}
 
 	@inlinable public init() {

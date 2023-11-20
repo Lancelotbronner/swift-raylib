@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2021-11-25.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Uniform
 

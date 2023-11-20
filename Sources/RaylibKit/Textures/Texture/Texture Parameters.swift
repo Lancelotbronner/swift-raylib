@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2021-12-26.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Texture Filter
 

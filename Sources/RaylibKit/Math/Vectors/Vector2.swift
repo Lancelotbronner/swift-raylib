@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2021-11-30.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Vector 2
 
@@ -64,13 +64,13 @@ extension Vector2: Decodable where Scalar: Decodable { }
 
 extension Vector2 where Scalar == Float {
 	
-	@_transparent public var toRaylib: CRaylib.Vector2 {
-		CRaylib.Vector2(x: x, y: y)
+	@_transparent public var toRaylib: raylib.Vector2 {
+		raylib.Vector2(x: x, y: y)
 	}
 	
 }
 
-extension CRaylib.Vector2 {
+extension raylib.Vector2 {
 	
 	@_transparent public var toSwift: Vector2f {
 		Vector2f(x, y)

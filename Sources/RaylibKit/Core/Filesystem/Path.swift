@@ -1,22 +1,17 @@
-import CRaylib
+import raylib
 
-//MARK: - Path
+public struct Path: RawRepresentable {
+	public let rawValue: String
 
-public struct Path: ExpressibleByStringLiteral, ExpressibleByArrayLiteral, CustomStringConvertible {
-	
-	//MARK: Properties
-	
-	@usableFromInline let underlying: String
-	
-	//MARK: Computed Properties
-	
-	@inlinable public var description: String {
-		underlying
+	public init(rawValue: String) {
+		self.rawValue = rawValue
 	}
-	
+
+	//MARK: - Filesystem
+
 	/// Wether this path points to an existing file
 	@inlinable public var isFile: Bool {
-		FileExists(underlying)
+		FileExists(rawValue)
 	}
 	
 	/// Act as if this path pointed to a file
@@ -26,7 +21,7 @@ public struct Path: ExpressibleByStringLiteral, ExpressibleByArrayLiteral, Custo
 	
 	/// Wether this path points to an existing directory
 	@inlinable public var isDirectory: Bool {
-		DirectoryExists(underlying)
+		DirectoryExists(rawValue)
 	}
 	
 	/// Act as if this path pointed to a directory
@@ -36,52 +31,38 @@ public struct Path: ExpressibleByStringLiteral, ExpressibleByArrayLiteral, Custo
 	
 	/// Get the previous directory path
 	@inlinable public var parent: Path {
-		GetPrevDirectoryPath(underlying).toPath
+		Path(rawValue: GetPrevDirectoryPath(rawValue).toString)
 	}
-	
-	/// Get the path's components
-	@inlinable public var components: [Substring] {
-		underlying.split { $0 == "/" || $0 == "\\" }
-	}
-	
-	/// Get the path's last component
-	@inlinable public var last: Substring? {
-		guard let slash = underlying.lastIndex(where: { $0 == "/" || $0 == "\\" }) else {
-			return nil
-		}
-		return underlying[underlying.index(after: slash)...]
-	}
-	
-	//MARK: Initialization
-	
-	@inlinable internal init(at filepath: String) {
-		underlying = filepath
-	}
-	
-	@inlinable public init(stringLiteral value: String) {
-		self.init(at: value)
-	}
-	
-	@inlinable public init(arrayLiteral elements: String...) {
-		self.init(at: elements.joined(separator: "/"))
-	}
-	
-	//MARK: Subscripts
-	
+
 	/// Adds a component to the path
 	@inlinable public subscript(_ component: String) -> Path {
-		.init(at: "\(underlying)/\(component)")
+		Path(rawValue: "\(rawValue)/\(component)")
 	}
-	
+
 	/// Adds components to the path
 	@inlinable public subscript(_ components: String...) -> Path {
 		self[components.joined(separator: "/")]
 	}
+
+	//MARK: - Properties
+
+	/// Get the path's components
+	@inlinable public var components: [Substring] {
+		rawValue.split { $0 == "/" || $0 == "\\" }
+	}
 	
-	//MARK: Operators
+	/// Get the path's last component
+	@inlinable public var last: Substring? {
+		guard let slash = rawValue.lastIndex(where: { $0 == "/" || $0 == "\\" }) else {
+			return nil
+		}
+		return rawValue[rawValue.index(after: slash)...]
+	}
 	
+	//MARK: - Operators
+
 	@inlinable public static func + (lhs: Path, rhs: Path) -> Path {
-		lhs[rhs.underlying]
+		lhs[rhs.rawValue]
 	}
 	
 	@inlinable public static func += (lhs: inout Path, rhs: Path) {
@@ -90,20 +71,22 @@ public struct Path: ExpressibleByStringLiteral, ExpressibleByArrayLiteral, Custo
 	
 }
 
-//MARK: - C Integration
+extension Path: ExpressibleByStringLiteral, ExpressibleByArrayLiteral, LosslessStringConvertible {
 
-extension UnsafePointer where Pointee == CChar {
-	
-	@inlinable public var toPath: Path {
-		.init(at: toString)
+	public init(_ description: String) {
+		self.init(rawValue: description)
 	}
-	
-}
 
-extension UnsafeMutablePointer where Pointee == CChar {
-	
-	@inlinable public var toPath: Path {
-		.init(at: toString)
+	@inlinable public init(stringLiteral value: String) {
+		self.init(rawValue: value)
 	}
-	
+
+	@inlinable public init(arrayLiteral elements: String...) {
+		self.init(rawValue: elements.joined(separator: "/"))
+	}
+
+	@inlinable public var description: String {
+		rawValue
+	}
+
 }

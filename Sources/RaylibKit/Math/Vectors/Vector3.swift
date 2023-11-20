@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2021-11-30.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Vector 3
 
@@ -55,13 +55,13 @@ extension Vector3: Hashable where Scalar: Hashable { }
 
 extension Vector3 where Scalar == Float {
 	
-	@_transparent public var toRaylib: CRaylib.Vector3 {
-		CRaylib.Vector3(x: x, y: y, z: z)
+	@_transparent public var toRaylib: raylib.Vector3 {
+		raylib.Vector3(x: x, y: y, z: z)
 	}
 	
 }
 
-extension CRaylib.Vector3 {
+extension raylib.Vector3 {
 	
 	@_transparent public var toSwift: Vector3f {
 		Vector3f(x, y, z)

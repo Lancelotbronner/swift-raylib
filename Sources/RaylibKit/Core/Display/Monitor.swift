@@ -5,14 +5,17 @@
 //  Created by Christophe Bronner on 2021-09-07.
 //
 
-import CRaylib
+import raylib
 
-//MARK: - Monitor
+public struct Monitor: RawRepresentable {
+	public var rawValue: Int32
 
-public struct Monitor {
-	
-	//MARK: Static Computed Properties
-	
+	public init(rawValue: Int32) {
+		self.rawValue = rawValue
+	}
+
+	//MARK: - Retrieval
+
 	/// Get number of connected monitors
 	@inlinable public static var count: Int {
 		GetMonitorCount().toInt
@@ -20,59 +23,49 @@ public struct Monitor {
 	
 	/// Get current connected monitor
 	@inlinable public static var current: Monitor {
-		Monitor(GetCurrentMonitor())
+		Monitor(rawValue: GetCurrentMonitor())
 	}
 	
 	/// Get currently connected monitors
 	@inlinable public static var all: [Monitor] {
 		(0 ..< GetMonitorCount()).lazy.map(Monitor.init)
 	}
-	
-	//MARK: Properties
-	
-	@usableFromInline let id: Int32
-	
-	//MARK: Computed Properties
-	
+
+	//MARK: - Properties
+
 	/// Get the human-readable name of the monitor
 	@inlinable public var name: String {
-		GetMonitorName(id).toString
+		GetMonitorName(rawValue).toString
 	}
 	
 	/// Get monitor position
 	@inlinable public var position: Vector2f {
-		GetMonitorPosition(id).toSwift
+		GetMonitorPosition(rawValue).toSwift
 	}
 	
 	/// Get monitor width (max available by monitor)
 	@inlinable public var width: Int {
-		GetMonitorWidth(id).toInt
+		GetMonitorWidth(rawValue).toInt
 	}
 	
 	/// Get monitor height (max available by monitor)
 	@inlinable public var height: Int {
-		GetMonitorHeight(id).toInt
+		GetMonitorHeight(rawValue).toInt
 	}
 	
 	/// Get monitor physical width in millimetres
 	@inlinable public var physicalWidth: Int {
-		GetMonitorPhysicalWidth(id).toInt
+		GetMonitorPhysicalWidth(rawValue).toInt
 	}
 	
 	/// Get monitor physical height in millimetres
 	@inlinable public var physicalHeight: Int {
-		GetMonitorPhysicalHeight(id).toInt
+		GetMonitorPhysicalHeight(rawValue).toInt
 	}
 	
 	/// Get specified monitor refresh rate
 	@inlinable public var refreshRate: Int {
-		GetMonitorRefreshRate(id).toInt
+		GetMonitorRefreshRate(rawValue).toInt
 	}
-	
-	//MARK: Initialization
-	
-	@usableFromInline init(_ id: Int32) {
-		self.id = id
-	}
-	
+
 }

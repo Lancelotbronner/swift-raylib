@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2021-09-07.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Camera 3D
 
@@ -13,7 +13,7 @@ public struct Camera3D {
 	
 	//MARK: Properties
 	
-	@usableFromInline var underlying: CRaylib.Camera3D
+	@usableFromInline var underlying: raylib.Camera3D
 	
 	//MARK: Computed Properties
 	

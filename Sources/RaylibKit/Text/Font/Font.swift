@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2022-01-08.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Font
 
@@ -68,13 +68,13 @@ extension File {
 	
 	/// Load font from file into GPU memory (VRAM)
 	@inlinable public func loadAsFont() -> Font {
-		LoadFont(path.underlying).toManaged.toSwift
+		LoadFont(path.rawValue).toManaged.toSwift
 	}
 	
 	/// Load font from file into GPU memory (VRAM)
 	@inlinable public func loadAsFont(size: Int, characters: [Int32]) -> Font {
 		characters.withContiguousStorageIfAvailable { buffer in
-			LoadFontEx(path.underlying, size.toInt32, buffer.baseAddress.map(UnsafeMutablePointer.init), characters.count.toInt32)
+			LoadFontEx(path.rawValue, size.toInt32, buffer.baseAddress.map(UnsafeMutablePointer.init), characters.count.toInt32)
 		}!.toManaged.toSwift
 	}
 	

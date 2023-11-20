@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2022-01-02.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Raylib
 

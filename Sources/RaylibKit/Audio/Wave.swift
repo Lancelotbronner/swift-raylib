@@ -5,22 +5,22 @@
 //  Created by Christophe Bronner on 2021-09-07.
 //
 
-import CRaylib
+import raylib
 
 public final class Wave {
 
-	@usableFromInline var underlying: CRaylib.Wave
+	public var rawValue: raylib.Wave
 
-	@inlinable public init(_ underlying: CRaylib.Wave) {
-		self.underlying = underlying
+	@inlinable public init(rawValue: raylib.Wave) {
+		self.rawValue = rawValue
 	}
 
 	@inlinable public convenience init(at filename: String) {
-		self.init(LoadWave(filename))
+		self.init(rawValue: LoadWave(filename))
 	}
 
 	deinit {
-		UnloadWave(underlying)
+		UnloadWave(rawValue)
 	}
 
 }

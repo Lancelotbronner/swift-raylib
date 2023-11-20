@@ -5,68 +5,62 @@
 //  Created by Christophe Bronner on 2021-11-24.
 //
 
-import CRaylib
-
-//MARK: - File
+import raylib
 
 public struct File {
 	
-	//MARK: Properties
-	
 	/// The file's path
 	public let path: Path
-	
-	//MARK: Computed Properties
+
+	public init(at path: Path) {
+		self.path = path
+	}
+
+	//MARK: - Filesystem
 	
 	/// Check if file exists
 	@inlinable public var exists: Bool {
 		path.isFile
 	}
-	
+
+	/// Get the files' parent directory
+	@inlinable public var directory: Directory {
+		Directory(at: Path(rawValue: GetDirectoryPath(path.rawValue).toString))
+	}
+
+	//MARK: - Metadata
+
 	/// Get filename
 	@inlinable public var filename: String {
-		GetFileName(path.underlying).toString
+		GetFileName(path.rawValue).toString
 	}
 	
 	/// Get filename string without extension
 	@inlinable public var name: String {
-		GetFileNameWithoutExt(path.underlying).toString
+		GetFileNameWithoutExt(path.rawValue).toString
 	}
 	
 	/// Get extension for a filename string (includes dot: '.png')
 	@inlinable public var `extension`: String {
-		GetFileExtension(path.underlying).toString
+		GetFileExtension(path.rawValue).toString
 	}
 	
 	/// Get file modification time (last write time)
 	@inlinable public var modification: Int {
-		GetFileModTime(path.underlying)
+		GetFileModTime(path.rawValue)
 	}
-	
-	/// Get the files' parent directory
-	@inlinable public var directory: Directory {
-		.init(at: GetDirectoryPath(path.underlying).toPath)
-	}
-	
-	//MARK: Initialization
-	
-	@usableFromInline init(at path: Path) {
-		self.path = path
-	}
-	
-	//MARK: Methods
 	
 	/// Check file extension (including point: .png, .wav)
 	@inlinable public func `is`(extension ext: String) -> Bool {
-		IsFileExtension(path.underlying, ext)
+		IsFileExtension(path.rawValue, ext)
 	}
 	
-	//MARK: Reading Methods
-	
+	//MARK: - Reading
+
 	/// Load file as bytes
 	@inlinable public func loadAsBytes() -> [UInt8] {
 		var count: UInt32 = 0
-		guard let pointer = LoadFileData(path.underlying, &count) else {
+		guard let pointer = LoadFileData(path.rawValue, &count) else {
 			return []
 		}
 		defer { UnloadFileData(pointer) }
@@ -75,7 +69,7 @@ public struct File {
 	
 	/// Load file as text
 	@inlinable public func loadAsText() -> String {
-		guard let pointer = LoadFileText(path.underlying) else {
+		guard let pointer = LoadFileText(path.rawValue) else {
 			return ""
 		}
 		defer { UnloadFileText(pointer) }
@@ -84,38 +78,38 @@ public struct File {
 	
 	/// Load file as image
 	@inlinable public func loadAsImage() throws -> Image {
-		LoadImage(path.underlying).toSwift
+		LoadImage(path.rawValue).toSwift
 	}
 	
 	/// Load raw file data as image
 	@inlinable public func loadAsRawImage(size width: Int, by height: Int, format: PixelFormat, offset: Int) throws -> Image {
-		LoadImageRaw(path.underlying, width.toInt32, height.toInt32, format.toRaylib.toInt32, offset.toInt32).toSwift
+		LoadImageRaw(path.rawValue, width.toInt32, height.toInt32, format.toRaylib.toInt32, offset.toInt32).toSwift
 	}
 	
 	/// Load file as animation
 	@inlinable public func loadAsAnimation(frames: Int) throws -> Image {
 		var frames = frames.toInt32
-		return LoadImageAnim(path.underlying, &frames).toSwift
+		return LoadImageAnim(path.rawValue, &frames).toSwift
 	}
 	
 	/// Load file as texture
 	@inlinable public func loadAsTexture() throws -> Texture {
 		// TODO: Error handling
-		LoadTexture(path.underlying).toManaged
+		LoadTexture(path.rawValue).toManaged
 	}
 
 	/// Load file as image
 	@inlinable public func loadAsMusic() throws -> Music {
 		// TODO: Error handling
-		LoadMusicStream(path.underlying).toSwift
+		LoadMusicStream(path.rawValue).toSwift
 	}
 
-	//MARK: Writing Methods
-	
+	//MARK: - Writing
+
 	/// Save text data to file
 	@inlinable public func write(text: String) throws {
 		_ = text.withCString { pointer in
-			SaveFileText(path.underlying, UnsafeMutablePointer(mutating: pointer))
+			SaveFileText(path.rawValue, UnsafeMutablePointer(mutating: pointer))
 		}
 		// TODO: Handle error
 	}
@@ -123,14 +117,14 @@ public struct File {
 	/// Save data to file
 	@inlinable public func write(data: [UInt8]) throws {
 		_ = data.withUnsafeBytes { buffer in
-			SaveFileData(path.underlying, UnsafeMutableRawPointer(mutating: buffer.baseAddress), buffer.count.toUInt32)
+			SaveFileData(path.rawValue, UnsafeMutableRawPointer(mutating: buffer.baseAddress), buffer.count.toInt32)
 		}
 		// TODO: Handle error
 	}
 	
 	@inlinable public func write(image: Image) {
 		// TODO: Error Handling
-		ExportImage(image.toRaylib, path.underlying)
+		ExportImage(image.toRaylib, path.rawValue)
 	}
 	
 }
@@ -145,7 +139,7 @@ extension File {
 	///  Load file data
 	@inlinable public var data: Data? {
 		var count: UInt32 = 0
-		guard let pointer = LoadFileData(path.underlying, &count) else {
+		guard let pointer = LoadFileData(path.rawValue, &count) else {
 			return nil
 		}
 		defer { UnloadFileData(pointer) }

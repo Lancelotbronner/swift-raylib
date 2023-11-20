@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2021-09-04.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Rectangle
 
@@ -139,13 +139,13 @@ public struct Rectangle {
 
 extension Rectangle {
 	
-	@_transparent public var toRaylib: CRaylib.Rectangle {
-		CRaylib.Rectangle(x: x, y: y, width: width, height: height)
+	@_transparent public var toRaylib: raylib.Rectangle {
+		raylib.Rectangle(x: x, y: y, width: width, height: height)
 	}
 	
 }
 
-extension CRaylib.Rectangle {
+extension raylib.Rectangle {
 	
 	@_transparent public var toSwift: Rectangle {
 		Rectangle(at: x, y, size: width, height)

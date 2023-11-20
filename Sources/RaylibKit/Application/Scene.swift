@@ -42,8 +42,6 @@ extension Scene {
 	
 }
 
-//MARK: - Scene Action
-
 public enum SceneAction {
 	
 	/// The scene keeps simulating

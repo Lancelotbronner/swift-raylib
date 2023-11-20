@@ -5,7 +5,17 @@
 //  Created by Christophe Bronner on 2021-12-26.
 //
 
+#if canImport(Darwin)
 import Darwin
+#elseif canImport(ucrt)
+import ucrt
+#elseif canImport(Glibc)
+import Glibc
+#elseif canImport(Musl)
+import Musl
+#else
+#error("Unsupported platform")
+#endif
 
 //MARK: - Floating Point Arithmetic
 

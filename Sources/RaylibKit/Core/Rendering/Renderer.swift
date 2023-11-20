@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2021-09-01.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Renderer
 
@@ -59,7 +59,7 @@ public struct Renderer {
 	//MARK: Drawing Mode Methods
 	
 	/// Begin blending mode; End blending mode (reset to default: alpha blending)
-	@inlinable public static func blend(_ mode: Blend, draw: () -> Void) {
+	@inlinable public static func blend(_ mode: BlendMode, draw: () -> Void) {
 		BeginBlendMode(mode.toRaylib.toInt32)
 		draw()
 		EndBlendMode()

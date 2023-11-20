@@ -5,14 +5,12 @@
 //  Created by Christophe Bronner on 2021-09-02.
 //
 
-import CRaylib
-
-//MARK: - Cursor
+import raylib
 
 public struct Cursor {
 	
-	//MARK: Properties
-	
+	//MARK: - Visibility Handling
+
 	/// Check if cursor is visible
 	@inlinable public var isVisible: Bool {
 		!IsCursorHidden()
@@ -27,19 +25,19 @@ public struct Cursor {
 	@inlinable public var isOnScreen: Bool {
 		IsCursorOnScreen()
 	}
-	
-	//MARK: Methods
-	
+
 	/// Shows cursor
 	@inlinable public static func show() {
 		ShowCursor()
 	}
-	
+
 	/// Hides cursor
 	@inlinable public static func hide() {
 		HideCursor()
 	}
-	
+
+	//MARK: Lock Handling
+
 	/// Enables cursor (unlock cursor)
 	@inlinable public static func enable() {
 		EnableCursor()
@@ -49,70 +47,59 @@ public struct Cursor {
 	@inlinable public static func disable() {
 		DisableCursor()
 	}
-	
+
+	//MARK: - Style
+
 	/// Set mouse cursor
 	@inlinable public static func style(to cursor: MouseCursor) {
-		SetMouseCursor(cursor.toRaylib.toInt32)
+		SetMouseCursor(cursor.rawValue.toInt32)
 	}
 	
 }
 
-//MARK: - Mouse Cursor
+public struct MouseCursor: RawRepresentable {
+	public let rawValue: UInt32
 
-public enum MouseCursor: UInt32 {
-	
-	//MARK: Cases
-	
-	/// Default pointer shape
-	case `default`
-	
-	/// The operation-not-allowed shape
-	case forbidden
-	
-	/// Arrow shape
-	case arrow
-	
-	/// Text writing cursor shape
-	case text
-	
-	/// Cross shape
-	case crosshair
-	
-	/// Pointing hand cursor
-	case pointingHand
-	
-	/// The omni-directional resize/move cursor shape
-	case resize
-	
-	/// Vertical resize/move arrow shape
-	case resizeNS
-	
-	/// Horizontal resize/move arrow shape
-	case resizeEW
-	
-	/// The top-right to bottom-left diagonal resize/move arrow shape
-	case resizeNESW
-	
-	/// Top-left to bottom-right diagonal resize/move arrow shape
-	case resizeNWSE
-	
-	//MARK: Computed Properties
-	
-	@inlinable public var toRaylib: UInt32 {
-		switch self {
-		case .default: return MOUSE_CURSOR_DEFAULT.rawValue
-		case .forbidden: return MOUSE_CURSOR_NOT_ALLOWED.rawValue
-		case .arrow: return MOUSE_CURSOR_ARROW.rawValue
-		case .text: return MOUSE_CURSOR_IBEAM.rawValue
-		case .crosshair: return MOUSE_CURSOR_CROSSHAIR.rawValue
-		case .pointingHand: return MOUSE_CURSOR_POINTING_HAND.rawValue
-		case .resize: return MOUSE_CURSOR_RESIZE_ALL.rawValue
-		case .resizeNS: return MOUSE_CURSOR_RESIZE_NS.rawValue
-		case .resizeEW: return MOUSE_CURSOR_RESIZE_EW.rawValue
-		case .resizeNESW: return MOUSE_CURSOR_RESIZE_NESW.rawValue
-		case .resizeNWSE: return MOUSE_CURSOR_RESIZE_NWSE.rawValue
-		}
+	public init(rawValue: UInt32) {
+		self.rawValue = rawValue
 	}
-	
+
+	public init(_ mouseCursor: raylib.MouseCursor) {
+		self.init(rawValue: mouseCursor.rawValue)
+	}
+
+	/// Default pointer shape
+	public static let `default` = Self(MOUSE_CURSOR_DEFAULT)
+
+	/// The operation-not-allowed shape
+	public static let notAllowed = Self(MOUSE_CURSOR_NOT_ALLOWED)
+
+	/// Arrow shape
+	public static let arrow = Self(MOUSE_CURSOR_ARROW)
+
+	/// Text writing cursor shape
+	public static let text = Self(MOUSE_CURSOR_IBEAM)
+
+	/// Cross shape
+	public static let crosshair = Self(MOUSE_CURSOR_CROSSHAIR)
+
+	/// Pointing hand cursor
+	public static let pointingHand = Self(MOUSE_CURSOR_POINTING_HAND)
+
+	/// The omni-directional resize/move cursor shape
+	public static let resizeAll = Self(MOUSE_CURSOR_RESIZE_ALL)
+
+	/// Vertical resize/move arrow shape
+	public static let resizeNS = Self(MOUSE_CURSOR_RESIZE_NS)
+
+	/// Horizontal resize/move arrow shape
+	public static let resizeEW = Self(MOUSE_CURSOR_RESIZE_EW)
+
+	/// The top-right to bottom-left diagonal resize/move arrow shape
+	public static let resizeNESW = Self(MOUSE_CURSOR_RESIZE_NESW)
+
+	/// Top-left to bottom-right diagonal resize/move arrow shape
+	public static let resizeNWSE = Self(MOUSE_CURSOR_RESIZE_NWSE)
+
 }
 

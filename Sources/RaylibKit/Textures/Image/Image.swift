@@ -5,13 +5,13 @@
 //  Created by Christophe Bronner on 2022-01-06.
 //
 
-import CRaylib
+import raylib
 
 public final class Image {
 	
-	@usableFromInline var underlying: CRaylib.Image
+	@usableFromInline var underlying: raylib.Image
 	
-	@inlinable public init(underlying image: CRaylib.Image) {
+	@inlinable public init(underlying image: raylib.Image) {
 		underlying = image
 	}
 	
@@ -27,7 +27,7 @@ public final class Image {
 
 	/// Load image from file into CPU memory (RAM)
 	@inlinable public convenience init(at path: Path) {
-		self.init(underlying: LoadImage(path.underlying))
+		self.init(underlying: LoadImage(path.rawValue))
 	}
 
 	// TODO: LoadImageFromMemory
@@ -238,7 +238,7 @@ extension Image {
 
 	/// Load image from file into CPU memory (RAM)
 	@inlinable public convenience init(at path: Path, from bundle: Bundle) {
-		self.init(underlying: LoadImage(Filesystem.at(path, from: bundle).underlying))
+		self.init(rawValue: LoadImage(Filesystem.at(path, from: bundle).rawValue))
 	}
 
 }
@@ -246,7 +246,7 @@ extension Image {
 
 //MARK: - Raylib Integration
 
-extension CRaylib.Image {
+extension raylib.Image {
 
 	@_transparent public var toSwift: Image {
 		Image(underlying: self)
@@ -256,7 +256,7 @@ extension CRaylib.Image {
 
 extension Image {
 
-	@_transparent public var toRaylib: CRaylib.Image {
+	@_transparent public var toRaylib: raylib.Image {
 		underlying
 	}
 

@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2021-09-01.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Color
 
@@ -95,7 +95,7 @@ extension Color {
 
 //MARK: - Raylib Integration
 
-extension CRaylib.Color {
+extension raylib.Color {
 	
 	@inlinable public var toSwift: Color {
 		Color.rgb(r, g, b, a: a)
@@ -105,8 +105,8 @@ extension CRaylib.Color {
 
 extension Color {
 	
-	@inlinable public var toRaylib: CRaylib.Color {
-		CRaylib.Color(r: red, g: green, b: blue, a: alpha)
+	@inlinable public var toRaylib: raylib.Color {
+		raylib.Color(r: red, g: green, b: blue, a: alpha)
 	}
 	
 }

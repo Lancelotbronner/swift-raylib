@@ -11,33 +11,22 @@ let package = Package(
 		.macOS(.v12),
 	],
 	products: [
-		.library(
-			name: "RaylibKit",
-			targets: ["RaylibKit"]),
+		.library(name: "RaylibKit", targets: ["RaylibKit"]),
 	],
 	targets: [
-		// Targets
-
 		.systemLibrary(
-			name: "CRaylib",
+			name: "raylib",
 			pkgConfig: "raylib",
 			providers: [
 				.brew(["raylib"]),
 			]),
 
-			.target(
-				name: "CRaylibCompatibility",
-				dependencies: ["CRaylib"]),
+		.target(
+			name: "RaylibKit",
+			dependencies: ["raylib"]),
 
-			.target(
-				name: "RaylibKit",
-				dependencies: ["CRaylib", "CRaylibCompatibility"],
-				path: "Sources/RaylibKit"),
-
-		// Tests
-
-			.testTarget(
-				name: "RaylibTests",
-				dependencies: ["RaylibKit"]),
+		.testTarget(
+			name: "RaylibTests",
+			dependencies: ["RaylibKit"]),
 	]
 )

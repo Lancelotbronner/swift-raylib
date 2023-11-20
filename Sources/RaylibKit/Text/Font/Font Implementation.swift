@@ -5,13 +5,13 @@
 //  Created by Christophe Bronner on 2021-09-07.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Implementation of Font
 
 @usableFromInline protocol ImplementationOfFont {
 	
-	var raylib: CRaylib.Font { get set }
+	var raylib: raylib.Font { get set }
 	
 }
 
@@ -25,20 +25,20 @@ extension ImplementationOfFont {
 
 //MARK: - Raylib Integration
 
-extension CRaylib.Font: MemoryManageable {
+extension raylib.Font: MemoryManageable {
 	
-	@inlinable public static func unload(instance: CRaylib.Font) {
+	@inlinable public static func unload(instance: raylib.Font) {
 		UnloadFont(instance)
 	}
 	
 }
 
-extension Unmanaged: ImplementationOfFont where Subject == CRaylib.Font { }
-extension Managed: ImplementationOfFont where Subject == CRaylib.Font { }
+extension Unmanaged: ImplementationOfFont where Subject == raylib.Font { }
+extension Managed: ImplementationOfFont where Subject == raylib.Font { }
 
 extension Font {
 	
-	@inlinable public var toRaylib: CRaylib.Font {
+	@inlinable public var toRaylib: raylib.Font {
 		implementation.raylib
 	}
 	

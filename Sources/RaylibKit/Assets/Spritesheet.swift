@@ -1,17 +1,16 @@
-
-//MARK: - Spritesheet
+//
+//  File.swift
+//
+//
+//  Created by Christophe Bronner on 2021-12-27.
+//
 
 public struct Spritesheet {
-	
-	//MARK: Properties
-	
 	public let rows: Int
 	public let columns: Int
 	public let padding: Edges<Int>
 	public let spacing: Vector2i
 	public let cell: Vector2i
-	
-	//MARK: Initialization
 	
 	public init(of rows: Int, by columns: Int, within size: Vector2i, padding: Edges<Int> = 0, spacing: Vector2i = .zero) {
 		self.rows = rows
@@ -31,8 +30,6 @@ public struct Spritesheet {
 		self.spacing = spacing
 		self.cell = tileSize
 	}
-	
-	//MARK: Methods
 	
 	@inlinable public func coordinates(of x: Int, _ y: Int) -> Vector2i {
 		let horizontal = padding.left + x * (spacing.x + cell.x)

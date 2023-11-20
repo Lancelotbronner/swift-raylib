@@ -5,16 +5,11 @@
 //  Created by Christophe Bronner on 2023-02-24.
 //
 
-import CRaylib
-
-//MARK: - Path Collection
+import raylib
 
 public final class DirectoryContents: Collection {
-
 	public typealias Element = Path
 	public typealias Index = Int
-
-	//MARK: Properties
 
 	@usableFromInline let underlying: FilePathList
 
@@ -55,7 +50,7 @@ public final class DirectoryContents: Collection {
 			precondition(position >= 0 && position < underlying.count, "Index out of range")
 			let element = underlying.paths[position]
 			precondition(element != nil, "Uninitialized path within PathCollection's range, contact the developer")
-			return Path(at: String(cString: element!))
+			return Path(rawValue: element!.toString)
 		}
 	}
 

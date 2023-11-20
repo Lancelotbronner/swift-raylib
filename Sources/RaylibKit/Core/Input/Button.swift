@@ -5,8 +5,6 @@
 //  Created by Christophe Bronner on 2021-09-02.
 //
 
-//MARK: - Button
-
 public protocol Button {
 	
 	/// Wether the button was pressed this frame
@@ -22,8 +20,6 @@ public protocol Button {
 	var isUp: Bool { get }
 	
 }
-
-//MARK: - Sequence Integration
 
 extension Sequence where Element: Button {
 	
@@ -66,6 +62,5 @@ extension Sequence where Element: Button {
 	public var allUp: Bool {
 		allSatisfy(\.isUp)
 	}
-	
 	
 }

@@ -5,18 +5,12 @@
 //  Created by Christophe Bronner on 2021-12-26.
 //
 
-import CRaylib
-
-//MARK: - Drag & Drop
+import raylib
 
 public struct DragAndDrop {
 
-	//MARK: Properties
-
 	@usableFromInline static var _paths = DroppedPathCollection(underlying: FilePathList())
-	
-	//MARK: Computed Properties
-	
+
 	/// Check if a file has been dropped into window
 	@inlinable public static var isDropped: Bool {
 		IsFileDropped()
@@ -26,8 +20,6 @@ public struct DragAndDrop {
 	@inlinable public static var paths: DroppedPathCollection {
 		_paths
 	}
-	
-	//MARK: Methods
 
 	/// Load newly dropped filepaths
 	@inlinable public static func refresh() {
@@ -101,7 +93,7 @@ public final class DroppedPathCollection: Collection {
 			precondition(position >= 0 && position < underlying.count, "Index out of range")
 			let element = underlying.paths[position]
 			precondition(element != nil, "Uninitialized path within PathCollection's range, contact the developer")
-			return Path(at: String(cString: element!))
+			return Path(rawValue: element!.toString)
 		}
 	}
 

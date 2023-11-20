@@ -5,13 +5,13 @@
 //  Created by Christophe Bronner on 2021-09-05.
 //
 
-import CRaylib
+import raylib
 
 //MARK: - Texture
 
 public protocol Texture {
 	
-	var toRaylib: CRaylib.Texture { get }
+	var toRaylib: raylib.Texture { get }
 	
 }
 
@@ -60,18 +60,18 @@ extension Texture {
 
 //MARK: - Raylib Integration
 
-extension CRaylib.Texture: MemoryManageable {
+extension raylib.Texture: MemoryManageable {
 	
-	@inlinable public static func unload(instance: CRaylib.Texture) {
+	@inlinable public static func unload(instance: raylib.Texture) {
 		UnloadTexture(instance)
 	}
 	
 }
 
-extension Unmanaged: Texture where Subject == CRaylib.Texture {
+extension Unmanaged: Texture where Subject == raylib.Texture {
 	@inlinable public var toRaylib: Subject { underlying }
 }
 
-extension Managed: Texture where Subject == CRaylib.Texture {
+extension Managed: Texture where Subject == raylib.Texture {
 	@inlinable public var toRaylib: Subject { underlying }
 }
