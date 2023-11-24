@@ -24,42 +24,42 @@ public protocol Button {
 extension Sequence where Element: Button {
 	
 	/// Wether any of the buttons were pressed this frame
-	public var anyPressed: Bool {
+	public var isAnyPressed: Bool {
 		contains(where: \.isPressed)
 	}
 	
 	/// Wether any of the buttons were released this frame
-	public var anyReleased: Bool {
+	public var isAnyReleased: Bool {
 		contains(where: \.isReleased)
 	}
 	
 	/// Wether any of the buttons are currrently being held down
-	public var anyDown: Bool {
+	public var isAnyDown: Bool {
 		contains(where: \.isDown)
 	}
 	
 	/// Wether any of the buttons are currrently uninteracted with
-	public var anyUp: Bool {
+	public var isAnyUp: Bool {
 		contains(where: \.isUp)
 	}
 	
 	/// Wether all the buttons were pressed this frame
-	public var allPressed: Bool {
+	public var isAllPressed: Bool {
 		allSatisfy(\.isPressed)
 	}
 	
 	/// Wether all the buttons were released this frame
-	public var allReleased: Bool {
+	public var isAllReleased: Bool {
 		allSatisfy(\.isReleased)
 	}
 	
 	/// Wether all the buttons are currrently being held down
-	public var allDown: Bool {
+	public var isAllDown: Bool {
 		allSatisfy(\.isDown)
 	}
 	
 	/// Wether all the buttons are currrently uninteracted with
-	public var allUp: Bool {
+	public var isAllUp: Bool {
 		allSatisfy(\.isUp)
 	}
 	

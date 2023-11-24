@@ -1,7 +1,7 @@
 import raylib
 
 public struct Path: RawRepresentable {
-	public let rawValue: String
+	public var rawValue: String
 
 	public init(rawValue: String) {
 		self.rawValue = rawValue
@@ -9,48 +9,37 @@ public struct Path: RawRepresentable {
 
 	//MARK: - Filesystem
 
-	/// Wether this path points to an existing file
-	@inlinable public var isFile: Bool {
-		FileExists(rawValue)
+	public init(_ filepath: some StringProtocol) {
+		self.init(rawValue: String(filepath))
 	}
-	
+
 	/// Act as if this path pointed to a file
 	@inlinable public var file: File {
-		.init(at: self)
-	}
-	
-	/// Wether this path points to an existing directory
-	@inlinable public var isDirectory: Bool {
-		DirectoryExists(rawValue)
+		File(rawValue: rawValue)
 	}
 	
 	/// Act as if this path pointed to a directory
 	@inlinable public var directory: Directory {
-		.init(at: self)
+		Directory(rawValue: rawValue)
 	}
-	
+
+	/// Omits the filename from the path, if any
+	@inlinable public var path: Path {
+		Path(rawValue: GetDirectoryPath(rawValue).toString)
+	}
+
 	/// Get the previous directory path
 	@inlinable public var parent: Path {
 		Path(rawValue: GetPrevDirectoryPath(rawValue).toString)
 	}
 
-	/// Adds a component to the path
-	@inlinable public subscript(_ component: String) -> Path {
-		Path(rawValue: "\(rawValue)/\(component)")
-	}
-
-	/// Adds components to the path
-	@inlinable public subscript(_ components: String...) -> Path {
-		self[components.joined(separator: "/")]
-	}
-
-	//MARK: - Properties
+	//MARK: - Components
 
 	/// Get the path's components
 	@inlinable public var components: [Substring] {
 		rawValue.split { $0 == "/" || $0 == "\\" }
 	}
-	
+
 	/// Get the path's last component
 	@inlinable public var last: Substring? {
 		guard let slash = rawValue.lastIndex(where: { $0 == "/" || $0 == "\\" }) else {
@@ -58,7 +47,31 @@ public struct Path: RawRepresentable {
 		}
 		return rawValue[rawValue.index(after: slash)...]
 	}
-	
+
+	public subscript(_ component: some StringProtocol) -> Path {
+		self / component
+	}
+
+	public subscript(_ components: some Collection<some StringProtocol>) -> Path {
+		self / components
+	}
+
+	public static func / (lhs: Path, rhs: some StringProtocol) -> Path {
+		Path(rawValue: "\(lhs.rawValue)/\(rhs)")
+	}
+
+	public static func /= (lhs: inout Path, rhs: some StringProtocol) {
+		lhs.rawValue += "/\(rhs)"
+	}
+
+	public static func / (lhs: Path, rhs: some Collection<some StringProtocol>) -> Path {
+		lhs / rhs.joined(separator: "/")
+	}
+
+	public static func /= (lhs: inout Path, rhs: some Collection<some StringProtocol>) {
+		lhs /= rhs.joined(separator: "/")
+	}
+
 	//MARK: - Operators
 
 	@inlinable public static func + (lhs: Path, rhs: Path) -> Path {
@@ -90,3 +103,17 @@ extension Path: ExpressibleByStringLiteral, ExpressibleByArrayLiteral, LosslessS
 	}
 
 }
+
+//MARK: - Foundation Integration
+
+#if canImport(Foundation)
+import Foundation
+
+extension Path {
+
+	public init(resources bundle: Bundle) {
+		self.init(rawValue: bundle.resourcePath ?? bundle.bundlePath)
+	}
+
+}
+#endif

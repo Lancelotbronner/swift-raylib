@@ -7,11 +7,7 @@
 
 import raylib
 
-//MARK: - Time
-
 public struct Time {
-	
-	//MARK: Computed Properties
 	
 	/// Get time in seconds for last frame drawn
 	@inlinable public static var delta: Float {

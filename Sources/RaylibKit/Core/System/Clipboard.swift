@@ -7,11 +7,7 @@
 
 import raylib
 
-//MARK: - Clipboard
-
 public struct Clipboard {
-	
-	//MARK: Properties
 	
 	/// Get and set clipboard text content
 	@inlinable public static var text: String {

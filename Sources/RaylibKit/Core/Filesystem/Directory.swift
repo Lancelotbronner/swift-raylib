@@ -7,25 +7,42 @@
 
 import raylib
 
-public struct Directory {
-	
-	/// The directory's path
-	public let path: Path
+public struct Directory: RawRepresentable {
+	public let rawValue: String
 
-	public init(at path: Path) {
-		self.path = path
+	public init(rawValue: String) {
+		self.rawValue = rawValue
+	}
+
+	//MARK: - Symbolic Locations
+
+	public static var application: Directory {
+		Path(rawValue: GetApplicationDirectory().toString).directory
+	}
+
+	public static var current: Directory {
+		Path(rawValue: GetWorkingDirectory().toString).directory
 	}
 
 	//MARK: - Filesystem
 
-	/// Check if a directory path exists
+	public init(_ path: Path) {
+		self.init(rawValue: path.rawValue)
+	}
+
+	/// The directory's path
+	public var path: Path {
+		Path(rawValue: rawValue)
+	}
+
+	/// Wether this path points to an existing directory
 	@inlinable public var exists: Bool {
-		path.isDirectory
+		DirectoryExists(rawValue)
 	}
 
 	/// Get previous directory path for a given path
 	@inlinable public var parent: Directory {
-		.init(at: path.parent)
+		path.parent.directory
 	}
 
 	/// Point to a file within the directory
@@ -41,28 +58,9 @@ public struct Directory {
 	//MARK: - Contents
 
 	/// Retrieves the subpaths of this directory
-	@inlinable public var contents: [Path] {
-		// TODO: Maybe make a DirectoryContentIterator for lazy processing
-		// TODO: Make a DirectoryRecursiveContentIterator for recursive iteration
-		let files = LoadDirectoryFiles(path.rawValue)
-
-		guard files.paths.pointee!.pointee != 0 else {
-			return []
-		}
-		
-		let buffer = UnsafeBufferPointer(start: files.paths?.advanced(by: 2), count: files.count.toInt - 2)
-		let result = buffer.compactMap { pointer in
-			pointer.map { path[$0.toString] }
-		}
-		UnloadDirectoryFiles(files)
-		return result
+	@inlinable public var contents: FilePaths {
+		FilePaths(rawValue: LoadDirectoryFiles(path.rawValue))
 	}
-	
-	// TODO: Add method to retrieve contents
-	// - Paths
-	// - Recursive paths
-	// - Files
-	// - Recursive files
 	
 	//MARK: - Working Directory
 
@@ -71,44 +69,26 @@ public struct Directory {
 		ChangeDirectory(path.rawValue)
 		// TODO: Handle error
 	}
-	
-	//MARK: - Functional Methods
 
-	@inlinable public func forEachFiles(do block: (File) throws -> Void) rethrows {
-		try walk(path: { _ in }, file: block, directory: { _ in }, paths: { _ in })
+	@inlinable public func withWorkingDirectory(perform block: () throws -> Void) rethrows {
+		let tmp = GetWorkingDirectory()
+		ChangeDirectory(rawValue)
+		try block()
+		ChangeDirectory(tmp)
 	}
-	
-	@inlinable public func mapFiles<NewValue>(_ transform: (File) -> NewValue) -> [NewValue] {
-		var mapped: [NewValue] = []
-		walk(path: { _ in }, file: { mapped.append(transform($0)) }, directory: { _ in }, paths: { mapped.reserveCapacity(mapped.count + $0.count) })
-		return mapped
-	}
-	
-	//MARK: - Internals
 
-	@usableFromInline func walk(
-		path processPath: (Path) throws -> Void,
-		file processFile: (File) throws -> Void,
-		directory processDirectory: (Directory) throws -> Void,
-		paths processPaths: ([Path]) throws -> Void
-	) rethrows {
-		var paths = contents
-		try processPaths(paths)
-		
-		while !paths.isEmpty {
-			let path = paths.removeLast()
-			try processPath(path)
-			
-			switch true {
-			case path.isFile: try processFile(path.file)
-			case path.isDirectory:
-				try processDirectory(path.directory)
-				let subpaths = path.directory.contents
-				try processPaths(subpaths)
-				paths.append(contentsOf: subpaths)
-			default: continue
-			}
-		}
-	}
-	
 }
+
+//MARK: - Foundation Integration
+
+#if canImport(Foundation)
+import Foundation
+
+extension Directory {
+
+	@inlinable public init(_ path: String, in bundle: Bundle) {
+		self.init(rawValue: Path(resources: bundle)[path].rawValue)
+	}
+
+}
+#endif

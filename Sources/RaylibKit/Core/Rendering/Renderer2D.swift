@@ -5,8 +5,6 @@
 //  Created by Christophe Bronner on 2022-01-12.
 //
 
-import raylib
-
 public struct Renderer2D {
 	
 	private init() { }

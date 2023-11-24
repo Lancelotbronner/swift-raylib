@@ -7,17 +7,20 @@
 
 import raylib
 
-//MARK: - Circle
+public struct Circle: Shape {
 
-public struct Circle {
-	
-	//MARK: Properties
-	
 	public var position: Vector2f
 	public var radius: Float
-	
-	//MARK: Computed Properties
-	
+
+	@inlinable public init(at position: Vector2f, radius: Float) {
+		self.position = position
+		self.radius = radius
+	}
+
+	@inlinable public init(at x: Float, _ y: Float, radius: Float) {
+		self.init(at: Vector2f(x, y), radius: radius)
+	}
+
 	@inlinable public var frame: Rectangle {
 		Rectangle(at: position - radius, size: Vector2f(diameter))
 	}
@@ -42,19 +45,8 @@ public struct Circle {
 		radius * 2
 	}
 	
-	//MARK: Initialization
-	
-	@inlinable public init(at position: Vector2f, radius: Float) {
-		self.position = position
-		self.radius = radius
-	}
-	
-	@inlinable public init(at x: Float, _ y: Float, radius: Float) {
-		self.init(at: Vector2f(x, y), radius: radius)
-	}
-	
-	//MARK: Translation Methods
-	
+	//MARK: - Translation
+
 	@inlinable public mutating func translate(by step: Vector2f) {
 		position += step
 	}
@@ -67,8 +59,8 @@ public struct Circle {
 		translated(by: Vector2f(x, y))
 	}
 	
-	//MARK: Collision Methods
-	
+	//MARK: - Collision
+
 	@inlinable public func contains(_ x: Int, _ y: Int) -> Bool {
 		CheckCollisionPointCircle(Vector2f(x.toFloat, y.toFloat).toRaylib, position.toRaylib, radius)
 	}

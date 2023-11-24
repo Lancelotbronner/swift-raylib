@@ -37,7 +37,7 @@ extension Applet {
 		
 		try app.load()
 		
-		Application.run {
+		Application.main {
 			app.update()
 			app.render()
 			Renderer.frame {

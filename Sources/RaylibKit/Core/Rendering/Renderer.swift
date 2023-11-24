@@ -53,6 +53,7 @@ public struct Renderer {
 		EndDrawing()
 	}
 	
+	/// Draw to render texture
 	@inlinable public static func target(_ texture: RenderTexture, draw: () -> Void) {
 		BeginTextureMode(texture.underlying)
 		draw()
@@ -84,7 +85,7 @@ public struct Renderer {
 	
 	/// BeginShaderMode; EndShaderMode
 	@inlinable public static func shader(_ shader: Shader, draw: () -> Void) {
-		BeginShaderMode(shader.implementation.raylib)
+		BeginShaderMode(shader.rawValue)
 		draw()
 		EndShaderMode()
 	}

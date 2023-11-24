@@ -7,38 +7,60 @@
 
 import raylib
 
-//MARK: - Rectangle
+public struct Rectangle: RawRepresentable {
+	public var rawValue: raylib.Rectangle
 
-public struct Rectangle {
-	
-	//MARK: Properties
-	
-	public var position: Vector2f
-	public var size: Vector2f
-	
-	//MARK: Computed Properties
-	
+	public init(rawValue: raylib.Rectangle) {
+		self.rawValue = rawValue
+	}
+
+	@inlinable public init(at x: Float, _ y: Float, size width: Float, _ height: Float) {
+		self.init(rawValue: raylib.Rectangle(x: x, y: y, width: width, height: height))
+	}
+
+	@inlinable public init(at position: Vector2f, size: Vector2f) {
+		self.init(at: position.x, position.y, size: size.x, size.y)
+	}
+
+	//MARK: - Properties
+
 	@inlinable public var x: Float {
-		get { position.x }
-		set { position.x = newValue }
+		get { rawValue.x }
+		set { rawValue.x = newValue }
 	}
 	
 	@inlinable public var y: Float {
-		get { position.y }
-		set { position.y = newValue }
+		get { rawValue.y }
+		set { rawValue.y = newValue }
 	}
 	
 	@inlinable public var width: Float {
-		get { size.x }
-		set { size.x = newValue }
+		get { rawValue.x }
+		set { rawValue.x = newValue }
 	}
 	
 	@inlinable public var height: Float {
-		get { size.y }
-		set { size.y = newValue }
+		get { rawValue.y }
+		set { rawValue.y = newValue }
 	}
 
-	//MARK: Computed Point Properties
+	@inlinable public var position: Vector2f {
+		get { Vector2f(rawValue.x, rawValue.y) }
+		set {
+			rawValue.x = newValue.x
+			rawValue.y = newValue.y
+		}
+	}
+
+	@inlinable public var size: Vector2f {
+		get { Vector2f(rawValue.width, rawValue.height) }
+		set {
+			rawValue.width = newValue.x
+			rawValue.height = newValue.y
+		}
+	}
+
+	//MARK: - Points
 
 	@usableFromInline var startX: Float { x }
 	@usableFromInline var centerX: Float { x + width / 2 }
@@ -84,25 +106,14 @@ public struct Rectangle {
 		Vector2f(endX, endY)
 	}
 	
-	//MARK: Initialization
-	
-	@inlinable public init(at position: Vector2f, size: Vector2f) {
-		self.position = position
-		self.size = size
-	}
-	
-	@inlinable public init(at x: Float, _ y: Float, size width: Float, _ height: Float) {
-		self.init(at: Vector2f(x, y), size: Vector2f(width, height))
-	}
-	
-	//MARK: Conversion Methods
-	
+	//MARK: - Conversion
+
 	@inlinable public func rounded(to cornerRadius: Float, segments: Int = 0) -> RoundedRectangle {
 		RoundedRectangle(round: self, by: cornerRadius, segments: segments)
 	}
 	
-	//MARK: Translation Methods
-	
+	//MARK: - Translation
+
 	@inlinable public mutating func translate(by step: Vector2f) {
 		position += step
 	}
@@ -111,8 +122,8 @@ public struct Rectangle {
 		Rectangle(at: position + step, size: size)
 	}
 	
-	//MARK: Collision Methods
-	
+	//MARK: - Collision
+
 	@inlinable public func contains(_ x: Float, _ y: Float) -> Bool {
 		CheckCollisionPointRec(Vector2f(x, y).toRaylib, toRaylib)
 	}

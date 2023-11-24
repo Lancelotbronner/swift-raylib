@@ -7,9 +7,6 @@
 
 import raylib
 
-
-//MARK: - System
-
 public struct System {
 	
 	/// Open URL with default system browser (if available)

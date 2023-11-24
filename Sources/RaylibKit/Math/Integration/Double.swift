@@ -5,6 +5,8 @@
 //  Created by Christophe Bronner on 2021-12-26.
 //
 
+import raylib.raymath
+
 #if canImport(Darwin)
 import Darwin
 #elseif canImport(ucrt)

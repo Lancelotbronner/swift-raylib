@@ -7,27 +7,25 @@
 
 import raylib
 
-//MARK: - Application
-
 public struct Application {
-	
-	//MARK: Computed Properties
 	
 	/// Wether the application should keep running
 	@inlinable public static var isRunning: Bool {
 		!WindowShouldClose()
 	}
-	
-	//MARK: Methods
-	
+
+	//MARK: - Configuration
+
 	// TODO: Set config flags
 	// void SetConfigFlags(unsigned int flags);			// Setup init configuration flags (view FLAGS)
-	
+
 	/// Set target FPS (maximum)
 	@inlinable public static func target(fps: Int) {
 		SetTargetFPS(fps.toInt32)
 	}
-	
+
+	//MARK: - Quitting
+
 	/// Quit the application
 	@inlinable public static func quit() {
 		Window.close()
@@ -43,9 +41,9 @@ public struct Application {
 		SetExitKey(KeyboardButton.null.keycode)
 	}
 	
-	//MARK: Lifecycle
+	//MARK: - main
 	
-	@inlinable public static func run(_ step: () -> Void) {
+	@inlinable public static func main(_ step: () -> Void) {
 		while Application.isRunning {
 			step()
 		}

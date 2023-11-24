@@ -60,7 +60,6 @@ public struct Camera2D: RawRepresentable {
 
 	@inlinable public mutating func translate(by delta: Vector2f) {
 		let translation = delta * (-1 / rawValue.zoom)
-		print("translation: \(translation)")
 		rawValue.target.x += translation.x
 		rawValue.target.y += translation.y
 	}
@@ -81,5 +80,12 @@ public struct Camera2D: RawRepresentable {
 	@inlinable public func toWorld(screen position: Vector2f) -> Vector2f {
 		GetScreenToWorld2D(position.toRaylib, rawValue).toSwift
 	}
-	
+
+	//MARK: - Rendering
+
+	/// Shortcut for ``Renderer/camera(_:draw:)-5io6x``
+	@_transparent public func callAsFunction(draw: () -> Void) {
+		Renderer.camera(self, draw: draw)
+	}
+
 }

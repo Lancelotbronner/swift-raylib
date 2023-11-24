@@ -18,6 +18,8 @@ public struct BlendMode: RawRepresentable {
 		self.init(rawValue: blendMode.rawValue)
 	}
 
+	//MARK: - Modes
+
 	/// The default blend mode
 	public static let `default` = alpha
 	
@@ -34,13 +36,22 @@ public struct BlendMode: RawRepresentable {
 	public static let addColors = Self(BLEND_ADD_COLORS)
 
 	/// Blend textures subtracting colors (alternative)
-	public static let subtract = Self(BLEND_SUBTRACT_COLORS)
+	public static let subtractColors = Self(BLEND_SUBTRACT_COLORS)
 
 	/// Blend premultiplied textures considering alpha
-	public static let premultiplied = Self(BLEND_ALPHA_PREMULTIPLY)
+	public static let alphaPremultiply = Self(BLEND_ALPHA_PREMULTIPLY)
+
+	//MARK: - Custom Modes
 
 	/// Blend textures using custom src/dst factors (use rlSetBlendMode())
 	public static let custom = Self(BLEND_CUSTOM)
 	// TODO: Implement custom with rlSetBlendMode()
+
+	//MARK: - Rendering
+
+	/// Shortcut for ``Renderer/blend(_:draw:)``.
+	@_transparent public func callAsFunction(_ draw: () -> Void) {
+		Renderer.blend(self, draw: draw)
+	}
 
 }

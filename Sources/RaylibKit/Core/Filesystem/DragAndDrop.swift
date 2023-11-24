@@ -9,7 +9,7 @@ import raylib
 
 public struct DragAndDrop {
 
-	@usableFromInline static var _paths = DroppedPathCollection(underlying: FilePathList())
+	@usableFromInline static var _paths = FilePaths(rawValue: FilePathList())
 
 	/// Check if a file has been dropped into window
 	@inlinable public static var isDropped: Bool {
@@ -17,89 +17,22 @@ public struct DragAndDrop {
 	}
 
 	/// Get currently loaded filepaths
-	@inlinable public static var paths: DroppedPathCollection {
+	@inlinable public static var paths: FilePaths {
 		_paths
 	}
 
 	/// Load newly dropped filepaths
 	@inlinable public static func refresh() {
-		_paths.refresh()
+		guard isDropped else { return }
+		clear()
+		_paths.rawValue = LoadDroppedFiles()
 	}
 
 	/// Unload dropped filepaths
 	@inlinable public static func clear() {
-		_paths.clear()
-	}
-	
-}
-
-//MARK: - Dropped Paths Collection
-
-public final class DroppedPathCollection: Collection {
-
-	public typealias Element = Path
-	public typealias Index = Int
-
-	//MARK: Properties
-
-	@usableFromInline var underlying: FilePathList
-
-	//MARK: Initialization
-
-	@inlinable public init(underlying paths: FilePathList) {
-		underlying = paths
-	}
-
-	deinit {
-		clear()
-	}
-
-	//MARK: Computed Properties
-
-	@inlinable public var capacity: Int {
-		underlying.capacity.toInt
-	}
-
-	//MARK: Content Methods
-
-	@usableFromInline internal func refresh() {
-		guard DragAndDrop.isDropped else { return }
-		clear()
-		underlying = LoadDroppedFiles()
-	}
-
-	@usableFromInline internal func clear() {
-		if underlying.paths != nil {
-			UnloadDroppedFiles(underlying)
+		if _paths.rawValue.paths != nil {
+			UnloadDroppedFiles(_paths.rawValue)
 		}
 	}
 
-	//MARK: Collection Conformance
-
-	public var startIndex: Int {
-		0
-	}
-
-	public var endIndex: Int {
-		underlying.count.toInt
-	}
-
-	public var count: Int {
-		underlying.count.toInt
-	}
-
-	public subscript(position: Int) -> Path {
-		get {
-			precondition(position >= 0 && position < underlying.count, "Index out of range")
-			let element = underlying.paths[position]
-			precondition(element != nil, "Uninitialized path within PathCollection's range, contact the developer")
-			return Path(rawValue: element!.toString)
-		}
-	}
-
-	public func index(after i: Int) -> Int {
-		i + 1
-	}
-
 }
-

@@ -37,7 +37,7 @@ public struct Mouse {
 
 	public static let side = MouseButton(MOUSE_BUTTON_SIDE)
 	public static let extra = MouseButton(MOUSE_BUTTON_EXTRA)
-	public static let backward = MouseButton(MOUSE_BUTTON_BACK)
+	public static let back = MouseButton(MOUSE_BUTTON_BACK)
 	public static let forward = MouseButton(MOUSE_BUTTON_FORWARD)
 
 	//MARK: - Scroll Wheel
