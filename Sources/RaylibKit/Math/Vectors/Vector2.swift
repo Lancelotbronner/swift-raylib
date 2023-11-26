@@ -110,7 +110,7 @@ extension Vector2 where Scalar: TrigonometryFunctions {
 		var result = Angle.radians(Scalar.atan2(other.y - y, other.x - x))
 		
 		if result < .zero {
-			result += .unit(1)
+			result += .radians(2 * Scalar.pi)
 		}
 		
 		return result

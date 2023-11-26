@@ -7,8 +7,8 @@
 
 extension BinaryInteger {
 	
-	//MARK: Integer Conversions
-	
+	//MARK: - Integer Conversions
+
 	@_transparent public var toInt: Int {
 		numericCast(self)
 	}
@@ -33,7 +33,7 @@ extension BinaryInteger {
 		numericCast(self)
 	}
 	
-	//MARK: Floating Point Conversions
+	//MARK: - Floating Point
 	
 	@_transparent public var toFloat: Float {
 		.init(self)

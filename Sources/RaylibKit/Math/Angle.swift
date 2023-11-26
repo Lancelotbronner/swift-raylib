@@ -17,7 +17,7 @@ public enum Angle<Scalar: FloatingPoint & TrigonometryFunctions>: Comparable {
 	case zero
 
 	/// Causes a full rotation
-	case unit(Scalar)
+	case turns(Scalar)
 
 	/// Degrees
 	case degrees(Scalar)
@@ -30,7 +30,7 @@ public enum Angle<Scalar: FloatingPoint & TrigonometryFunctions>: Comparable {
 	@_transparent public var toDegrees: Scalar {
 		switch self {
 		case .zero: return 0
-		case let .unit(times): return 360 * times
+		case let .turns(times): return 360 * times
 		case let .degrees(angle): return angle
 		case let .radians(angle): return angle * 180 / .pi
 		}
@@ -39,7 +39,7 @@ public enum Angle<Scalar: FloatingPoint & TrigonometryFunctions>: Comparable {
 	@_transparent public var toRadians: Scalar {
 		switch self {
 		case .zero: return 0
-		case let .unit(times): return .pi * 2 * times
+		case let .turns(times): return .pi * 2 * times
 		case let .degrees(angle): return angle * .pi / 180
 		case let .radians(angle): return angle
 		}

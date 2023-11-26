@@ -90,5 +90,9 @@ extension Directory {
 		self.init(rawValue: Path(resources: bundle)[path].rawValue)
 	}
 
+	@inlinable public init(_ path: Path, in bundle: Bundle) {
+		self.init(rawValue: Path(resources: bundle)[path].rawValue)
+	}
+
 }
 #endif

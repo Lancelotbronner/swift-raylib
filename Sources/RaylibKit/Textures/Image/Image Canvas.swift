@@ -7,38 +7,29 @@
 
 import raylib
 
-//MARK: - Image Canvas
-
 public struct Canvas {
-	
-	//MARK: Properties
-	
-	@usableFromInline var underlying: UnsafeMutablePointer<raylib.Image>
-	
-	//MARK: Computed Properties
-	
+	public let rawValue: UnsafeMutablePointer<raylib.Image>
+
+	public init(rawValue: UnsafeMutablePointer<raylib.Image>) {
+		self.rawValue = rawValue
+	}
+
 	@inlinable public var wire: WireCanvas {
-		WireCanvas(to: underlying)
+		WireCanvas(rawValue: rawValue)
 	}
 	
-	//MARK: Initialization
-	
-	@usableFromInline init(to image: UnsafeMutablePointer<raylib.Image>) {
-		underlying = image
-	}
-	
-	//MARK: Canvas Methods
-	
+	//MARK: - Whole Canvas
+
 	/// Clear image background with given color
 	@inlinable public mutating func clear(to color: Color = Renderer.color) {
-		ImageClearBackground(underlying, color.toRaylib)
+		ImageClearBackground(rawValue, color.rawValue)
 	}
 	
-	//MARK: Pixel Methods
-	
+	//MARK: - Pixel
+
 	/// Draw pixel within an image
 	@inlinable public mutating func pixel(at x: Int, _ y: Int, color: Color = Renderer.color) {
-		ImageDrawPixel(underlying, x.toInt32, y.toInt32, color.toRaylib)
+		ImageDrawPixel(rawValue, x.toInt32, y.toInt32, color.rawValue)
 	}
 	
 	/// Draw pixel within an image (Vector version)
@@ -46,11 +37,11 @@ public struct Canvas {
 		pixel(at: position.x, position.y, color: color)
 	}
 	
-	//MARK: Line Methods
-	
+	//MARK: - Lines
+
 	/// Draw line within an image
 	@inlinable public mutating func line(from sx: Int, _ sy: Int, to ex: Int, _ ey: Int, color: Color = Renderer.color) {
-		ImageDrawLine(underlying, sx.toInt32, sy.toInt32, ex.toInt32, ey.toInt32, color.toRaylib)
+		ImageDrawLine(rawValue, sx.toInt32, sy.toInt32, ex.toInt32, ey.toInt32, color.rawValue)
 	}
 	
 	/// Draw line within an image (Vector version)
@@ -58,11 +49,11 @@ public struct Canvas {
 		line(from: start.x, start.y, to: start.x, start.y, color: color)
 	}
 	
-	//MARK: Circle Methods
-	
+	//MARK: - Circle
+
 	/// Draw circle within an image
 	@inlinable public mutating func circle(at x: Int, _ y: Int, radius: Int, color: Color = Renderer.color) {
-		ImageDrawCircle(underlying, x.toInt32, y.toInt32, radius.toInt32, color.toRaylib)
+		ImageDrawCircle(rawValue, x.toInt32, y.toInt32, radius.toInt32, color.rawValue)
 	}
 	
 	/// Draw circle within an image (Vector version)
@@ -75,11 +66,11 @@ public struct Canvas {
 		circle(at: shape.position.toInt, radius: shape.radius.toInt, color: color)
 	}
 	
-	//MARK: Rectangle Methods
-	
+	//MARK: - Rectangle
+
 	/// Draw rectangle within an image
 	@inlinable public mutating func rectangle(at x: Int, _ y: Int, size width: Int, _ height: Int, color: Color = Renderer.color) {
-		ImageDrawRectangle(underlying, x.toInt32, y.toInt32, width.toInt32, height.toInt32, color.toRaylib)
+		ImageDrawRectangle(rawValue, x.toInt32, y.toInt32, width.toInt32, height.toInt32, color.rawValue)
 	}
 	
 	/// Draw rectangle within an image (Vector version)
@@ -92,23 +83,23 @@ public struct Canvas {
 		rectangle(at: shape.position.toInt, size: shape.size.toInt, color: color)
 	}
 	
-	//MARK: Image Methods
-	
+	//MARK: - Image
+
 	/// Draw a source image within a destination image
 	@inlinable public mutating func image(from source: Rectangle, of other: Image, to destination: Rectangle, tint: Color = Renderer.tint) {
-		ImageDraw(underlying, other.toRaylib, source.toRaylib, destination.toRaylib, tint.toRaylib)
+		ImageDraw(rawValue, other.rawValue, source.rawValue, destination.rawValue, tint.rawValue)
 	}
 	
-	//MARK: Text Methods
-	
+	//MARK: - Text
+
 	/// Draw text within an image
-	@inlinable public mutating func text(_ string: String, at x: Int, _ y: Int, size: Int = Renderer.pointSize, color: Color = Renderer.textColor) {
-		ImageDrawText(underlying, string, x.toInt32, y.toInt32, size.toInt32, color.toRaylib)
+	@inlinable public mutating func text(_ string: String, at x: Int, _ y: Int, size: Float = Renderer.pointSize, color: Color = Renderer.textColor) {
+		ImageDrawText(rawValue, string, x.toInt32, y.toInt32, size.toInt32, color.rawValue)
 	}
 	
 	/// Draw text within an image
-	@inlinable public mutating func text(_ string: String, at x: Int, _ y: Int, size: Int = Renderer.pointSize, spacing: Int, using font: Font, color: Color = Renderer.textColor) {
-		ImageDrawTextEx(underlying, font.toRaylib, string, Vector2f(x.toFloat, y.toFloat).toRaylib, size.toFloat, spacing.toFloat, color.toRaylib)
+	@inlinable public mutating func text(_ string: String, at x: Int, _ y: Int, size: Float = Renderer.pointSize, spacing: Float, using font: Font, color: Color = Renderer.textColor) {
+		ImageDrawTextEx(rawValue, font.rawValue, string, Vector2f(x.toFloat, y.toFloat).toRaylib, size, spacing, color.rawValue)
 	}
 	
 }

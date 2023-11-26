@@ -10,9 +10,9 @@ public enum Axis {
 	case vertical
 }
 
-public enum Rotation {
-	public static let clockwise = Rotation.right
-	public static let counterClockwise = Rotation.left
+public enum RotationDirection {
+	public static let clockwise = RotationDirection.right
+	public static let counterClockwise = RotationDirection.left
 
 	case left
 	case right

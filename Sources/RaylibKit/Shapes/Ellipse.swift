@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2021-09-06.
 //
 
-public struct Ellipse {
+public struct Ellipse: Shape {
 	
 	public var position: Vector2f
 	public var radius: Vector2f

@@ -7,12 +7,10 @@
 
 import raylib
 
-//MARK: - Trace
-
 public struct Trace {
 	
-	//MARK: Logging Methods
-	
+	//MARK: - Log
+
 	/// Log a message of the specified level
 	@inlinable public static func log(_ level: TraceLevel, _ message: String) {
 		// TraceLog(level.rawValue.toInt32, message)
@@ -50,8 +48,8 @@ public struct Trace {
 		log(.fatal, message)
 	}
 	
-	//MARK: Configuration Methods
-	
+	//MARK: - Configuration
+
 	/// Set the current threshold (minimum) log level
 	@inlinable public static func configure(threshold level: TraceLevel) {
 		SetTraceLogLevel(level.rawValue.toInt32)
@@ -62,12 +60,13 @@ public struct Trace {
 	
 }
 
-//MARK: - Trace Level
-
 public struct TraceLevel: RawRepresentable, Comparable {
-	
-	//MARK: Constants
-	
+	public let rawValue: UInt32
+
+	@inlinable public init(rawValue: UInt32) {
+		self.rawValue = rawValue
+	}
+
 	/// Disables logging
 	public static let none = TraceLevel(rawValue: LOG_NONE.rawValue)
 	
@@ -92,17 +91,7 @@ public struct TraceLevel: RawRepresentable, Comparable {
 	/// Displays all logs
 	public static let all = TraceLevel(rawValue: LOG_ALL.rawValue)
 	
-	//MARK: Properties
-	
-	public var rawValue: UInt32
-	
-	//MARK: Initialization
-	
-	@inlinable public init(rawValue: UInt32) {
-		self.rawValue = rawValue
-	}
-	
-	//MARK: Operators
+	//MARK: - Operators
 	
 	public static func < (lhs: TraceLevel, rhs: TraceLevel) -> Bool {
 		lhs.rawValue < rhs.rawValue

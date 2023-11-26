@@ -5,8 +5,6 @@
 //  Created by Christophe Bronner on 2021-09-04.
 //
 
-//MARK: - Collection
-
 extension Collection where Index == Int {
 	
 	@inlinable public func cycle(after i: Index) -> Index {
@@ -23,8 +21,6 @@ extension BidirectionalCollection where Index == Int {
 	}
 	
 }
-
-//MARK: - Array
 
 extension Array {
 	

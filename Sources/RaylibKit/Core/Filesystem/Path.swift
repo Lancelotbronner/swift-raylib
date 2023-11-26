@@ -56,6 +56,10 @@ public struct Path: RawRepresentable {
 		self / components
 	}
 
+	public subscript(_ component: Path) -> Path {
+		self / path
+	}
+
 	public static func / (lhs: Path, rhs: some StringProtocol) -> Path {
 		Path(rawValue: "\(lhs.rawValue)/\(rhs)")
 	}
@@ -70,6 +74,14 @@ public struct Path: RawRepresentable {
 
 	public static func /= (lhs: inout Path, rhs: some Collection<some StringProtocol>) {
 		lhs /= rhs.joined(separator: "/")
+	}
+
+	public static func / (lhs: Path, rhs: Path) -> Path {
+		lhs / rhs.rawValue
+	}
+
+	public static func /= (lhs: inout Path, rhs: Path) {
+		lhs /= rhs.rawValue
 	}
 
 	//MARK: - Operators

@@ -7,50 +7,57 @@
 
 import raylib
 
-//MARK: - Color
+public struct Color: RawRepresentable {
+	public var rawValue: raylib.Color
 
-public struct Color {
-	
-	//MARK: Constants
-	
+	public init(rawValue: raylib.Color) {
+		self.rawValue = rawValue
+	}
+
+	//MARK: - Initialization
+
+	@inlinable public static func rgba(_ value: UInt32) -> Color {
+		self.init(rawValue: GetColor(value))
+	}
+
+	@inlinable public static func rgb(_ r: UInt8, _ g: UInt8, _ b: UInt8, a: UInt8 = .max) -> Color {
+		self.init(rawValue: raylib.Color(r: r, g: g, b: b, a: a))
+	}
+
 	@inlinable public static var random: Color {
 		.rgba(UInt32.random(in: 0 ..< 0xFFFFFF))
 	}
 	
-	//MARK: Properties
-	
-	public var red: UInt8
-	public var green: UInt8
-	public var blue: UInt8
-	public var alpha: UInt8
-	
-	//MARK: Computed Properties
-	
+	//MARK: - Properties
+
 	@inlinable public var value: UInt32 {
-		ColorToInt(toRaylib).toUInt32
+		ColorToInt(rawValue).toUInt32
+	}
+
+	public var r: UInt8 {
+		get { rawValue.r }
+		set { rawValue.g = newValue }
+	}
+
+	public var g: UInt8 {
+		get { rawValue.g }
+		set { rawValue.g = newValue }
+	}
+
+	public var b: UInt8 {
+		get { rawValue.b }
+		set { rawValue.b = newValue }
+	}
+
+	public var a: UInt8 {
+		get { rawValue.a }
+		set { rawValue.a = newValue }
 	}
 	
-	//MARK: Initialization
-	
-	@usableFromInline init(_ r: UInt8, _ g: UInt8, _ b: UInt8, _ a: UInt8) {
-		red = r
-		green = g
-		blue = b
-		alpha = a
-	}
-	
-	@inlinable public static func rgba(_ value: UInt32) -> Color {
-		GetColor(value).toSwift
-	}
-	
-	@inlinable public static func rgb(_ r: UInt8, _ g: UInt8, _ b: UInt8, a: UInt8 = .max) -> Color {
-		Color(r, g, b, a)
-	}
-	
-	//MARK: Methods
-	
+	//MARK: - Fade
+
 	@inlinable public func faded(to alpha: Float) -> Color {
-		Fade(toRaylib, alpha).toSwift
+		Color(rawValue: Fade(rawValue, alpha))
 	}
 	
 	@inlinable public mutating func fade(to alpha: Float) {
@@ -59,54 +66,36 @@ public struct Color {
 	
 }
 
-//MARK: - Palette
+//MARK: - Color Palette
 
 extension Color {
 	
-	@inlinable public static var lightGray: Color { .rgb(200, 200, 200) }
-	@inlinable public static var gray: Color { .rgb(130, 130, 130) }
-	@inlinable public static var darkGray: Color { .rgb(80, 80, 80) }
-	@inlinable public static var yellow: Color { .rgb(253, 249, 0) }
-	@inlinable public static var gold: Color { .rgb(253, 203, 0) }
-	@inlinable public static var orange: Color { .rgb(255, 161, 0) }
-	@inlinable public static var pink: Color { .rgb(255, 109, 194) }
-	@inlinable public static var red: Color { .rgb(230, 41, 55) }
-	@inlinable public static var maroon: Color { .rgb(190, 33, 55) }
-	@inlinable public static var green: Color { .rgb(0, 228, 48) }
-	@inlinable public static var lime: Color { .rgb(0, 158, 47) }
-	@inlinable public static var darkGreen: Color { .rgb(0, 117, 44) }
-	@inlinable public static var skyBlue: Color { .rgb(102, 191, 255) }
-	@inlinable public static var blue: Color { .rgb(0, 121, 241) }
-	@inlinable public static var darkBlue: Color { .rgb(0, 82, 172) }
-	@inlinable public static var purple: Color { .rgb(200, 122, 255) }
-	@inlinable public static var violet: Color { .rgb(135, 60, 190) }
-	@inlinable public static var darkPurple: Color { .rgb(112, 31, 126) }
-	@inlinable public static var beige: Color { .rgb(211, 176, 131) }
-	@inlinable public static var brown: Color { .rgb(127, 106, 79) }
-	@inlinable public static var darkBrown: Color { .rgb(76, 63, 47) }
+	public static let lightGray = Color.rgb(200, 200, 200)
+	public static let gray = Color.rgb(130, 130, 130)
+	public static let darkGray = Color.rgb(80, 80, 80)
+	public static let yellow = Color.rgb(253, 249, 0)
+	public static let gold = Color.rgb(253, 203, 0)
+	public static let orange = Color.rgb(255, 161, 0)
+	public static let pink = Color.rgb(255, 109, 194)
+	public static let red = Color.rgb(230, 41, 55)
+	public static let maroon = Color.rgb(190, 33, 55)
+	public static let green = Color.rgb(0, 228, 48)
+	public static let lime = Color.rgb(0, 158, 47)
+	public static let darkGreen = Color.rgb(0, 117, 44)
+	public static let skyBlue = Color.rgb(102, 191, 255)
+	public static let blue = Color.rgb(0, 121, 241)
+	public static let darkBlue = Color.rgb(0, 82, 172)
+	public static let purple = Color.rgb(200, 122, 255)
+	public static let violet = Color.rgb(135, 60, 190)
+	public static let darkPurple = Color.rgb(112, 31, 126)
+	public static let beige = Color.rgb(211, 176, 131)
+	public static let brown = Color.rgb(127, 106, 79)
+	public static let darkBrown = Color.rgb(76, 63, 47)
 
-	@inlinable public static var white: Color { .rgb(255, 255, 255) }
-	@inlinable public static var black: Color { .rgb(0, 0, 0) }
-	@inlinable public static var clear: Color { .rgb(0, 0, 0) }
-	@inlinable public static var magenta: Color { .rgb(255, 0, 255) }
-	@inlinable public static var raywhite: Color { .rgb(245, 245, 245) }
-	
-}
-
-//MARK: - Raylib Integration
-
-extension raylib.Color {
-	
-	@inlinable public var toSwift: Color {
-		Color.rgb(r, g, b, a: a)
-	}
-	
-}
-
-extension Color {
-	
-	@inlinable public var toRaylib: raylib.Color {
-		raylib.Color(r: red, g: green, b: blue, a: alpha)
-	}
+	public static let white = Color.rgb(255, 255, 255)
+	public static let black = Color.rgb(0, 0, 0)
+	public static let clear = Color.rgb(0, 0, 0)
+	public static let magenta = Color.rgb(255, 0, 255)
+	public static let raywhite = Color.rgb(245, 245, 245)
 	
 }

@@ -5,12 +5,10 @@
 //  Created by Christophe Bronner on 2021-09-01.
 //
 
-//MARK: - Binary Representation
-
 extension BinaryFloatingPoint {
 	
-	//MARK: Floating Point Conversions
-	
+	//MARK: - Floating Point
+
 	@_transparent public var toFloat: Float {
 		.init(self)
 	}
@@ -19,8 +17,8 @@ extension BinaryFloatingPoint {
 		.init(self)
 	}
 	
-	//MARK: Integer Conversions
-	
+	//MARK: - Integer
+
 	@_transparent public var toInt: Int {
 		.init(self)
 	}

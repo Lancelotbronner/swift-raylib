@@ -7,7 +7,7 @@
 
 import raylib
 
-public struct Rectangle: RawRepresentable {
+public struct Rectangle: RawRepresentable, Shape {
 	public var rawValue: raylib.Rectangle
 
 	public init(rawValue: raylib.Rectangle) {
@@ -60,6 +60,10 @@ public struct Rectangle: RawRepresentable {
 		}
 	}
 
+	@inlinable public var frame: Rectangle {
+		self
+	}
+
 	//MARK: - Points
 
 	@usableFromInline var startX: Float { x }
@@ -108,7 +112,7 @@ public struct Rectangle: RawRepresentable {
 	
 	//MARK: - Conversion
 
-	@inlinable public func rounded(to cornerRadius: Float, segments: Int = 0) -> RoundedRectangle {
+	@inlinable public func rounded(cornerRadius: Float, segments: Int = 0) -> RoundedRectangle {
 		RoundedRectangle(round: self, by: cornerRadius, segments: segments)
 	}
 	
@@ -125,41 +129,23 @@ public struct Rectangle: RawRepresentable {
 	//MARK: - Collision
 
 	@inlinable public func contains(_ x: Float, _ y: Float) -> Bool {
-		CheckCollisionPointRec(Vector2f(x, y).toRaylib, toRaylib)
+		CheckCollisionPointRec(Vector2f(x, y).toRaylib, rawValue)
 	}
 	
 	@inlinable public func contains(_ point: Vector2f) -> Bool {
-		CheckCollisionPointRec(point.toRaylib, toRaylib)
+		CheckCollisionPointRec(point.toRaylib, rawValue)
 	}
 	
 	@inlinable public func collided(with other: Rectangle) -> Bool {
-		CheckCollisionRecs(toRaylib, other.toRaylib)
+		CheckCollisionRecs(rawValue, other.rawValue)
 	}
 	
 	@inlinable public func collided(with other: Circle) -> Bool {
-		CheckCollisionCircleRec(other.position.toRaylib, other.radius, toRaylib)
+		CheckCollisionCircleRec(other.position.toRaylib, other.radius, rawValue)
 	}
 	
 	@inlinable public func collision(with other: Rectangle) -> Rectangle {
-		GetCollisionRec(toRaylib, other.toRaylib).toSwift
-	}
-	
-}
-
-//MARK: - Raylib Integration
-
-extension Rectangle {
-	
-	@_transparent public var toRaylib: raylib.Rectangle {
-		raylib.Rectangle(x: x, y: y, width: width, height: height)
-	}
-	
-}
-
-extension raylib.Rectangle {
-	
-	@_transparent public var toSwift: Rectangle {
-		Rectangle(at: x, y, size: width, height)
+		Rectangle(rawValue: GetCollisionRec(rawValue, other.rawValue))
 	}
 	
 }

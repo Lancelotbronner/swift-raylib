@@ -7,58 +7,35 @@
 
 import raylib
 
-//MARK: - Render Texture
+public final class RenderTexture: RawRepresentable {
+	public var rawValue: raylib.RenderTexture
 
-public final class RenderTexture {
-	
-	//MARK: Properties
-	
-	@usableFromInline var underlying: raylib.RenderTexture
-	
-	//MARK: Computed Properties
-	
-	@inlinable public var depth: Texture {
-		underlying.depth.toUnmanaged
+	public init(rawValue: raylib.RenderTexture) {
+		self.rawValue = rawValue
+	}
+
+	deinit {
+		UnloadRenderTexture(rawValue)
+	}
+
+	//MARK: - Properties
+
+	@inlinable public var depth: some Texture {
+		UnmanagedTexture(rawValue: rawValue.depth)
 	}
 	
-	@inlinable public var texture: Texture {
-		underlying.texture.toUnmanaged
+	@inlinable public var texture: some Texture {
+		UnmanagedTexture(rawValue: rawValue.texture)
 	}
 	
-	//MARK: Initialization
-	
+	//MARK: - Initialization
+
 	@inlinable public convenience init(size width: Int, by height: Int) {
-		self.init(underlying: LoadRenderTexture(width.toInt32, height.toInt32))
+		self.init(rawValue: LoadRenderTexture(width.toInt32, height.toInt32))
 	}
 	
 	@inlinable public convenience init(size: Vector2f) {
-		self.init(underlying: LoadRenderTexture(size.x.toInt32, size.y.toInt32))
+		self.init(rawValue: LoadRenderTexture(size.x.toInt32, size.y.toInt32))
 	}
 	
-	@inlinable public init(underlying texture: raylib.RenderTexture) {
-		underlying = texture
-	}
-	
-	deinit {
-		UnloadRenderTexture(underlying)
-	}
-	
-}
-
-//MARK: - Raylib Integration
-
-extension raylib.RenderTexture {
-
-	@_transparent public var toSwift: RenderTexture {
-		RenderTexture(underlying: self)
-	}
-
-}
-
-extension RenderTexture {
-
-	@_transparent public var toRaylib: raylib.RenderTexture {
-		underlying
-	}
-
 }

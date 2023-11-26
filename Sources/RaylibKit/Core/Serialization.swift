@@ -7,12 +7,10 @@
 
 import raylib
 
-//MARK: - Serialization
-
 public struct Serialization {
-	
-	//MARK: Methods
-	
+
+	//MARK: - Compression
+
 	/// Compress data (DEFLATE algorithm)
 	@inlinable public static func compress(_ data: UnsafeBufferPointer<UInt8>) -> UnsafeBufferPointer<UInt8> {
 		var length: Int32 = 0
@@ -26,7 +24,9 @@ public struct Serialization {
 		let pointer = DecompressData(data.baseAddress, data.count.toInt32, &length)
 		return .init(start: pointer, count: length.toInt)
 	}
-	
+
+	//MARK: - Encoding
+
 	/// Encode data to Base64 string
 	@inlinable public static func encode(_ data: UnsafeBufferPointer<UInt8>) -> String {
 		var length: Int32 = 0

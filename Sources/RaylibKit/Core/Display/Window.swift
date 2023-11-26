@@ -89,7 +89,7 @@ public struct Window {
 
 	/// Set icon for window
 	@inlinable public static func icon(_ image: Image) {
-		SetWindowIcon(image.underlying)
+		SetWindowIcon(image.rawValue)
 	}
 
 	//MARK: - Frame

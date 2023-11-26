@@ -7,7 +7,7 @@
 
 extension OptionSet {
 	
-	//MARK: Operators
+	//MARK: - Operators
 	
 	public static func |(lhs: Self, rhs: Self) -> Self {
 		lhs.union(rhs)

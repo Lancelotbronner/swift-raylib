@@ -105,12 +105,14 @@ public final class Music {
 	
 }
 
-//MARK: - Raylib Integration
+//MARK: - Filesystem Integration
 
-extension raylib.Music {
+extension File {
 
-	@_transparent public var toSwift: Music {
-		Music(rawValue: self)
+	/// Load file as image
+	@inlinable public func loadAsMusic() -> Music {
+		// TODO: Error handling
+		Music(rawValue: LoadMusicStream(path.rawValue))
 	}
 
 }

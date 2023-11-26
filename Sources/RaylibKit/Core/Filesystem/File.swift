@@ -83,32 +83,10 @@ public struct File: RawRepresentable {
 		return pointer.toString
 	}
 	
-	/// Load file as image
-	@inlinable public func loadAsImage() -> Image {
-		LoadImage(path.rawValue).toSwift
-	}
-	
-	/// Load raw file data as image
-	@inlinable public func loadAsRawImage(size width: Int, by height: Int, format: PixelFormat, offset: Int) -> Image {
-		LoadImageRaw(path.rawValue, width.toInt32, height.toInt32, format.toRaylib.toInt32, offset.toInt32).toSwift
-	}
-	
-	/// Load file as animation
-	@inlinable public func loadAsAnimation(frames: Int) -> Image {
-		var frames = frames.toInt32
-		return LoadImageAnim(path.rawValue, &frames).toSwift
-	}
-	
 	/// Load file as texture
-	@inlinable public func loadAsTexture() -> Texture {
+	@inlinable public func loadAsTexture() -> some Texture {
 		// TODO: Error handling
-		LoadTexture(path.rawValue).toManaged
-	}
-
-	/// Load file as image
-	@inlinable public func loadAsMusic() -> Music {
-		// TODO: Error handling
-		LoadMusicStream(path.rawValue).toSwift
+		ManagedTexture(rawValue: LoadTexture(path.rawValue))
 	}
 
 	//MARK: - Writing
@@ -131,11 +109,6 @@ public struct File: RawRepresentable {
 	@inlinable public func writeBytes(_ value: UnsafeBufferPointer<UInt8>) {
 		writeBytes(UnsafeMutableBufferPointer(mutating: value))
 	}
-
-	@inlinable public func writeImage(_ value: Image) {
-		// TODO: Error Handling
-		ExportImage(value.toRaylib, path.rawValue)
-	}
 	
 }
 
@@ -147,6 +120,10 @@ import Foundation
 extension File {
 
 	@inlinable public init(_ path: String, in bundle: Bundle) {
+		self.init(rawValue: Path(resources: bundle)[path].rawValue)
+	}
+
+	@inlinable public init(_ path: Path, in bundle: Bundle) {
 		self.init(rawValue: Path(resources: bundle)[path].rawValue)
 	}
 

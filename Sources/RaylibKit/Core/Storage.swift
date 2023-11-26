@@ -5,8 +5,6 @@
 //  Created by Christophe Bronner on 2021-09-02.
 //
 
-//MARK: - Storage
-
 public struct Storage {
 	
 	// TODO: Implement persistent storage

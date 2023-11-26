@@ -21,7 +21,7 @@ public struct Renderer {
 	public static var tint = Color.white
 	
 	/// Default text size
-	public static var pointSize = 20
+	public static var pointSize: Float = 20
 	
 	/// Default text color
 	public static var textColor = Color.black
@@ -36,7 +36,7 @@ public struct Renderer {
 
 	/// Set background color (framebuffer clear color)
 	@inlinable public static func clear(to color: Color) {
-		ClearBackground(color.toRaylib)
+		ClearBackground(color.rawValue)
 	}
 
 	/// Clears using the color set in``background``
@@ -55,7 +55,7 @@ public struct Renderer {
 	
 	/// Draw to render texture
 	@inlinable public static func target(_ texture: RenderTexture, draw: () -> Void) {
-		BeginTextureMode(texture.underlying)
+		BeginTextureMode(texture.rawValue)
 		draw()
 		EndTextureMode()
 	}

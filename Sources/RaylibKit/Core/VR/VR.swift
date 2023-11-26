@@ -7,11 +7,7 @@
 
 import raylib
 
-//MARK: - VR
-
 public struct VR {
-	
-	//MARK: Methods
 	
 	// TODO: Implement rendering
 	// void BeginVrStereoMode(VrStereoConfig config);

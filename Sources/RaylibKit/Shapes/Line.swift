@@ -7,15 +7,16 @@
 
 import raylib
 
-//MARK: - Line
-
-public struct Line {
-	
-	//MARK: Properties
+public struct Line: Shape {
 	
 	public var start: Vector2f
 	public var end: Vector2f
 	
+	public init(from start: Vector2f, to end: Vector2f) {
+		self.start = start
+		self.end = end
+	}
+
 	@inlinable public var frame: Rectangle {
 		let minX = min(start.x, end.x)
 		let maxX = max(start.x, end.x)
@@ -23,14 +24,7 @@ public struct Line {
 		let maxY = max(start.y, end.y)
 		return Rectangle(at: minX, minY, size: maxX - minX, maxY - minY)
 	}
-	
-	//MARK: Initialization
-	
-	public init(from start: Vector2f, to end: Vector2f) {
-		self.start = start
-		self.end = end
-	}
-	
+
 	//MARK: Collision Methods
 	
 	@inlinable public func collision(with other: Line) -> Vector2f? {

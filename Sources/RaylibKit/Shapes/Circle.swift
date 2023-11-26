@@ -8,7 +8,7 @@
 import raylib
 
 public struct Circle: Shape {
-
+	
 	public var position: Vector2f
 	public var radius: Float
 
@@ -70,7 +70,7 @@ public struct Circle: Shape {
 	}
 	
 	@inlinable public func collided(with other: Rectangle) -> Bool {
-		CheckCollisionCircleRec(position.toRaylib, radius, other.toRaylib)
+		CheckCollisionCircleRec(position.toRaylib, radius, other.rawValue)
 	}
 	
 	@inlinable public func collided(with other: Circle) -> Bool {

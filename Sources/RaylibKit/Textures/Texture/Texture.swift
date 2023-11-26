@@ -7,71 +7,45 @@
 
 import raylib
 
-//MARK: - Texture
-
-public protocol Texture {
-	
-	var toRaylib: raylib.Texture { get }
-	
-}
-
 extension Texture {
-	
-	//MARK: Computed Properties
-	
+
+	//MARK: - Properties
+
 	@inlinable public var width: Int {
-		toRaylib.width.toInt
+		rawValue.width.toInt
 	}
 	
 	@inlinable public var height: Int {
-		toRaylib.height.toInt
+		rawValue.height.toInt
 	}
 	
 	@inlinable public var size: Vector2f {
-		Vector2f(toRaylib.width.toFloat, toRaylib.height.toFloat)
+		Vector2f(rawValue.width.toFloat, rawValue.height.toFloat)
 	}
 	
-	//MARK: Methods
-	
+	//MARK: - Attributes
+
 	@inlinable public func filter(using algorithm: TextureFilter) {
-		SetTextureFilter(toRaylib, algorithm.toRaylib.toInt32)
+		SetTextureFilter(rawValue, algorithm.rawValue)
 	}
 	
 	@inlinable public func wrap(using algorithm: TextureWrap) {
-		SetTextureWrap(toRaylib, algorithm.toRaylib.toInt32)
+		SetTextureWrap(rawValue, algorithm.rawValue)
 	}
 	
 	@inlinable public func update(with image: Image) {
-		UpdateTexture(toRaylib, image.underlying.data)
+		UpdateTexture(rawValue, image.rawValue.data)
 	}
 	
 	@inlinable public func update(area: Rectangle, with image: Image) {
-		UpdateTextureRec(toRaylib, area.toRaylib, image.underlying.data)
+		UpdateTextureRec(rawValue, area.rawValue, image.rawValue.data)
 	}
 	
-	//MARK: Conversion Methods
-	
+	//MARK: - Conversion Methods
+
 	/// Retrieve from GPU
 	@inlinable public func retrieve() -> Image {
-		LoadImageFromTexture(toRaylib).toSwift
+		Image(rawValue: LoadImageFromTexture(rawValue))
 	}
 	
-}
-
-//MARK: - Raylib Integration
-
-extension raylib.Texture: MemoryManageable {
-	
-	@inlinable public static func unload(instance: raylib.Texture) {
-		UnloadTexture(instance)
-	}
-	
-}
-
-extension Unmanaged: Texture where Subject == raylib.Texture {
-	@inlinable public var toRaylib: Subject { underlying }
-}
-
-extension Managed: Texture where Subject == raylib.Texture {
-	@inlinable public var toRaylib: Subject { underlying }
 }
