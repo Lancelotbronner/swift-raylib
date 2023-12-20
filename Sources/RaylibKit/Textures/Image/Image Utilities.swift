@@ -92,5 +92,5 @@ public enum ResizeAlgorithm {
 	case nearest
 
 	/// Fill
-	case fill(offset: Vector2i, color: Color)
+	case fill(offset: Point2, color: Color)
 }

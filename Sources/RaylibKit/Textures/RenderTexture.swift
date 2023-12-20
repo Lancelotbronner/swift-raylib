@@ -34,7 +34,7 @@ public final class RenderTexture: RawRepresentable {
 		self.init(rawValue: LoadRenderTexture(width.toInt32, height.toInt32))
 	}
 	
-	@inlinable public convenience init(size: Vector2f) {
+	@inlinable public convenience init(size: Vector2) {
 		self.init(rawValue: LoadRenderTexture(size.x.toInt32, size.y.toInt32))
 	}
 	

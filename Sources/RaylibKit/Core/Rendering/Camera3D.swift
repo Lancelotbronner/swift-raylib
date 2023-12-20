@@ -29,13 +29,13 @@ public struct Camera3D: RawRepresentable {
 	}
 
 	/// Get the screen space position for a world space position
-	@inlinable public func toScreen(world position: Vector3f) -> Vector2f {
-		GetWorldToScreen(position.toRaylib, rawValue).toSwift
+	@inlinable public func toScreen(world position: Vector3f) -> Vector2 {
+		Vector2(rawValue: GetWorldToScreen(position.toRaylib, rawValue))
 	}
 
 	/// Get the screen space position for a world space position
-	@inlinable public func toScreen(world position: Vector3f, size width: Int, by height: Int) -> Vector2f {
-		GetWorldToScreenEx(position.toRaylib, rawValue, width.toInt32, height.toInt32).toSwift
+	@inlinable public func toScreen(world position: Vector3f, size width: Int, by height: Int) -> Vector2 {
+		Vector2(rawValue: GetWorldToScreenEx(position.toRaylib, rawValue, width.toInt32, height.toInt32))
 	}
 
 	//MARK: - Rendering

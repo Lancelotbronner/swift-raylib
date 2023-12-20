@@ -9,10 +9,10 @@ import raylib
 
 public struct Line: Shape {
 	
-	public var start: Vector2f
-	public var end: Vector2f
+	public var start: Vector2
+	public var end: Vector2
 	
-	public init(from start: Vector2f, to end: Vector2f) {
+	public init(from start: Vector2, to end: Vector2) {
 		self.start = start
 		self.end = end
 	}
@@ -27,10 +27,11 @@ public struct Line: Shape {
 
 	//MARK: Collision Methods
 	
-	@inlinable public func collision(with other: Line) -> Vector2f? {
+	@inlinable public func collision(with other: Line) -> Vector2? {
 		var tmp = Vector2One()
-		let collision = CheckCollisionLines(start.toRaylib, end.toRaylib, other.start.toRaylib, other.end.toRaylib, &tmp) ? tmp : nil
-		return collision?.toSwift
+		let collision = CheckCollisionLines(start.rawValue, end.rawValue, other.start.rawValue, other.end.rawValue, &tmp) ? tmp : nil
+		guard let collision else { return nil }
+		return Vector2(rawValue: collision)
 	}
 	
 }

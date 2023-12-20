@@ -5,11 +5,9 @@
 //  Created by Christophe Bronner on 2021-12-26.
 //
 
-//MARK: - Comparable Arithmetics
-
 extension Comparable {
 	
-	//MARK: Clamping Methods
+	//MARK: - Clamping Methods
 	
 	@inlinable public mutating func minimum(of value: Self) {
 		self = max(self, value)

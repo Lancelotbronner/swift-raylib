@@ -19,8 +19,8 @@ extension Texture {
 		rawValue.height.toInt
 	}
 	
-	@inlinable public var size: Vector2f {
-		Vector2f(rawValue.width.toFloat, rawValue.height.toFloat)
+	@inlinable public var size: Vector2 {
+		Vector2(rawValue.width.toFloat, rawValue.height.toFloat)
 	}
 	
 	//MARK: - Attributes

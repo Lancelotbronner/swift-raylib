@@ -17,26 +17,26 @@ extension Renderer2D {
 	}
 	
 	/// Draw a pixel (Vector version)
-	@inlinable public static func pixel(at position: Vector2f, _ color: Color) {
+	@inlinable public static func pixel(at position: Vector2, _ color: Color) {
 		DrawPixel(position.x.toInt32, position.y.toInt32, color.rawValue)
 	}
 	
 	//MARK: - Line
 
 	/// Draw a line (Vector version)
-	@inlinable public static func line(from start: Vector2f, to end: Vector2f, thickness: Float = Renderer.thickness, color: Color = Renderer.color) {
-		DrawLineEx(start.toRaylib, end.toRaylib, thickness, color.rawValue)
+	@inlinable public static func line(from start: Vector2, to end: Vector2, thickness: Float = Renderer.thickness, color: Color = Renderer.color) {
+		DrawLineEx(start.rawValue, end.rawValue, thickness, color.rawValue)
 	}
 
 	/// Draw a line
 	@inlinable public static func line(from startX: Float, _ startY: Float, to endX: Float, _ endY: Float, thickness: Float = Renderer.thickness, color: Color = Renderer.color) {
-		DrawLineEx(Vector2f(startX, startY).toRaylib, Vector2f(endX.toFloat, endY.toFloat).toRaylib, thickness, color.rawValue)
+		DrawLineEx(Vector2(startX, startY).rawValue, Vector2(endX.toFloat, endY.toFloat).rawValue, thickness, color.rawValue)
 	}
 	
 	/// Draw lines sequence
-	@inlinable public static func lines(_ points: [Vector2f], color: Color = Renderer.color) {
+	@inlinable public static func lines(_ points: [Vector2], color: Color = Renderer.color) {
 		points.withContiguousStorageIfAvailable { buffer in
-			var tmp = buffer.baseAddress!.pointee.toRaylib
+			var tmp = buffer.baseAddress!.pointee.rawValue
 			DrawLineStrip(&tmp, points.count.toInt32, color.rawValue)
 		}
 	}
@@ -45,7 +45,9 @@ extension Renderer2D {
 
 	/// Draw a line using cubic-bezier curves in-out
 	@inlinable public static func bezier(from startX: Int, _ startY: Int, to endX: Int, _ endY: Int, thickness: Float = Renderer.thickness, color: Color = Renderer.color) {
-		DrawLineBezier(Vector2(startX.toFloat, startY.toFloat).toRaylib, Vector2f(endX.toFloat, endY.toFloat).toRaylib, thickness, color.rawValue)
+		let start = Vector2(startX.toFloat, startY.toFloat)
+		let end = Vector2(endX.toFloat, endY.toFloat)
+		DrawLineBezier(start.rawValue, end.rawValue, thickness, color.rawValue)
 	}
 	
 //	/// Draw a line using cubic-bezier curves in-out (Vector version

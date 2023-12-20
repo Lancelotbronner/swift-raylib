@@ -39,8 +39,8 @@ public struct Monitor: RawRepresentable {
 	}
 	
 	/// Get monitor position
-	@inlinable public var position: Vector2f {
-		GetMonitorPosition(rawValue).toSwift
+	@inlinable public var position: Vector2 {
+		Vector2(rawValue: GetMonitorPosition(rawValue))
 	}
 	
 	/// Get monitor width (max available by monitor)

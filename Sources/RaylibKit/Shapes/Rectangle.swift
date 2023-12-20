@@ -18,7 +18,7 @@ public struct Rectangle: RawRepresentable, Shape {
 		self.init(rawValue: raylib.Rectangle(x: x, y: y, width: width, height: height))
 	}
 
-	@inlinable public init(at position: Vector2f, size: Vector2f) {
+	@inlinable public init(at position: Vector2, size: Vector2) {
 		self.init(at: position.x, position.y, size: size.x, size.y)
 	}
 
@@ -44,16 +44,16 @@ public struct Rectangle: RawRepresentable, Shape {
 		set { rawValue.y = newValue }
 	}
 
-	@inlinable public var position: Vector2f {
-		get { Vector2f(rawValue.x, rawValue.y) }
+	@inlinable public var position: Vector2 {
+		get { Vector2(rawValue.x, rawValue.y) }
 		set {
 			rawValue.x = newValue.x
 			rawValue.y = newValue.y
 		}
 	}
 
-	@inlinable public var size: Vector2f {
-		get { Vector2f(rawValue.width, rawValue.height) }
+	@inlinable public var size: Vector2 {
+		get { Vector2(rawValue.width, rawValue.height) }
 		set {
 			rawValue.width = newValue.x
 			rawValue.height = newValue.y
@@ -73,41 +73,41 @@ public struct Rectangle: RawRepresentable, Shape {
 	@usableFromInline var centerY: Float { y + height / 2 }
 	@usableFromInline var endY: Float { y + height }
 
-	@inlinable public var topLeft: Vector2f {
-		Vector2f(startX, startY)
+	@inlinable public var topLeft: Vector2 {
+		Vector2(startX, startY)
 	}
 
-	@inlinable public var top: Vector2f {
-		Vector2f(centerX, startY)
+	@inlinable public var top: Vector2 {
+		Vector2(centerX, startY)
 	}
 
-	@inlinable public var topRight: Vector2f {
-		Vector2f(endX, startY)
+	@inlinable public var topRight: Vector2 {
+		Vector2(endX, startY)
 	}
 
-	@inlinable public var left: Vector2f {
-		Vector2f(startX, centerY)
+	@inlinable public var left: Vector2 {
+		Vector2(startX, centerY)
 	}
 
-	@inlinable public var center: Vector2f {
-		get { Vector2f(centerX, centerY) }
+	@inlinable public var center: Vector2 {
+		get { Vector2(centerX, centerY) }
 		set { position = newValue - size / 2 }
 	}
 
-	@inlinable public var right: Vector2f {
-		Vector2f(endX, centerY)
+	@inlinable public var right: Vector2 {
+		Vector2(endX, centerY)
 	}
 
-	@inlinable public var bottomLeft: Vector2f {
-		Vector2f(startX, endY)
+	@inlinable public var bottomLeft: Vector2 {
+		Vector2(startX, endY)
 	}
 
-	@inlinable public var bottom: Vector2f {
-		Vector2f(centerX, endY)
+	@inlinable public var bottom: Vector2 {
+		Vector2(centerX, endY)
 	}
 
-	@inlinable public var bottomRight: Vector2f {
-		Vector2f(endX, endY)
+	@inlinable public var bottomRight: Vector2 {
+		Vector2(endX, endY)
 	}
 	
 	//MARK: - Conversion
@@ -118,22 +118,22 @@ public struct Rectangle: RawRepresentable, Shape {
 	
 	//MARK: - Translation
 
-	@inlinable public mutating func translate(by step: Vector2f) {
+	@inlinable public mutating func translate(by step: Vector2) {
 		position += step
 	}
 	
-	@inlinable public func translated(by step: Vector2f) -> Rectangle {
+	@inlinable public func translated(by step: Vector2) -> Rectangle {
 		Rectangle(at: position + step, size: size)
 	}
 	
 	//MARK: - Collision
 
 	@inlinable public func contains(_ x: Float, _ y: Float) -> Bool {
-		CheckCollisionPointRec(Vector2f(x, y).toRaylib, rawValue)
+		CheckCollisionPointRec(Vector2(x, y).rawValue, rawValue)
 	}
 	
-	@inlinable public func contains(_ point: Vector2f) -> Bool {
-		CheckCollisionPointRec(point.toRaylib, rawValue)
+	@inlinable public func contains(_ point: Vector2) -> Bool {
+		CheckCollisionPointRec(point.rawValue, rawValue)
 	}
 	
 	@inlinable public func collided(with other: Rectangle) -> Bool {
@@ -141,7 +141,7 @@ public struct Rectangle: RawRepresentable, Shape {
 	}
 	
 	@inlinable public func collided(with other: Circle) -> Bool {
-		CheckCollisionCircleRec(other.position.toRaylib, other.radius, rawValue)
+		CheckCollisionCircleRec(other.position.rawValue, other.radius, rawValue)
 	}
 	
 	@inlinable public func collision(with other: Rectangle) -> Rectangle {

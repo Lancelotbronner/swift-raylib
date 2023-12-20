@@ -21,22 +21,20 @@ public protocol TrigonometryFunctions: FloatingPoint {
 }
 
 extension TrigonometryFunctions {
-	
-	//MARK: Methods
-	
-	@inlinable public func sin() -> Self {
+
+	@inlinable public var sin: Self {
 		Self.sin(self)
 	}
 	
-	@inlinable public func cos() -> Self {
+	@inlinable public var cos: Self {
 		Self.cos(self)
 	}
 	
-	@inlinable public func tan() -> Self {
+	@inlinable public var tan: Self {
 		Self.tan(self)
 	}
 	
-	@inlinable public func atan() -> Self {
+	@inlinable public var atan: Self {
 		Self.atan(self)
 	}
 	

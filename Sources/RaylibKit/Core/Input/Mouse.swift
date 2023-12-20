@@ -21,13 +21,13 @@ public struct Mouse {
 		set { SetMousePosition(GetMouseX(), newValue.toInt32) }
 	}
 
-	@inlinable public static var position: Vector2f {
-		get { GetMousePosition().toSwift }
+	@inlinable public static var position: Vector2 {
+		get { Vector2(rawValue: GetMousePosition()) }
 		set { SetMousePosition(newValue.x.toInt32, newValue.y.toInt32) }
 	}
 
-	@inlinable public static var delta: Vector2f {
-		GetMouseDelta().toSwift
+	@inlinable public static var delta: Vector2 {
+		Vector2(rawValue: GetMouseDelta())
 	}
 
 	//MARK: - Buttons
@@ -50,11 +50,11 @@ public struct Mouse {
 	
 	//MARK: - Configuration
 
-	@inlinable public static func offset(by value: Vector2f) {
+	@inlinable public static func offset(by value: Vector2) {
 		SetMouseOffset(value.x.toInt32, value.y.toInt32)
 	}
 	
-	@inlinable public static func scale(by value: Vector2f) {
+	@inlinable public static func scale(by value: Vector2) {
 		SetMouseScale(value.x, value.y)
 	}
 	

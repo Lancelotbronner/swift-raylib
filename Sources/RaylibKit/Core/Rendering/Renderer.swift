@@ -100,7 +100,7 @@ public struct Renderer {
 	}
 	
 	/// Begin scissor mode (define screen area for following drawing); End scissor mode
-	@inlinable public static func scissor(at position: Vector2f, size: Vector2f, draw: () -> Void) {
+	@inlinable public static func scissor(at position: Vector2, size: Vector2, draw: () -> Void) {
 		scissor(at: position.x.toInt, position.y.toInt, size: size.x.toInt, by: size.y.toInt, draw: draw)
 	}
 	

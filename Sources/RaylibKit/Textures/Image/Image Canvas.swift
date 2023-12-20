@@ -33,8 +33,8 @@ public struct Canvas {
 	}
 	
 	/// Draw pixel within an image (Vector version)
-	@inlinable public mutating func pixel(at position: Vector2i, color: Color = Renderer.color) {
-		pixel(at: position.x, position.y, color: color)
+	@inlinable public mutating func pixel(at position: Vector2, color: Color = Renderer.color) {
+		ImageDrawPixelV(rawValue, position.rawValue, color.rawValue)
 	}
 	
 	//MARK: - Lines
@@ -45,8 +45,8 @@ public struct Canvas {
 	}
 	
 	/// Draw line within an image (Vector version)
-	@inlinable public mutating func line(from start: Vector2i, to end: Vector2i, color: Color = Renderer.color) {
-		line(from: start.x, start.y, to: start.x, start.y, color: color)
+	@inlinable public mutating func line(from start: Vector2, to end: Vector2, color: Color = Renderer.color) {
+		ImageDrawLineV(rawValue, start.rawValue, end.rawValue, color.rawValue)
 	}
 	
 	//MARK: - Circle
@@ -57,13 +57,13 @@ public struct Canvas {
 	}
 	
 	/// Draw circle within an image (Vector version)
-	@inlinable public mutating func circle(at center: Vector2i, radius: Int, color: Color = Renderer.color) {
-		circle(at: center.x, center.y, radius: radius, color: color)
+	@inlinable public mutating func circle(at center: Vector2, radius: Int, color: Color = Renderer.color) {
+		ImageDrawCircleV(rawValue, center.rawValue, radius.toInt32, color.rawValue)
 	}
 	
 	/// Draw circle within an image (Shape version)
 	@inlinable public mutating func circle(_ shape: Circle, color: Color = Renderer.color) {
-		circle(at: shape.position.toInt, radius: shape.radius.toInt, color: color)
+		circle(at: shape.position, radius: shape.radius.toInt, color: color)
 	}
 	
 	//MARK: - Rectangle
@@ -74,13 +74,13 @@ public struct Canvas {
 	}
 	
 	/// Draw rectangle within an image (Vector version)
-	@inlinable public mutating func rectangle(at position: Vector2i, size: Vector2i, color: Color = Renderer.color) {
-		rectangle(at: position.x, position.y, size: size.x, size.y, color: color)
+	@inlinable public mutating func rectangle(at position: Vector2, size: Vector2, color: Color = Renderer.color) {
+		ImageDrawRectangleV(rawValue, position.rawValue, size.rawValue, color.rawValue)
 	}
 	
 	/// Draw rectangle within an image (Shape version)
 	@inlinable public mutating func rectangle(_ shape: Rectangle, color: Color = Renderer.color) {
-		rectangle(at: shape.position.toInt, size: shape.size.toInt, color: color)
+		ImageDrawRectangleRec(rawValue, shape.rawValue, color.rawValue)
 	}
 	
 	//MARK: - Image
@@ -99,7 +99,7 @@ public struct Canvas {
 	
 	/// Draw text within an image
 	@inlinable public mutating func text(_ string: String, at x: Int, _ y: Int, size: Float = Renderer.pointSize, spacing: Float, using font: Font, color: Color = Renderer.textColor) {
-		ImageDrawTextEx(rawValue, font.rawValue, string, Vector2f(x.toFloat, y.toFloat).toRaylib, size, spacing, color.rawValue)
+		ImageDrawTextEx(rawValue, font.rawValue, string, Vector2(x.toFloat, y.toFloat).rawValue, size, spacing, color.rawValue)
 	}
 	
 }

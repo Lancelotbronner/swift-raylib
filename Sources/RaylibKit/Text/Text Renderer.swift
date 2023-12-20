@@ -30,7 +30,7 @@ extension Renderer2D {
 	}
 
 	@inlinable public static func text(using font: Font, _ value: String, at x: Float, _ y: Float, spacing: Float, size: Float = Renderer.pointSize, color: Color = Renderer.textColor) {
-		DrawTextEx(font.rawValue, value, Vector2f(x, y).toRaylib, size, spacing, color.rawValue)
+		DrawTextEx(font.rawValue, value, Vector2(x, y).rawValue, size, spacing, color.rawValue)
 	}
 
 }

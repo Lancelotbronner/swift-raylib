@@ -23,7 +23,7 @@ public struct BuiltinUniform<T> {
 
 //MARK: - Vector2f Uniforms
 
-extension BuiltinUniform where T == Vector2f {
+extension BuiltinUniform where T == Vector2 {
 	
 	@inlinable public static var texcoord01: BuiltinUniform { .init(1) }
 	@inlinable public static var texcoord02: BuiltinUniform { .init(2) }

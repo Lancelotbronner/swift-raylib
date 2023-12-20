@@ -36,11 +36,11 @@ extension BinaryInteger {
 	//MARK: - Floating Point
 	
 	@_transparent public var toFloat: Float {
-		.init(self)
+		Float(self)
 	}
 	
 	@_transparent public var toDouble: Double {
-		.init(self)
+		Double(self)
 	}
 	
 }

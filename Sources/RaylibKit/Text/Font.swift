@@ -35,8 +35,8 @@ public final class Font: RawRepresentable {
 	//MARK: - Measurement
 
 	/// Measures the string size using the current font
-	@inlinable public func measure(_ text: String, at size: Float = Renderer.pointSize, spacing: Float) -> Vector2f {
-		MeasureTextEx(rawValue, text, size, spacing).toSwift
+	@inlinable public func measure(_ text: String, at size: Float = Renderer.pointSize, spacing: Float) -> Vector2 {
+		Vector2(rawValue: MeasureTextEx(rawValue, text, size, spacing))
 	}
 
 	// TODO: GenImageFontAtlas

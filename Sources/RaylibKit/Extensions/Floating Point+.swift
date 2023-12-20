@@ -10,37 +10,37 @@ extension BinaryFloatingPoint {
 	//MARK: - Floating Point
 
 	@_transparent public var toFloat: Float {
-		.init(self)
+		Float(self)
 	}
 	
 	@_transparent public var toDouble: Double {
-		.init(self)
+		Double(self)
 	}
 	
 	//MARK: - Integer
 
 	@_transparent public var toInt: Int {
-		.init(self)
+		Int(self)
 	}
 	
 	@_transparent public var toUInt: UInt {
-		.init(self)
+		UInt(self)
 	}
 	
 	@_transparent public var toInt32: Int32 {
-		.init(self)
+		Int32(self)
 	}
 	
 	@_transparent public var toUInt32: UInt32 {
-		.init(self)
+		UInt32(self)
 	}
 	
 	@_transparent public var toInt8: Int8 {
-		.init(self)
+		Int8(self)
 	}
 	
 	@_transparent public var toUInt8: UInt8 {
-		.init(self)
+		UInt8(self)
 	}
 	
 }

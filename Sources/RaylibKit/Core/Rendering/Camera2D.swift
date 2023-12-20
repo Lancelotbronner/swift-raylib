@@ -20,11 +20,11 @@ public struct Camera2D: RawRepresentable {
 		self.init(at: .zero)
 	}
 
-	@inlinable public init(at position: Vector2f, offsetBy offset: Vector2f = .zero, rotation: Float = 0, zoom: Float = 1) {
-		rawValue = raylib.Camera2D(offset: position.toRaylib, target: offset.toRaylib, rotation: rotation, zoom: zoom)
+	@inlinable public init(at position: Vector2, offsetBy offset: Vector2 = .zero, rotation: Float = 0, zoom: Float = 1) {
+		rawValue = raylib.Camera2D(offset: position.rawValue, target: offset.rawValue, rotation: rotation, zoom: zoom)
 	}
 
-	@inlinable public static func centered(on position: Vector2f, rotation: Float = 0, zoom: Float = 1) -> Camera2D {
+	@inlinable public static func centered(on position: Vector2, rotation: Float = 0, zoom: Float = 1) -> Camera2D {
 		Camera2D(at: position, offsetBy: Window.size / 2)
 	}
 
@@ -38,9 +38,9 @@ public struct Camera2D: RawRepresentable {
 	
 	// TODO: Validate offset
 	/// The camera's screen offset
-	@inlinable public var offset: Vector2f {
-		get { rawValue.offset.toSwift }
-		set { rawValue.offset = newValue.toRaylib }
+	@inlinable public var offset: Vector2 {
+		get { Vector2(rawValue: rawValue.offset) }
+		set { rawValue.offset = newValue.rawValue }
 	}
 	
 	/// How much the camera is zoomed in
@@ -53,12 +53,12 @@ public struct Camera2D: RawRepresentable {
 
 	// TODO: Validate target
 	/// The point the camera is watching
-	@inlinable public var target: Vector2f {
-		get { rawValue.target.toSwift }
-		set { rawValue.target = newValue.toRaylib }
+	@inlinable public var target: Vector2 {
+		get { Vector2(rawValue: rawValue.target) }
+		set { rawValue.target = newValue.rawValue }
 	}
 
-	@inlinable public mutating func translate(by delta: Vector2f) {
+	@inlinable public mutating func translate(by delta: Vector2) {
 		let translation = delta * (-1 / rawValue.zoom)
 		rawValue.target.x += translation.x
 		rawValue.target.y += translation.y
@@ -72,13 +72,13 @@ public struct Camera2D: RawRepresentable {
 	}
 
 	/// Get the screen space position for a world space position
-	@inlinable public func toScreen(world position: Vector2f) -> Vector2f {
-		GetWorldToScreen2D(position.toRaylib, rawValue).toSwift
+	@inlinable public func toScreen(world position: Vector2) -> Vector2 {
+		Vector2(rawValue: GetWorldToScreen2D(position.rawValue, rawValue))
 	}
 	
 	/// Get the world space position for a screen space position
-	@inlinable public func toWorld(screen position: Vector2f) -> Vector2f {
-		GetScreenToWorld2D(position.toRaylib, rawValue).toSwift
+	@inlinable public func toWorld(screen position: Vector2) -> Vector2 {
+		Vector2(rawValue: GetScreenToWorld2D(position.rawValue, rawValue))
 	}
 
 	//MARK: - Rendering

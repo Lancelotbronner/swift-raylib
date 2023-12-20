@@ -53,8 +53,8 @@ public final class Image: RawRepresentable {
 		rawValue.height.toInt
 	}
 
-	@inlinable public var size: Vector2f {
-		Vector2f(rawValue.width.toFloat, rawValue.height.toFloat)
+	@inlinable public var size: Vector2 {
+		Vector2(rawValue.width.toFloat, rawValue.height.toFloat)
 	}
 
 	@inlinable public var mipmaps: Int {
@@ -104,9 +104,12 @@ public final class Image: RawRepresentable {
 	/// Resize image according to the specified algorithm
 	@inlinable public func resize(to width: Int, _ height: Int, using algorithm: ResizeAlgorithm) {
 		switch algorithm {
-		case .bicubic: ImageResize(&rawValue, width.toInt32, height.toInt32)
-		case .nearest: ImageResizeNN(&rawValue, width.toInt32, height.toInt32)
-		case let .fill(offset, color): ImageResizeCanvas(&rawValue, width.toInt32, height.toInt32, offset.x.toInt32, offset.y.toInt32, color.rawValue)
+		case .bicubic: 
+			ImageResize(&rawValue, width.toInt32, height.toInt32)
+		case .nearest: 
+			ImageResizeNN(&rawValue, width.toInt32, height.toInt32)
+		case let .fill(offset, color):
+			ImageResizeCanvas(&rawValue, width.toInt32, height.toInt32, offset.x, offset.y, color.rawValue)
 		}
 	}
 	

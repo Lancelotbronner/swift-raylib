@@ -104,8 +104,8 @@ public struct Window {
 	}
 
 	/// Get window scale DPI factor
-	@inlinable public static var scaleDPI: Vector2f {
-		GetWindowScaleDPI().toSwift
+	@inlinable public static var scaleDPI: Vector2 {
+		Vector2(rawValue: GetWindowScaleDPI())
 	}
 
 	//MARK: - Size
@@ -128,8 +128,8 @@ public struct Window {
 	}
 
 	/// Get current screen size
-	@inlinable public static var size: Vector2f {
-		get { Vector2f(width.toFloat, height.toFloat) }
+	@inlinable public static var size: Vector2 {
+		get { Vector2(width.toFloat, height.toFloat) }
 		set { SetWindowSize(newValue.x.toInt32, newValue.y.toInt32) }
 	}
 
@@ -158,8 +158,8 @@ public struct Window {
 	}
 
 	/// Get window position XY on monitor
-	@inlinable public static var position: Vector2f {
-		get { GetWindowPosition().toSwift }
+	@inlinable public static var position: Vector2 {
+		get { Vector2(rawValue: GetWindowPosition()) }
 		set { SetWindowPosition(newValue.x.toInt32, newValue.y.toInt32) }
 	}
 

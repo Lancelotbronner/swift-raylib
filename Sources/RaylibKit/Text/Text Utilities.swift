@@ -20,9 +20,9 @@ public enum TextAlignment {
 		}
 	}
 
-	@inlinable func offset(of text: String, using font: Font, at size: Float = Renderer.pointSize, spacing: Float) -> Vector2f {
+	@inlinable func offset(of text: String, using font: Font, at size: Float = Renderer.pointSize, spacing: Float) -> Vector2 {
 		switch self {
-		case .left: return Vector2f.zero
+		case .left: return Vector2.zero
 		case .center: return font.measure(text, at: size, spacing: spacing) / 2
 		case .right: return -font.measure(text, at: size, spacing: spacing)
 		}

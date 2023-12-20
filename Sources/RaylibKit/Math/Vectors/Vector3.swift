@@ -12,35 +12,35 @@ import raylib
 public typealias Vector3f = Vector3<Float>
 public typealias Vector3i = Vector3<Int>
 
-public struct Vector3<Scalar>: Vector {
+public struct Vector3<Element>: VectorProtocol {
 	
 	//MARK: Properties
 	
-	public var x: Scalar
-	public var y: Scalar
-	public var z: Scalar
+	public var x: Element
+	public var y: Element
+	public var z: Element
 	
 	//MARK: Initialization
 	
-	@inlinable public init(_ x: Scalar, _ y: Scalar, _ z: Scalar) {
+	@inlinable public init(_ x: Element, _ y: Element, _ z: Element) {
 		self.x = x
 		self.y = y
 		self.z = z
 	}
 	
-	@inlinable public init(_ v: Scalar) {
+	@inlinable public init(_ v: Element) {
 		self.init(v, v, v)
 	}
 	
 	//MARK: Utilities
 
-	@_transparent public static func transform(_ transform: (WritableKeyPath<Vector3<Scalar>, Scalar>) throws -> Void) rethrows {
+	@_transparent public static func transform(_ transform: (WritableKeyPath<Vector3<Element>, Element>) throws -> Void) rethrows {
 		try transform(\.x)
 		try transform(\.y)
 		try transform(\.z)
 	}
 	
-	@_transparent public static func map(_ transform: (WritableKeyPath<Vector3, Scalar>) throws -> Scalar) rethrows -> Vector3 {
+	@_transparent public static func map(_ transform: (WritableKeyPath<Vector3, Element>) throws -> Element) rethrows -> Vector3 {
 		Vector3(try transform(\.x), try transform(\.y), try transform(\.z))
 	}
 	
@@ -48,12 +48,12 @@ public struct Vector3<Scalar>: Vector {
 
 //MARK: - Conformances
 
-extension Vector3: Equatable where Scalar: Equatable { }
-extension Vector3: Hashable where Scalar: Hashable { }
+extension Vector3: Equatable where Element: Equatable { }
+extension Vector3: Hashable where Element: Hashable { }
 
 //MARK: - Raylib Integration
 
-extension Vector3 where Scalar == Float {
+extension Vector3 where Element == Float {
 	
 	@_transparent public var toRaylib: raylib.Vector3 {
 		raylib.Vector3(x: x, y: y, z: z)

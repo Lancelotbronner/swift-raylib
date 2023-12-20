@@ -11,16 +11,16 @@ extension Renderer2D {
 	
 	//MARK: - Triangle
 	
-	@inlinable public static func triangle(_ p1: Vector2f, _ p2: Vector2f, _ p3: Vector2f, color: Color = Renderer.color) {
-		DrawTriangle(p1.toRaylib, p2.toRaylib, p3.toRaylib, color.rawValue)
+	@inlinable public static func triangle(_ p1: Vector2, _ p2: Vector2, _ p3: Vector2, color: Color = Renderer.color) {
+		DrawTriangle(p1.rawValue, p2.rawValue, p3.rawValue, color.rawValue)
 	}
 
 	@inlinable public static func triangle(a x1: Float, _ y1: Float, b x2: Float, _ y2: Float, c x3: Float, _ y3: Float, color: Color = Renderer.color) {
-		triangle(Vector2f(x1, y1), Vector2f(x2, y2), Vector2f(x3, y3), color: .violet)
+		triangle(Vector2(x1, y1), Vector2(x2, y2), Vector2(x3, y3), color: .violet)
 	}
 	
 	@inlinable public static func triangle(_ shape: Triangle, color: Color = Renderer.color) {
-		DrawTriangle(shape.a.toRaylib, shape.b.toRaylib, shape.c.toRaylib, color.rawValue)
+		DrawTriangle(shape.a.rawValue, shape.b.rawValue, shape.c.rawValue, color.rawValue)
 	}
 	
 	//MARK: - Rectangle with Color
@@ -29,7 +29,7 @@ extension Renderer2D {
 		DrawRectangle(x.toInt32, y.toInt32, width.toInt32, height.toInt32, color.rawValue)
 	}
 	
-	@inlinable public static func rectangle(at position: Vector2f, size: Vector2f, color: Color = Renderer.color) {
+	@inlinable public static func rectangle(at position: Vector2, size: Vector2, color: Color = Renderer.color) {
 		DrawRectangle(position.x.toInt32, position.y.toInt32, size.x.toInt32, size.y.toInt32, color.rawValue)
 	}
 	
@@ -43,7 +43,7 @@ extension Renderer2D {
 		DrawRectangleGradientH(x.toInt32, y.toInt32, width.toInt32, height.toInt32, from.rawValue, to.rawValue)
 	}
 	
-	@inlinable public static func rectangle(at position: Vector2f, size: Vector2f, gradientH from: Color, _ to: Color) {
+	@inlinable public static func rectangle(at position: Vector2, size: Vector2, gradientH from: Color, _ to: Color) {
 		DrawRectangleGradientH(position.x.toInt32, position.y.toInt32, size.x.toInt32, size.y.toInt32, from.rawValue, to.rawValue)
 	}
 	
@@ -57,7 +57,7 @@ extension Renderer2D {
 		DrawRectangleGradientV(x.toInt32, y.toInt32, width.toInt32, height.toInt32, from.rawValue, to.rawValue)
 	}
 	
-	@inlinable public static func rectangle(at position: Vector2f, size: Vector2f, gradientV from: Color, _ to: Color) {
+	@inlinable public static func rectangle(at position: Vector2, size: Vector2, gradientV from: Color, _ to: Color) {
 		DrawRectangleGradientV(position.x.toInt32, position.y.toInt32, size.x.toInt32, size.y.toInt32, from.rawValue, to.rawValue)
 	}
 	
@@ -71,7 +71,7 @@ extension Renderer2D {
 		DrawRectangleGradientEx(.init(x: x.toFloat, y: y.toFloat, width: width.toFloat, height: height.toFloat), topLeft.rawValue, bottomLeft.rawValue, bottomRight.rawValue, topRight.rawValue)
 	}
 	
-	@inlinable public static func rectangle(at position: Vector2f, size: Vector2f, gradient topLeft: Color, _ bottomLeft: Color, _ bottomRight: Color, _ topRight: Color) {
+	@inlinable public static func rectangle(at position: Vector2, size: Vector2, gradient topLeft: Color, _ bottomLeft: Color, _ bottomRight: Color, _ topRight: Color) {
 		DrawRectangleGradientEx(.init(x: position.x, y: position.y, width: size.x, height: size.y), topLeft.rawValue, bottomLeft.rawValue, bottomRight.rawValue, topRight.rawValue)
 	}
 	
@@ -91,12 +91,12 @@ extension Renderer2D {
 		DrawCircle(x.toInt32, y.toInt32, radius, color.rawValue)
 	}
 	
-	@inlinable public static func circle(at position: Vector2f, radius: Float, color: Color = Renderer.color) {
-		DrawCircleV(position.toRaylib, radius, color.rawValue)
+	@inlinable public static func circle(at position: Vector2, radius: Float, color: Color = Renderer.color) {
+		DrawCircleV(position.rawValue, radius, color.rawValue)
 	}
 	
 	@inlinable public static func circle(_ shape: Circle, color: Color = Renderer.color) {
-		DrawCircleV(shape.position.toRaylib, shape.radius, color.rawValue)
+		DrawCircleV(shape.position.rawValue, shape.radius, color.rawValue)
 	}
 
 	//MARK: - Circle with Gradient
@@ -105,7 +105,7 @@ extension Renderer2D {
 		DrawCircleGradient(x.toInt32, y.toInt32, radius, from.rawValue, to.rawValue)
 	}
 	
-	@inlinable public static func circle(at position: Vector2f, radius: Float, gradient from: Color, _ to: Color) {
+	@inlinable public static func circle(at position: Vector2, radius: Float, gradient from: Color, _ to: Color) {
 		DrawCircleGradient(position.x.toInt32, position.y.toInt32, radius, from.rawValue, to.rawValue)
 	}
 	
@@ -116,11 +116,11 @@ extension Renderer2D {
 	//MARK: - Sector
 	
 	@inlinable public static func sector(at x: Int, _ y: Int, radius: Float, from start: Angle<Float>, to end: Angle<Float>, segments: Int = 0, color: Color = Renderer.color) {
-		DrawCircleSector(Vector2f(x.toFloat, y.toFloat).toRaylib, radius, start.toDegrees, end.toDegrees, segments.toInt32, color.rawValue)
+		DrawCircleSector(Vector2(x.toFloat, y.toFloat).rawValue, radius, start.degrees, end.degrees, segments.toInt32, color.rawValue)
 	}
 	
-	@inlinable public static func sector(at position: Vector2f, radius: Float, from start: Angle<Float>, to end: Angle<Float>, segments: Int = 0, color: Color = Renderer.color) {
-		DrawCircleSector(position.toRaylib, radius, start.toDegrees, end.toDegrees, segments.toInt32, color.rawValue)
+	@inlinable public static func sector(at position: Vector2, radius: Float, from start: Angle<Float>, to end: Angle<Float>, segments: Int = 0, color: Color = Renderer.color) {
+		DrawCircleSector(position.rawValue, radius, start.degrees, end.degrees, segments.toInt32, color.rawValue)
 	}
 	
 	//MARK: - Ellipse
@@ -129,28 +129,28 @@ extension Renderer2D {
 		DrawEllipse(x.toInt32, y.toInt32, radiusH, radiusV, color.rawValue)
 	}
 	
-	@inlinable public static func ellipse(at position: Vector2f, radius: Vector2f, color: Color = Renderer.color) {
+	@inlinable public static func ellipse(at position: Vector2, radius: Vector2, color: Color = Renderer.color) {
 		DrawEllipse(position.x.toInt32, position.y.toInt32, radius.x, radius.y, color.rawValue)
 	}
 	
 	//MARK: - Ring
 	
 	@inlinable public static func ring(at x: Int, _ y: Int, inner innerRadius: Float, outer outerRadius: Float, segments: Int = 0, from start: Angle<Float>, to end: Angle<Float>, color: Color = Renderer.color) {
-		DrawRing(Vector2f(x.toFloat, y.toFloat).toRaylib, innerRadius, outerRadius, start.toDegrees, end.toDegrees, segments.toInt32, color.rawValue)
+		DrawRing(Vector2(x.toFloat, y.toFloat).rawValue, innerRadius, outerRadius, start.degrees, end.degrees, segments.toInt32, color.rawValue)
 	}
 	
-	@inlinable public static func ring(at position: Vector2f, inner innerRadius: Float, outer outerRadius: Float, segments: Int = 0, from start: Angle<Float>, to end: Angle<Float>, color: Color = Renderer.color) {
-		DrawRing(position.toRaylib, innerRadius, outerRadius, start.toDegrees, end.toDegrees, segments.toInt32, color.rawValue)
+	@inlinable public static func ring(at position: Vector2, inner innerRadius: Float, outer outerRadius: Float, segments: Int = 0, from start: Angle<Float>, to end: Angle<Float>, color: Color = Renderer.color) {
+		DrawRing(position.rawValue, innerRadius, outerRadius, start.degrees, end.degrees, segments.toInt32, color.rawValue)
 	}
 	
 	//MARK: - Polygon
 	
 	@inlinable public static func polygon(at x: Int, _ y: Int, sides: Int, radius: Float, rotation: Angle<Float> = .zero, color: Color = Renderer.color) {
-		DrawPoly(Vector2f(x.toFloat, y.toFloat).toRaylib, sides.toInt32, radius, rotation.toDegrees, color.rawValue)
+		DrawPoly(Vector2(x.toFloat, y.toFloat).rawValue, sides.toInt32, radius, rotation.degrees, color.rawValue)
 	}
 	
-	@inlinable public static func polygon(at position: Vector2f, sides: Int, radius: Float, rotation: Angle<Float> = .zero, color: Color = Renderer.color) {
-		DrawPoly(position.toRaylib, sides.toInt32, radius, rotation.toDegrees, color.rawValue)
+	@inlinable public static func polygon(at position: Vector2, sides: Int, radius: Float, rotation: Angle<Float> = .zero, color: Color = Renderer.color) {
+		DrawPoly(position.rawValue, sides.toInt32, radius, rotation.degrees, color.rawValue)
 	}
 	
 }

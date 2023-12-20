@@ -7,16 +7,12 @@
 
 import raylib
 
-//MARK: - Degree
-
 public enum Angle<Scalar: FloatingPoint & TrigonometryFunctions>: Comparable {
-	
-	//MARK: Cases
 
-	/// Causes no rotation
+	/// Inert angle
 	case zero
 
-	/// Causes a full rotation
+	/// The number of full rotations made
 	case turns(Scalar)
 
 	/// Degrees
@@ -24,10 +20,18 @@ public enum Angle<Scalar: FloatingPoint & TrigonometryFunctions>: Comparable {
 
 	/// Radians
 	case radians(Scalar)
-	
-	//MARK: Computed Properties
-	
-	@_transparent public var toDegrees: Scalar {
+
+	/// The number of full rotations made
+	@_transparent public var turns: Scalar {
+		switch self {
+		case .zero: return 0
+		case let .turns(times): return times
+		case let .degrees(angle): return angle / 360
+		case let .radians(angle): return angle / .pi / 2
+		}
+	}
+
+	@_transparent public var degrees: Scalar {
 		switch self {
 		case .zero: return 0
 		case let .turns(times): return 360 * times
@@ -36,7 +40,7 @@ public enum Angle<Scalar: FloatingPoint & TrigonometryFunctions>: Comparable {
 		}
 	}
 
-	@_transparent public var toRadians: Scalar {
+	@_transparent public var radians: Scalar {
 		switch self {
 		case .zero: return 0
 		case let .turns(times): return .pi * 2 * times
@@ -45,26 +49,28 @@ public enum Angle<Scalar: FloatingPoint & TrigonometryFunctions>: Comparable {
 		}
 	}
 	
-	@inlinable public var vector: Vector2<Scalar> {
-		Vector2<Scalar>(toRadians.cos(), toRadians.sin())
+	/// The normalized direction of this angle
+	@inlinable public var direction: Vector2<Scalar> {
+		Vector2<Scalar>(radians.cos, radians.sin)
 	}
 	
-	@inlinable public func vector(length: Scalar) -> Vector2<Scalar> {
-		vector * length
+	/// The direction of this angle with the given length
+	@inlinable public func direction(length: Scalar) -> Vector2<Scalar> {
+		direction * length
 	}
 	
 }
 
-//MARK: - Additive Arithmetics
+//MARK: - Arithmetics
 
 extension Angle: AdditiveArithmetic {
 	
 	public static func + (lhs: Angle, rhs: Angle) -> Angle {
-		.degrees(lhs.toDegrees + rhs.toDegrees)
+		.degrees(lhs.degrees + rhs.degrees)
 	}
 	
 	public static func - (lhs: Angle, rhs: Angle) -> Angle {
-		.degrees(lhs.toDegrees - rhs.toDegrees)
+		.degrees(lhs.degrees - rhs.degrees)
 	}
 	
 }

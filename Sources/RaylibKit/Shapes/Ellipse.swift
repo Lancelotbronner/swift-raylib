@@ -7,10 +7,10 @@
 
 public struct Ellipse: Shape {
 	
-	public var position: Vector2f
-	public var radius: Vector2f
+	public var position: Vector2
+	public var radius: Vector2
 
-	@inlinable public init(at position: Vector2f, radius: Vector2f) {
+	@inlinable public init(at position: Vector2, radius: Vector2) {
 		self.position = position
 		self.radius = radius
 	}
@@ -19,7 +19,7 @@ public struct Ellipse: Shape {
 		Rectangle(at: position - radius, size: diameter)
 	}
 	
-	@inlinable public var diameter: Vector2f {
+	@inlinable public var diameter: Vector2 {
 		radius * 2
 	}
 	
