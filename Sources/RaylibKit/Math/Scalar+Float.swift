@@ -49,8 +49,8 @@ extension Float: TrigonometryFunctions {
 		atanf(value)
 	}
 	
-	@inlinable public static func atan2(_ lhs: Float, _ rhs: Float) -> Float {
-		atan2f(lhs, rhs)
+	@inlinable public static func atan2(x: Float, y: Float) -> Float {
+		atan2f(y, x)
 	}
 	
 }

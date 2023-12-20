@@ -30,9 +30,9 @@ extension BuiltinUniform where T == Vector2 {
 	
 }
 
-//MARK: - Vector3f Uniforms
+//MARK: - Vector3 Uniforms
 
-extension BuiltinUniform where T == Vector3f {
+extension BuiltinUniform where T == Vector3 {
 	
 	@inlinable public static var position: BuiltinUniform { .init(0) }
 	@inlinable public static var normal: BuiltinUniform { .init(3) }

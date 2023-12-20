@@ -16,7 +16,7 @@ public protocol TrigonometryFunctions: FloatingPoint {
 	static func cos(_ value: Self) -> Self
 	static func tan(_ value: Self) -> Self
 	static func atan(_ value: Self) -> Self
-	static func atan2(_ lhs: Self, _ rhs: Self) -> Self
+	static func atan2(x: Self, y: Self) -> Self
 	
 }
 
@@ -38,9 +38,4 @@ extension TrigonometryFunctions {
 		Self.atan(self)
 	}
 	
-	@inlinable public func atan2(with other: Self) -> Self {
-		Self.atan2(self, other)
-	}
-	
 }
-

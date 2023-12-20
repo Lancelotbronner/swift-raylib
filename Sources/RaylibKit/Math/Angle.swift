@@ -7,22 +7,22 @@
 
 import raylib
 
-public enum Angle<Scalar: FloatingPoint & TrigonometryFunctions>: Comparable {
+public enum Angle: Comparable {
 
 	/// Inert angle
 	case zero
 
 	/// The number of full rotations made
-	case turns(Scalar)
+	case turns(Float)
 
 	/// Degrees
-	case degrees(Scalar)
+	case degrees(Float)
 
 	/// Radians
-	case radians(Scalar)
+	case radians(Float)
 
 	/// The number of full rotations made
-	@_transparent public var turns: Scalar {
+	@_transparent public var turns: Float {
 		switch self {
 		case .zero: return 0
 		case let .turns(times): return times
@@ -31,7 +31,7 @@ public enum Angle<Scalar: FloatingPoint & TrigonometryFunctions>: Comparable {
 		}
 	}
 
-	@_transparent public var degrees: Scalar {
+	@_transparent public var degrees: Float {
 		switch self {
 		case .zero: return 0
 		case let .turns(times): return 360 * times
@@ -40,7 +40,7 @@ public enum Angle<Scalar: FloatingPoint & TrigonometryFunctions>: Comparable {
 		}
 	}
 
-	@_transparent public var radians: Scalar {
+	@_transparent public var radians: Float {
 		switch self {
 		case .zero: return 0
 		case let .turns(times): return .pi * 2 * times
@@ -50,12 +50,12 @@ public enum Angle<Scalar: FloatingPoint & TrigonometryFunctions>: Comparable {
 	}
 	
 	/// The normalized direction of this angle
-	@inlinable public var direction: Vector2<Scalar> {
-		Vector2<Scalar>(radians.cos, radians.sin)
+	@inlinable public var direction: Vector2 {
+		Vector2(radians.cos, radians.sin)
 	}
 	
 	/// The direction of this angle with the given length
-	@inlinable public func direction(length: Scalar) -> Vector2<Scalar> {
+	@inlinable public func direction(length: Float) -> Vector2 {
 		direction * length
 	}
 	

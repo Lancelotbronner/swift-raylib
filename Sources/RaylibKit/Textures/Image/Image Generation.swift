@@ -21,7 +21,7 @@ extension Image {
 
 	//MARK: - Linear Gradient
 
-	@inlinable public static func linearGradient(size width: Int, by height: Int, direction: Angle<Float>, from start: Color, to end: Color) -> Image {
+	@inlinable public static func linearGradient(size width: Int, by height: Int, direction: Angle, from start: Color, to end: Color) -> Image {
 		Image(rawValue: GenImageGradientLinear(width.toInt32, height.toInt32, direction.degrees.rounded().toInt32, start.rawValue, end.rawValue))
 	}
 

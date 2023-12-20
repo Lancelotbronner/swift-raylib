@@ -151,11 +151,11 @@ extension Vector2 {
 
 	/// Calculate angle between two vectors
 	/// Angle is calculated from origin point `(0, 0)`.
-	@_transparent public func angle(with other: Vector2) -> Angle<Float> {
+	@_transparent public func angle(with other: Vector2) -> Angle {
 		.radians(Vector2Angle(rawValue, other.rawValue))
 	}
 
-	@_transparent public func lineAngle(to end: Vector2) -> Angle<Float> {
+	@_transparent public func lineAngle(to end: Vector2) -> Angle {
 		.radians(Vector2LineAngle(rawValue, end.rawValue))
 	}
 
@@ -288,11 +288,11 @@ extension Vector2 {
 
 extension Vector2 {
 
-	@_transparent public func rotated(by angle: Angle<Float>) -> Vector2 {
+	@_transparent public func rotated(by angle: Angle) -> Vector2 {
 		Vector2(rawValue: Vector2Rotate(rawValue, angle.radians))
 	}
 
-	@_transparent public mutating func rotate(by angle: Angle<Float>) {
+	@_transparent public mutating func rotate(by angle: Angle) {
 		rawValue = Vector2Rotate(rawValue, angle.radians)
 	}
 

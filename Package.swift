@@ -6,7 +6,7 @@ import PackageDescription
 //MARK: - Package
 
 let package = Package(
-	name: "RaylibKit",
+	name: "swift-raylib",
 	platforms: [
 		.macOS(.v12),
 	],
