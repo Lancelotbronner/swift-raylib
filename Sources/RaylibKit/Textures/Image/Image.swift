@@ -30,11 +30,6 @@ public final class Image: RawRepresentable {
 		self.init(rawValue: ImageTextEx(font.rawValue, text, size, spacing, color.rawValue))
 	}
 
-	/// Load image from file into CPU memory (RAM)
-	@inlinable public convenience init(at path: Path) {
-		self.init(rawValue: LoadImage(path.rawValue))
-	}
-
 	// TODO: LoadImageFromMemory
 	// Image LoadImageFromMemory(const char *fileType, const unsigned char *fileData, int dataSize);
 
@@ -76,7 +71,7 @@ public final class Image: RawRepresentable {
 
 	/// Upload to GPU
 	@inlinable public func upload() -> some Texture {
-		ManagedTexture(rawValue: LoadTextureFromImage(rawValue))
+		Texture(rawValue: LoadTextureFromImage(rawValue))
 	}
 	
 	/// Convert image data to desired format
@@ -213,7 +208,19 @@ public final class Image: RawRepresentable {
 	@inlinable public func mask(using alpha: Image) {
 		ImageAlphaMask(&rawValue, alpha.rawValue)
 	}
-	
+
+	//MARK: - Filesystem Methods
+
+	/// Load image from file into CPU memory (RAM)
+	@inlinable public convenience init(at path: Path) {
+		self.init(rawValue: LoadImage(path.rawValue))
+	}
+
+	/// Export image data to file
+	@inlinable public func export(to path: Path) {
+		ExportImage(rawValue, path.rawValue)
+	}
+
 }
 
 // TODO: Image color data
@@ -234,7 +241,7 @@ extension File {
 
 	/// Load file as image
 	@inlinable public func loadAsImage() -> Image {
-		Image(rawValue: LoadImage(path.rawValue))
+		Image(at: path)
 	}
 
 	/// Load raw file data as image
@@ -250,8 +257,7 @@ extension File {
 	}
 
 	@inlinable public func writeImage(_ value: Image) {
-		// TODO: Error Handling
-		ExportImage(value.rawValue, path.rawValue)
+		value.export(to: path)
 	}
 
 }
@@ -263,7 +269,7 @@ extension Image {
 
 	/// Load image from file into CPU memory (RAM)
 	@inlinable public convenience init(at path: Path, from bundle: Bundle) {
-		self.init(rawValue: LoadImage(File(path, in: bundle).rawValue))
+		self.init(at: Path(bundle: bundle)[path])
 	}
 
 }

@@ -23,6 +23,10 @@ public struct Vector2: RawRepresentable, Vector2Protocol {
 		self.init(x.toFloat, y.toFloat)
 	}
 
+	@_transparent public init(_ point: Point2) {
+		self.init(point.x.toFloat, point.y.toFloat)
+	}
+
 	@_transparent public var x: Float {
 		get { rawValue.x }
 		set { rawValue.x = newValue }

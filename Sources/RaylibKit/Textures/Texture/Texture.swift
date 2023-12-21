@@ -40,7 +40,13 @@ extension Texture {
 	@inlinable public func update(area: Rectangle, with image: Image) {
 		UpdateTextureRec(rawValue, area.rawValue, image.rawValue.data)
 	}
-	
+
+	//MARK: - Filesystem Methods
+
+	public convenience init(at path: Path) throws {
+		self.init(rawValue: LoadTexture(path.rawValue))
+	}
+
 	//MARK: - Conversion Methods
 
 	/// Retrieve from GPU
@@ -49,3 +55,17 @@ extension Texture {
 	}
 	
 }
+
+//MARK: - Foundation Integration
+
+#if canImport(Foundation)
+import Foundation
+
+extension Texture {
+
+	public convenience init(at path: Path, bundle: Bundle) throws {
+		try self.init(at: Path(bundle: bundle)[path])
+	}
+
+}
+#endif

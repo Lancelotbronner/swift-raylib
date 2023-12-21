@@ -86,12 +86,12 @@ import Foundation
 
 extension Directory {
 
-	@inlinable public init(_ path: String, in bundle: Bundle) {
-		self.init(rawValue: Path(resources: bundle)[path].rawValue)
+	@inlinable public init(_ path: String, bundle: Bundle) {
+		self.init(rawValue: Path(bundle: bundle)[path].rawValue)
 	}
 
-	@inlinable public init(_ path: Path, in bundle: Bundle) {
-		self.init(rawValue: Path(resources: bundle)[path].rawValue)
+	@inlinable public init(_ path: Path, bundle: Bundle) {
+		self.init(rawValue: Path(bundle: bundle)[path].rawValue)
 	}
 
 }

@@ -30,11 +30,11 @@ extension Renderer2D {
 
 	/// Draw a line
 	@inlinable public static func line(from startX: Float, _ startY: Float, to endX: Float, _ endY: Float, thickness: Float = Renderer.thickness, color: Color = Renderer.color) {
-		DrawLineEx(Vector2(startX, startY).rawValue, Vector2(endX.toFloat, endY.toFloat).rawValue, thickness, color.rawValue)
+		DrawLineEx(Vector2(startX, startY).rawValue, Vector2(endX, endY).rawValue, thickness, color.rawValue)
 	}
 	
 	/// Draw lines sequence
-	@inlinable public static func lines(_ points: [Vector2], color: Color = Renderer.color) {
+	@inlinable public static func lineStrip(_ points: [Vector2], color: Color = Renderer.color) {
 		points.withContiguousStorageIfAvailable { buffer in
 			var tmp = buffer.baseAddress!.pointee.rawValue
 			DrawLineStrip(&tmp, points.count.toInt32, color.rawValue)
@@ -51,27 +51,27 @@ extension Renderer2D {
 	}
 	
 //	/// Draw a line using cubic-bezier curves in-out (Vector version
-//	@inlinable public static func bezier(from start: Vector2f, to end: Vector2f, thickness: Float = Renderer.thickness, color: Color = Renderer.color) {
+//	@inlinable public static func bezier(from start: Vector2, to end: Vector2, thickness: Float = Renderer.thickness, color: Color = Renderer.color) {
 //		DrawLineBezier(start.toRaylib, end.toRaylib, thickness, color.toRaylib)
 //	}
 //	
 //	/// Draw line using quadratic bezier curves with a control point
 //	@inlinable public static func bezier(from startX: Int, _ startY: Int, to endX: Int, _ endY: Int, control controlX: Int, _ controlY: Int, thickness: Float = Renderer.thickness, color: Color = Renderer.color) {
-//		DrawLineBezierQuad(Vector2(startX.toFloat, startY.toFloat).toRaylib, Vector2f(endX.toFloat, endY.toFloat).toRaylib, Vector2f(controlX.toFloat, controlY.toFloat).toRaylib, thickness, color.toRaylib)
+//		DrawLineBezierQuad(Vector2(startX.toFloat, startY.toFloat).toRaylib, Vector2(endX.toFloat, endY.toFloat).toRaylib, Vector2(controlX.toFloat, controlY.toFloat).toRaylib, thickness, color.toRaylib)
 //	}
 //	
 //	/// Draw line using quadratic bezier curves with a control point (Vector version)
-//	@inlinable public static func bezier(from start: Vector2f, to end: Vector2f, control: Vector2f, thickness: Float = Renderer.thickness, color: Color = Renderer.color) {
+//	@inlinable public static func bezier(from start: Vector2, to end: Vector2, control: Vector2, thickness: Float = Renderer.thickness, color: Color = Renderer.color) {
 //		DrawLineBezierQuad(start.toRaylib, end.toRaylib, control.toRaylib, thickness, color.toRaylib)
 //	}
 //	
 //	/// Draw line using quadratic bezier curves with two control point
 //	@inlinable public static func bezier(from startX: Int, _ startY: Int, to endX: Int, _ endY: Int, control control1X: Int, _ control1Y: Int, and control2X: Int, _ control2Y: Int, thickness: Float = Renderer.thickness, color: Color = Renderer.color) {
-//		bezier(from: Vector2f(startX.toFloat, startY.toFloat), to: Vector2f(endX.toFloat, endY.toFloat), control: Vector2f(control1X.toFloat, control1Y.toFloat), and: Vector2f(control2X.toFloat, control2Y.toFloat), thickness: thickness, color: color)
+//		bezier(from: Vector2(startX.toFloat, startY.toFloat), to: Vector2(endX.toFloat, endY.toFloat), control: Vector2(control1X.toFloat, control1Y.toFloat), and: Vector2(control2X.toFloat, control2Y.toFloat), thickness: thickness, color: color)
 //	}
 //	
 //	/// Draw line using quadratic bezier curves with two control point (Vector version)
-//	@inlinable public static func bezier(from start: Vector2f, to end: Vector2f, control control1: Vector2f, and control2: Vector2f, thickness: Float = Renderer.thickness, color: Color = Renderer.color) {
+//	@inlinable public static func bezier(from start: Vector2, to end: Vector2, control control1: Vector2, and control2: Vector2, thickness: Float = Renderer.thickness, color: Color = Renderer.color) {
 //		DrawLineBezierCubic(start.toRaylib, end.toRaylib, control1.toRaylib, control2.toRaylib, thickness, color.toRaylib)
 //	}
 

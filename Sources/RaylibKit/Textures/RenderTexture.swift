@@ -20,12 +20,12 @@ public final class RenderTexture: RawRepresentable {
 
 	//MARK: - Properties
 
-	@inlinable public var depth: some Texture {
-		UnmanagedTexture(rawValue: rawValue.depth)
+	@inlinable public var depth: Texture {
+		Texture(rawValue: rawValue.depth, flags: [])
 	}
 	
-	@inlinable public var texture: some Texture {
-		UnmanagedTexture(rawValue: rawValue.texture)
+	@inlinable public var texture: Texture {
+		Texture(rawValue: rawValue.texture, flags: [])
 	}
 	
 	//MARK: - Initialization

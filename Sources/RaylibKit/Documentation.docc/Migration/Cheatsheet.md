@@ -228,7 +228,7 @@ Vector2, 2 components
 Language|Symbol
 ---|---
 C|`struct Vector2;`
-Swift|``Vector2f``
+Swift|``Vector2``
 #### Vector3
 Vector3, 3 components
 Language|Symbol

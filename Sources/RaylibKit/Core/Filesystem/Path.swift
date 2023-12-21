@@ -123,7 +123,7 @@ import Foundation
 
 extension Path {
 
-	public init(resources bundle: Bundle) {
+	public init(bundle: Bundle) {
 		self.init(rawValue: bundle.resourcePath ?? bundle.bundlePath)
 	}
 

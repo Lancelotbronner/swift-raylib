@@ -86,7 +86,7 @@ public struct File: RawRepresentable {
 	/// Load file as texture
 	@inlinable public func loadAsTexture() -> some Texture {
 		// TODO: Error handling
-		ManagedTexture(rawValue: LoadTexture(path.rawValue))
+		Texture(rawValue: LoadTexture(path.rawValue))
 	}
 
 	//MARK: - Writing
@@ -119,12 +119,12 @@ import Foundation
 
 extension File {
 
-	@inlinable public init(_ path: String, in bundle: Bundle) {
-		self.init(rawValue: Path(resources: bundle)[path].rawValue)
+	@inlinable public init(_ path: String, bundle: Bundle) {
+		self.init(rawValue: Path(bundle: bundle)[path].rawValue)
 	}
 
-	@inlinable public init(_ path: Path, in bundle: Bundle) {
-		self.init(rawValue: Path(resources: bundle)[path].rawValue)
+	@inlinable public init(_ path: Path, bundle: Bundle) {
+		self.init(rawValue: Path(bundle: bundle)[path].rawValue)
 	}
 
 	///  Load file data

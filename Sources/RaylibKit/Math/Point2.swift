@@ -31,6 +31,10 @@ extension Point2: Vector2Protocol {
 		self.init(x.toInt32, y.toInt32)
 	}
 
+	@_transparent public init(_ value: Vector2) {
+		self.init(value.x.toInt32, value.y.toInt32)
+	}
+
 }
 
 //MARK: - Constants
@@ -90,6 +94,84 @@ extension Point2 {
 		let rhs = rhs.toInt32
 		lhs.x -= rhs
 		lhs.y -= rhs
+	}
+
+}
+
+//MARK: - Multiply Operation
+
+extension Point2 {
+
+	@_transparent public static func * (lhs: Point2, rhs: Point2) -> Point2 {
+		Point2(lhs.x * rhs.x, lhs.y * rhs.y)
+	}
+
+	@_transparent public static func *= (lhs: inout Point2, rhs: Point2) {
+		lhs.x *= rhs.x
+		lhs.y *= rhs.y
+	}
+
+	@_transparent public static func * (lhs: Point2, rhs: some BinaryInteger) -> Point2 {
+		let rhs = rhs.toInt32
+		return Point2(lhs.x * rhs, lhs.y * rhs)
+	}
+
+	@_transparent public static func *= (lhs: inout Point2, rhs: some BinaryInteger) {
+		let rhs = rhs.toInt32
+		lhs.x *= rhs
+		lhs.y *= rhs
+	}
+
+}
+
+//MARK: - Divide Operation
+
+extension Point2 {
+
+	@_transparent public static func / (lhs: Point2, rhs: Point2) -> Point2 {
+		Point2(lhs.x / rhs.x, lhs.y / rhs.y)
+	}
+
+	@_transparent public static func /= (lhs: inout Point2, rhs: Point2) {
+		lhs.x /= rhs.x
+		lhs.y /= rhs.y
+	}
+
+	@_transparent public static func / (lhs: Point2, rhs: some BinaryInteger) -> Point2 {
+		let rhs = rhs.toInt32
+		return Point2(lhs.x / rhs, lhs.y / rhs)
+	}
+
+	@_transparent public static func /= (lhs: inout Point2, rhs: some BinaryInteger) {
+		let rhs = rhs.toInt32
+		lhs.x /= rhs
+		lhs.y /= rhs
+	}
+
+}
+
+//MARK: - Modulo Operation
+
+extension Point2 {
+
+	@_transparent public static func % (lhs: Point2, rhs: Point2) -> Point2 {
+		Point2(lhs.x % rhs.x, lhs.y % rhs.y)
+	}
+
+	@_transparent public static func %= (lhs: inout Point2, rhs: Point2) {
+		lhs.x %= rhs.x
+		lhs.y %= rhs.y
+	}
+
+	@_transparent public static func % (lhs: Point2, rhs: some BinaryInteger) -> Point2 {
+		let rhs = rhs.toInt32
+		return Point2(lhs.x % rhs, lhs.y % rhs)
+	}
+
+	@_transparent public static func %= (lhs: inout Point2, rhs: some BinaryInteger) {
+		let rhs = rhs.toInt32
+		lhs.x %= rhs
+		lhs.y %= rhs
 	}
 
 }

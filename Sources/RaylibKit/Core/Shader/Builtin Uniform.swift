@@ -21,7 +21,7 @@ public struct BuiltinUniform<T> {
 	
 }
 
-//MARK: - Vector2f Uniforms
+//MARK: - Vector2 Uniforms
 
 extension BuiltinUniform where T == Vector2 {
 	

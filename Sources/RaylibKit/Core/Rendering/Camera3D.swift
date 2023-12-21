@@ -14,7 +14,7 @@ public struct Camera3D: RawRepresentable {
 		self.rawValue = rawValue
 	}
 	
-//	@inlinable public init(at position: Vector2f, offsetBy offset: Vector2f = Window.size / 2, rotation: Float = 0, zoom: Float = 1) {
+//	@inlinable public init(at position: Vector2, offsetBy offset: Vector2 = Window.size / 2, rotation: Float = 0, zoom: Float = 1) {
 //		underlying = .init
 //	}
 	

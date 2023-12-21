@@ -35,13 +35,13 @@ public struct Rectangle: RawRepresentable, Shape {
 	}
 	
 	@inlinable public var width: Float {
-		get { rawValue.x }
-		set { rawValue.x = newValue }
+		get { rawValue.width }
+		set { rawValue.width = newValue }
 	}
 	
 	@inlinable public var height: Float {
-		get { rawValue.y }
-		set { rawValue.y = newValue }
+		get { rawValue.height }
+		set { rawValue.height = newValue }
 	}
 
 	@inlinable public var position: Vector2 {

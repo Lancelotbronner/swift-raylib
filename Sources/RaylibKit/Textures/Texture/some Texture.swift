@@ -7,28 +7,33 @@
 
 import raylib
 
-public protocol Texture: RawRepresentable<raylib.Texture> {
-	var rawValue: raylib.Texture { get set }
-
-	init(rawValue: raylib.Texture)
-}
-
-public struct UnmanagedTexture: Texture {
+public final class Texture: RawRepresentable {
 	public var rawValue: raylib.Texture
+	private var interop: InteropFlags
 
-	public init(rawValue: raylib.Texture) {
-		self.rawValue = rawValue
+	public convenience init(rawValue: raylib.Texture) {
+		self.init(rawValue: rawValue, flags: .managed)
 	}
-}
 
-public final class ManagedTexture: Texture {
-	public var rawValue: raylib.Texture
-
-	public init(rawValue: raylib.Texture) {
+	public init(rawValue: raylib.Texture, flags interop: InteropFlags) {
 		self.rawValue = rawValue
+		self.interop = interop
 	}
 
 	deinit {
-		UnloadTexture(rawValue)
+		if interop.contains([.managed]) {
+			UnloadTexture(rawValue)
+		}
 	}
+
+	public struct InteropFlags: OptionSet {
+		public var rawValue: UInt8
+
+		public init(rawValue: UInt8) {
+			self.rawValue = rawValue
+		}
+
+		public static let managed = Self(rawValue: 0x1)
+	}
+
 }

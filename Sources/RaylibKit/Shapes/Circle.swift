@@ -77,7 +77,7 @@ public struct Circle: Shape {
 		CheckCollisionCircles(position.rawValue, radius, other.position.rawValue, other.radius)
 	}
 	
-//	@inlinable public func willCollide(with other: Rectangle, at velocity: Vector2f) -> Bool {
+//	@inlinable public func willCollide(with other: Rectangle, at velocity: Vector2) -> Bool {
 		// TODO: Consider velocity-based collision methods?
 //	}
 	
