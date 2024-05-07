@@ -21,7 +21,7 @@ public final class Texture: RawRepresentable {
 	}
 
 	deinit {
-		if interop.contains([.managed]) {
+		if interop.contains(.managed) {
 			UnloadTexture(rawValue)
 		}
 	}

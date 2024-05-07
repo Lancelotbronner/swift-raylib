@@ -1,131 +1,174 @@
-////
-////  File.swift
-////  
-////
-////  Created by Christophe Bronner on 2021-11-25.
-////
 //
-//import raylib
+//  File.swift
+//  
 //
-//public protocol UniformConvertible {
-//	
-//	/// Writes a value for the specified shader at the specified index
-//	static func write(_ value: Self, at index: Int32, to shader: Shader)
+//  Created by Christophe Bronner on 2021-11-25.
 //
-//}
-//
-//public struct Uniform<Scalar: UniformConvertible> {
-//	public let shader: Shader
-//	public let index: Int32
-//	
-//	@usableFromInline init(at index: Int32, in shader: Shader) {
-//		self.shader = shader
-//		self.index = index
-//	}
-//	
-//	/// Writes the value to the shader's uniform
-//	///
-//	/// - Parameter value: The value to write
-//	@inlinable public func write(_ value: Scalar) {
-//		Scalar.write(value, at: index, to: shader)
-//	}
-//	
-//}
-//
-////MARK: - Uniform Conformances
-//
-//internal protocol BuiltinUniformInstance: UniformConvertible {
-//	var UNIFORM_TYPE: Int32 { get }
-//}
-//
-//extension BuiltinUniformInstance {
-//	
-//	@inlinable public func write(_ value: Self, at index: Int32, to shader: Shader) {
-//		withUnsafePointer(to: value) { pointer in
-//			SetShaderValue(shader.rawValue, index, pointer, UNIFORM_TYPE)
-//		}
-//	}
-//	
-//}
-//
-//internal protocol BuiltinUniformType: BuiltinUniformInstance {
-//	static var UNIFORM_TYPE: Int32 { get }
-//}
-//
-//extension BuiltinUniformType {
-//	
-//	@inlinable public var UNIFORM_TYPE: Int32 { Self.UNIFORM_TYPE }
-//	
-//}
-//
-//internal protocol BuiltinUniformSequence: UniformConvertible, Collection {
-//	static var UNIFORM_TYPE: Int32 { get }
-//}
-//
-//extension BuiltinUniformSequence {
-//	
-//	@inlinable public func write(_ value: Self, at index: Int32, to shader: Shader) {
-//		withUnsafePointer(to: value) { pointer in
-//			SetShaderValueV(shader.rawValue, index, pointer, Self.UNIFORM_TYPE, value.count.toInt32)
-//		}
-//	}
-//	
-//}
-//
-//extension Sequence where Element: BuiltinUniformType {
-//	
-//	@usableFromInline static var UNIFORM_TYPE: Int32 { Element.UNIFORM_TYPE }
-//	
-//}
-//
-//internal protocol BuiltinUniformVector2 {
-//	static var UNIFORM_VECTOR_2_TYPE: Int32 { get }
-//}
-//
-//extension Vector2: BuiltinUniformInstance, UniformConvertible where Scalar: BuiltinUniformVector2 {
-//	var UNIFORM_TYPE: Int32 { Scalar.UNIFORM_VECTOR_2_TYPE }
-//}
-//
-//internal protocol BuiltinUniformVector3 {
-//	static var UNIFORM_VECTOR_3_TYPE: Int32 { get }
-//}
-//
-//extension Vector3: BuiltinUniformInstance, UniformConvertible where Scalar: BuiltinUniformVector3 {
-//	var UNIFORM_TYPE: Int32 { Scalar.UNIFORM_VECTOR_3_TYPE }
-//}
-//
-//internal protocol BuiltinUniformVector4 {
-//	static var UNIFORM_VECTOR_4_TYPE: Int32 { get }
-//}
-//
-//extension Vector4: BuiltinUniformInstance, UniformConvertible where Scalar: BuiltinUniformVector4 {
-//	var UNIFORM_TYPE: Int32 { Scalar.UNIFORM_VECTOR_4_TYPE }
-//}
-//
-////MARK: - Uniform Data Types
-//
-//extension Float: BuiltinUniformType, BuiltinUniformVector2, BuiltinUniformVector3, BuiltinUniformVector4 {
-//	
-//	static var UNIFORM_TYPE: Int32 { SHADER_UNIFORM_FLOAT.rawValue.toInt32 }
-//	static var UNIFORM_VECTOR_2_TYPE: Int32 { SHADER_UNIFORM_VEC2.rawValue.toInt32 }
-//	static var UNIFORM_VECTOR_3_TYPE: Int32 { SHADER_UNIFORM_VEC3.rawValue.toInt32 }
-//	static var UNIFORM_VECTOR_4_TYPE: Int32 { SHADER_UNIFORM_VEC4.rawValue.toInt32 }
-//	
-//}
-//
-//extension Int32: BuiltinUniformType, BuiltinUniformVector2, BuiltinUniformVector3, BuiltinUniformVector4 {
-//	static var UNIFORM_TYPE: Int32 { SHADER_UNIFORM_INT.rawValue.toInt32 }
-//	static var UNIFORM_VECTOR_2_TYPE: Int32 { SHADER_UNIFORM_IVEC2.rawValue.toInt32 }
-//	static var UNIFORM_VECTOR_3_TYPE: Int32 { SHADER_UNIFORM_IVEC3.rawValue.toInt32 }
-//	static var UNIFORM_VECTOR_4_TYPE: Int32 { SHADER_UNIFORM_IVEC4.rawValue.toInt32 }
-//}
-//
-//// TODO: Matrix & Texture uniform convertible
-//// void SetShaderValueMatrix(Shader shader, int locIndex, Matrix mat);
-//// void SetShaderValueTexture(Shader shader, int locIndex, Texture2D texture);
-//
-////MARK: - Sequence Integrations
-//
-//extension Array: BuiltinUniformSequence, UniformConvertible where Element: BuiltinUniformType { }
-//extension ContiguousArray: BuiltinUniformSequence, UniformConvertible where Element: BuiltinUniformType { }
-//extension Set: BuiltinUniformSequence, UniformConvertible where Element: BuiltinUniformType { }
+
+import raylib
+
+public struct Uniform {
+	@usableFromInline let shader: raylib.Shader
+	@usableFromInline let location: Int32
+
+	@usableFromInline init(_ shader: raylib.Shader, at location: Int32) {
+		self.shader = shader
+		self.location = location
+	}
+
+	@inlinable public func assign(_ value: Float) {
+		SetShaderValue(value, at: location, as: SHADER_UNIFORM_FLOAT, on: shader)
+	}
+
+	@inlinable public func assign(_ value: Vector2) {
+		SetShaderValue(value, at: location, as: SHADER_UNIFORM_VEC2, on: shader)
+	}
+
+	@inlinable public func assign(_ value: Vector3) {
+		SetShaderValue(value, at: location, as: SHADER_UNIFORM_VEC3, on: shader)
+	}
+
+	@inlinable public func assign(_ value: Vector4) {
+		SetShaderValue(value, at: location, as: SHADER_UNIFORM_VEC4, on: shader)
+	}
+
+	@inlinable public func assign(_ value: Int) {
+		SetShaderValue(value.toInt32, at: location, as: SHADER_UNIFORM_INT, on: shader)
+	}
+
+	//TODO: Add integer vectors
+
+	@inlinable public func assign(_ value: Matrix4x4f) {
+		SetShaderValueMatrix(shader, location, value)
+	}
+
+	@inlinable public func assign(_ value: Texture) {
+		SetShaderValueTexture(shader, location, value.rawValue)
+	}
+
+	@inlinable var float: Uniform1f {
+		Uniform1f(self)
+	}
+
+	@inlinable var float2: Uniform2f {
+		Uniform2f(self)
+	}
+
+	@inlinable var float3: Uniform3f {
+		Uniform3f(self)
+	}
+
+	@inlinable var float4: Uniform4f {
+		Uniform4f(self)
+	}
+
+	@inlinable var color: UniformColor {
+		UniformColor(self)
+	}
+
+	@inlinable var matrix4x4f: UniformMatrix4x4f {
+		UniformMatrix4x4f(self)
+	}
+
+	@inlinable var texture: UniformTexture {
+		UniformTexture(self)
+	}
+}
+
+@usableFromInline func SetShaderValue<T>(_ value: T, at index: Int32, as uniformType: ShaderUniformDataType, on shader: raylib.Shader) {
+	withUnsafePointer(to: value) {
+		raylib.SetShaderValue(shader, index, $0, Int32(bitPattern: uniformType.rawValue))
+	}
+}
+
+@usableFromInline func SetShaderValueV<T>(_ values: [T], at index: Int32, as uniformType: ShaderUniformDataType, on shader: raylib.Shader) {
+	values.withUnsafeBufferPointer {
+		raylib.SetShaderValueV(shader, index, $0.baseAddress, Int32(bitPattern: uniformType.rawValue), values.count.toInt32)
+	}
+}
+
+//MARK: - Specialized Uniforms
+
+public struct Uniform1f {
+	public let uniform: Uniform
+
+	@usableFromInline init(_ uniform: Uniform) {
+		self.uniform = uniform
+	}
+
+	@inlinable public func assign(_ value: Float) {
+		uniform.assign(value)
+	}
+}
+
+public struct Uniform2f {
+	public let uniform: Uniform
+
+	@usableFromInline init(_ uniform: Uniform) {
+		self.uniform = uniform
+	}
+
+	@inlinable public func assign(_ value: Vector2) {
+		uniform.assign(value)
+	}
+}
+
+public struct Uniform3f {
+	public let uniform: Uniform
+
+	@usableFromInline init(_ uniform: Uniform) {
+		self.uniform = uniform
+	}
+
+	@inlinable public func assign(_ value: Vector3) {
+		uniform.assign(value)
+	}
+}
+
+public struct Uniform4f {
+	public let uniform: Uniform
+
+	@usableFromInline init(_ uniform: Uniform) {
+		self.uniform = uniform
+	}
+
+	@inlinable public func assign(_ value: Vector4) {
+		uniform.assign(value)
+	}
+}
+
+public struct UniformColor {
+	public let uniform: Uniform
+
+	@usableFromInline init(_ uniform: Uniform) {
+		self.uniform = uniform
+	}
+
+	@inlinable public func assign(_ value: Color) {
+		uniform.assign(value.toVector4f)
+	}
+}
+
+public struct UniformMatrix4x4f {
+	public let uniform: Uniform
+
+	@usableFromInline init(_ uniform: Uniform) {
+		self.uniform = uniform
+	}
+
+	@inlinable public func assign(_ value: Matrix4x4f) {
+		uniform.assign(value)
+	}
+}
+
+public struct UniformTexture {
+	public let uniform: Uniform
+
+	@usableFromInline init(_ uniform: Uniform) {
+		self.uniform = uniform
+	}
+
+	@inlinable public func assign(_ value: Texture) {
+		uniform.assign(value)
+	}
+}

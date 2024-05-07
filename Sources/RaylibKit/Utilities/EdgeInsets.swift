@@ -5,7 +5,7 @@
 //  Created by Christophe Bronner on 2021-12-27.
 //
 
-public struct Edges<Scalar> {
+public struct EdgeInsets<Scalar> {
 	
 	public var top: Scalar
 	public var right: Scalar
@@ -29,7 +29,7 @@ public struct Edges<Scalar> {
 	
 }
 
-extension Edges: ExpressibleByIntegerLiteral where Scalar: ExpressibleByIntegerLiteral, Scalar.IntegerLiteralType == Scalar {
+extension EdgeInsets: ExpressibleByIntegerLiteral where Scalar: ExpressibleByIntegerLiteral, Scalar.IntegerLiteralType == Scalar {
 	
 	public init(integerLiteral value: Scalar) {
 		self.init(value)

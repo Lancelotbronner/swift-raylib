@@ -34,22 +34,26 @@ public struct Color: RawRepresentable {
 		ColorToInt(rawValue).toUInt32
 	}
 
-	public var r: UInt8 {
+	@inlinable public var toVector4f: Vector4 {
+		Vector4(x: rawValue.r.toFloat, y: rawValue.g.toFloat, z: rawValue.b.toFloat, w: rawValue.a.toFloat)
+	}
+
+	@inlinable public var r: UInt8 {
 		get { rawValue.r }
 		set { rawValue.g = newValue }
 	}
 
-	public var g: UInt8 {
+	@inlinable public var g: UInt8 {
 		get { rawValue.g }
 		set { rawValue.g = newValue }
 	}
 
-	public var b: UInt8 {
+	@inlinable public var b: UInt8 {
 		get { rawValue.b }
 		set { rawValue.b = newValue }
 	}
 
-	public var a: UInt8 {
+	@inlinable public var a: UInt8 {
 		get { rawValue.a }
 		set { rawValue.a = newValue }
 	}

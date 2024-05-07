@@ -24,9 +24,5 @@ let package = Package(
 		.target(
 			name: "RaylibKit",
 			dependencies: ["raylib"]),
-
-		.testTarget(
-			name: "RaylibTests",
-			dependencies: ["RaylibKit"]),
 	]
 )

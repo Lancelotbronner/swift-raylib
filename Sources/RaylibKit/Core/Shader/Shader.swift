@@ -7,13 +7,11 @@
 
 import raylib
 
-#warning("Shader API to review")
-
-//MARK: - Shader
-
 public final class Shader: RawRepresentable {
+	
 	public var rawValue: raylib.Shader
 
+	@inlinable
 	public init(rawValue: raylib.Shader) {
 		self.rawValue = rawValue
 	}
@@ -27,9 +25,9 @@ public final class Shader: RawRepresentable {
 	/// Load shader from files and bind default locations
 	///
 	/// - Parameters:
-	///   - vertex: The filename of the vertex shader
-	///   - fragment: The filename of the fragment shader
-	public convenience init(path vertex: File, _ fragment: File) {
+	///   - vertex: The path of the vertex shader
+	///   - fragment: The path of the fragment shader
+	public convenience init(at vertex: File, _ fragment: File) {
 		self.init(rawValue: LoadShader(vertex.rawValue, fragment.rawValue))
 	}
 
@@ -41,25 +39,49 @@ public final class Shader: RawRepresentable {
 		self.init(rawValue: LoadShaderFromMemory(vertex, fragment))
 	}
 
-	//MARK: - Uniforms
+	//MARK: - Properties
 
-//	/// Get uniform
-//	@inlinable public func uniform<T>(_ name: String, of type: T.Type = T.self) -> Uniform<T> {
-//		return Uniform(at: GetShaderLocation(rawValue, name), in: self)
-//	}
-//	
-//	/// Bind builtin uniform to a shader variable
-//	@inlinable public func bind<T>(_ builtin: BuiltinUniform<T>, to variable: String) -> Uniform<T> {
-//		let tmp = uniform(variable, of: T.self)
-//		rawValue.locs[builtin.index] = tmp.index
-//		return tmp
-//	}
-	
-	// TODO: Make attribute wrapper
-	
+	@inlinable public var isReady: Bool {
+		IsShaderReady(rawValue)
+	}
+
+	@inlinable public var locations: LocationsView {
+		LocationsView(of: self)
+	}
+
+	@inlinable public var uniforms: UniformsView {
+		UniformsView(of: self)
+	}
+
+	//MARK: - Locations
+
 	/// Get attributes location
-	@inlinable public func attribute(_ name: String) -> Int {
-		GetShaderLocationAttrib(rawValue, name).toInt
+	@inlinable public func location(attribute name: String) -> Int32 {
+		GetShaderLocationAttrib(rawValue, name)
+	}
+
+	/// Get uniform location
+	@inlinable public func location(uniform name: String) -> Int32 {
+		GetShaderLocation(rawValue, name)
+	}
+
+	/// Get builtin uniform location
+	@inlinable public func location(of index: ShaderLocationIndex) -> Int32 {
+		rawValue.locs[index.rawValue.toInt]
+	}
+
+	@inlinable func bind(_ index: ShaderLocationIndex, to location: Int32) {
+		rawValue.locs[index.rawValue.toInt] = location
+	}
+
+	/// Get uniform
+	@inlinable public func uniform(_ name: String) -> Uniform {
+		Uniform(rawValue, at: location(uniform: name))
+	}
+
+	/// Get builtin uniform
+	@inlinable public func uniform(_ index: ShaderLocationIndex) -> Uniform {
+		Uniform(rawValue, at: location(of: index))
 	}
 
 	//MARK: - Rendering
