@@ -33,7 +33,7 @@ extension Renderer2D {
 		DrawTexturePro(value.rawValue, source?.rawValue ?? .init(x: 0, y: 0, width: value.size.x, height: value.size.y), destination.rawValue, .init(), rotation.degrees, tint.rawValue)
 	}
 	
-	//MARK: - Render Texture
+	//MARK: - Target
 	
 	public static func target(_ value: RenderTexture, to destination: Rectangle, rotation: Angle = .zero, tint: Color = Renderer.tint) {
 		let source = Rectangle(at: 0, 0, size: value.texture.width.toFloat, -value.texture.height.toFloat)

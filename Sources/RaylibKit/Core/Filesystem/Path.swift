@@ -57,7 +57,7 @@ public struct Path: RawRepresentable {
 	}
 
 	public subscript(_ component: Path) -> Path {
-		self / path
+		self / component
 	}
 
 	public static func / (lhs: Path, rhs: some StringProtocol) -> Path {

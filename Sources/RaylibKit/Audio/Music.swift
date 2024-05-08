@@ -102,17 +102,26 @@ public final class Music {
 	@inlinable public func set(pan: Float) {
 		SetMusicPan(rawValue, pan)
 	}
-	
-}
 
-//MARK: - Filesystem Integration
+	//MARK: - Filesystem Methods
 
-extension File {
-
-	/// Load file as image
-	@inlinable public func loadAsMusic() -> Music {
-		// TODO: Error handling
-		Music(rawValue: LoadMusicStream(path.rawValue))
+	public convenience init(at path: Path) throws {
+		self.init(rawValue: LoadMusicStream(path.rawValue))
 	}
 
 }
+
+//MARK: - Foundation Integration
+
+#if canImport(Foundation)
+import Foundation
+
+extension Music {
+
+   public convenience init(at path: Path, bundle: Bundle) throws {
+	   try self.init(at: Path(bundle: bundle)[path])
+   }
+
+}
+#endif
+
