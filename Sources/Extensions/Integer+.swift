@@ -24,7 +24,15 @@ public extension BinaryInteger {
 	@_transparent var toUInt32: UInt32 {
 		numericCast(self)
 	}
-	
+
+	@_transparent var toInt16: Int16 {
+		numericCast(self)
+	}
+
+	@_transparent var toUInt16: UInt16 {
+		numericCast(self)
+	}
+
 	@_transparent var toInt8: Int8 {
 		numericCast(self)
 	}

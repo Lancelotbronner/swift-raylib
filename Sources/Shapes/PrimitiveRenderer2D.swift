@@ -12,8 +12,8 @@ public extension Renderer2D {
 	//MARK: - Pixel
 
 	/// Draw a pixel
-	@inlinable static func pixel(at x: Int, _ y: Int, _ color: Color) {
-		DrawPixel(x.toInt32, y.toInt32, color.rawValue)
+	@inlinable static func pixel(at x: Float, _ y: Float, _ color: Color) {
+		DrawPixelV(raylib.Vector2(x: x, y: y), color.rawValue)
 	}
 	
 	/// Draw a pixel (Vector version)

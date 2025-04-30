@@ -34,7 +34,15 @@ public extension BinaryFloatingPoint {
 	@_transparent var toUInt32: UInt32 {
 		UInt32(self)
 	}
-	
+
+	@_transparent var toInt16: Int16 {
+		Int16(self)
+	}
+
+	@_transparent var toUInt16: UInt16 {
+		UInt16(self)
+	}
+
 	@_transparent var toInt8: Int8 {
 		Int8(self)
 	}

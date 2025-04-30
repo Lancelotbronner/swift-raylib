@@ -5,6 +5,10 @@
 //  Created by Christophe Bronner on 2021-12-27.
 //
 
+//#if canImport(Foundation)
+//import Foundation
+//#endif
+
 // TODO: Find a way to plug an async load() method
 // TODO: Find a way to make scenes use an async load() method
 // TODO: Turn filesystem loads into async methods
@@ -29,6 +33,16 @@ extension App {
 	//MARK: - @main
 
 	@usableFromInline static func tryMain() throws {
+//#if canImport(Foundation)
+//		let url = Bundle.main.bundleURL
+//		let path: String
+//		if #available(macOS 13.0, *) {
+//			path = url.path(percentEncoded: false)
+//		} else {
+//			path = url.path
+//		}
+//		FileManager.default.changeCurrentDirectoryPath(path)
+//#endif
 		var app = try Self.init()
 		
 		if !Window.isReady {
