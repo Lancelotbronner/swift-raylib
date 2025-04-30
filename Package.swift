@@ -1,4 +1,4 @@
-// swift-tools-version:5.8
+// swift-tools-version:6.1
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -7,22 +7,15 @@ import PackageDescription
 
 let package = Package(
 	name: "swift-raylib",
-	platforms: [
-		.macOS(.v12),
-	],
 	products: [
 		.library(name: "RaylibKit", targets: ["RaylibKit"]),
 	],
+	dependencies: [
+		.package(url: "https://github.com/Lancelotbronner/raylib-build.git", from: "5.5.1"),
+	],
 	targets: [
-		.systemLibrary(
-			name: "raylib",
-			pkgConfig: "raylib",
-			providers: [
-				.brew(["raylib"]),
-			]),
-
-		.target(
-			name: "RaylibKit",
-			dependencies: ["raylib"]),
+		.target(name: "RaylibKit", dependencies: [
+			.product(name: "raylib", package: "raylib-build"),
+		]),
 	]
 )
