@@ -25,16 +25,16 @@ public final class Sound: AudioObject {
 }
 
 public extension Sound {
-	/// Create a new sound that shares the same sample data as the source sound, does not own the sound data
-	@inlinable convenience init(alias source: Sound) {
-		self.init(rawValue: LoadSoundAlias(source.rawValue), alias: true)
-	}
 
 	//	RLAPI Sound LoadSoundFromWave(Wave wave);                             // Load sound from wave data
 
 	/// Checks if a sound is valid (data loaded and buffers initialized)
 	@inlinable var isValid: Bool {
 		IsSoundValid(rawValue)
+	}
+	/// Create a new sound that shares the same sample data as the source sound, does not own the sound data
+	@inlinable func alias() -> Sound {
+		Sound(rawValue: LoadSoundAlias(rawValue), alias: true)
 	}
 
 	/// Update sound buffer with new data
@@ -45,7 +45,7 @@ public extension Sound {
 	//MARK: - Filesystem Methods
 
 	/// Load sound from file
-	convenience init(at path: Path) throws {
+	convenience init(at path: Path) {
 		self.init(rawValue: LoadSound(path.rawValue), alias: false)
 	}
 
@@ -57,8 +57,8 @@ public extension Sound {
 import Foundation
 
 public extension Sound {
-   convenience init(at path: Path, bundle: Bundle) throws {
-	   try self.init(at: Path(bundle: bundle)[path])
-   }
+	convenience init(at path: Path, bundle: Bundle) {
+		self.init(at: Path(bundle: bundle)[path])
+	}
 }
 #endif

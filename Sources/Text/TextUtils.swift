@@ -11,7 +11,10 @@ public enum TextAlignment {
 	case left
 	case center
 	case right
-	
+}
+
+extension TextAlignment {
+
 	@inlinable func offset(of text: String, at size: Float = Renderer.pointSize) -> Int {
 		switch self {
 		case .left: return 0

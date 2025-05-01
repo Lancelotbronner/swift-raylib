@@ -7,10 +7,11 @@
 
 import raylib
 
-public struct Text {
-	
-	@inlinable public static func measure(_ text: String, size: Float = Renderer.pointSize) -> Int {
+public struct Text {}
+
+public extension Text {
+	// Measure string width for default font
+	@inlinable static func measure(_ text: String, size: Float = Renderer.pointSize) -> Int {
 		MeasureText(text, size.rounded().toInt32).toInt
 	}
-
 }

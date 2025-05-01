@@ -9,15 +9,15 @@ import raylib
 
 public final class Texture: RawRepresentable {
 	public var rawValue: raylib.Texture
-	private var interop: InteropFlags
+	public let interop: InteropFlags
 
-	public convenience init(rawValue: raylib.Texture) {
-		self.init(rawValue: rawValue, flags: .managed)
-	}
-
-	public init(rawValue: raylib.Texture, flags interop: InteropFlags) {
+	@inlinable public init(rawValue: raylib.Texture, flags interop: InteropFlags) {
 		self.rawValue = rawValue
 		self.interop = interop
+	}
+
+	@inlinable public convenience init(rawValue: raylib.Texture) {
+		self.init(rawValue: rawValue, flags: .managed)
 	}
 
 	deinit {
@@ -27,13 +27,14 @@ public final class Texture: RawRepresentable {
 	}
 
 	public struct InteropFlags: OptionSet, Sendable {
-		public var rawValue: UInt8
+		public let rawValue: UInt8
 
-		public init(rawValue: UInt8) {
+		@inlinable public init(rawValue: UInt8) {
 			self.rawValue = rawValue
 		}
-
-		public static let managed = Self(rawValue: 0x1)
 	}
+}
 
+public extension Texture.InteropFlags {
+	static let managed = Self(rawValue: 0x1)
 }

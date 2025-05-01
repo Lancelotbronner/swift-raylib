@@ -33,7 +33,11 @@ public extension KeyboardButton {
 	@inlinable var isPressed: Bool {
 		IsKeyPressed(keycode)
 	}
-	
+
+	@inlinable var isRepeated: Bool {
+		IsKeyPressedRepeat(keycode)
+	}
+
 	@inlinable var isDown: Bool {
 		IsKeyDown(keycode)
 	}

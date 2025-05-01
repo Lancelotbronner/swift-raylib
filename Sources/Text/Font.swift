@@ -10,22 +10,24 @@
 public final class Font: RawRepresentable, Sendable {
 	public let rawValue: raylib.Font
 
-	public init(rawValue: raylib.Font) {
+	@inlinable public init(rawValue: raylib.Font) {
 		self.rawValue = rawValue
 	}
+}
 
+public extension Font {
 	/// Load font from Image (XNA style)
-	@inlinable public convenience init(image: Image, key: Color, firstCharacter: Int32) {
+	@inlinable convenience init(image: Image, key: Color, firstCharacter: Int32) {
 		self.init(rawValue: LoadFontFromImage(image.rawValue, key.rawValue, firstCharacter))
 	}
 
 	/// Get the default Font
-	public static let `default` = Font(rawValue: GetFontDefault())
+	static let `default` = Font(rawValue: GetFontDefault())
 
 	//MARK: - Properties
 
-	@inlinable public var size: Int {
-		rawValue.baseSize.toInt
+	@inlinable var size: Int {
+		Int(rawValue.baseSize)
 	}
 
 	// TODO: LoadFontFromMemory
@@ -35,7 +37,7 @@ public final class Font: RawRepresentable, Sendable {
 	//MARK: - Measurement
 
 	/// Measures the string size using the current font
-	@inlinable public func measure(_ text: String, at size: Float = Renderer.pointSize, spacing: Float) -> Vector2 {
+	@inlinable func measure(_ text: String, at size: Float = Renderer.pointSize, spacing: Float) -> Vector2 {
 		Vector2(rawValue: MeasureTextEx(rawValue, text, size, spacing))
 	}
 

@@ -7,50 +7,61 @@
 
 import raylib
 
-extension Texture {
+public extension Texture {
 
 	//MARK: - Properties
 
-	@inlinable public var width: Int {
+	@inlinable var width: Int {
 		rawValue.width.toInt
 	}
 	
-	@inlinable public var height: Int {
+	@inlinable var height: Int {
 		rawValue.height.toInt
 	}
 	
-	@inlinable public var size: Vector2 {
+	@inlinable var size: Vector2 {
 		Vector2(rawValue.width.toFloat, rawValue.height.toFloat)
 	}
 	
 	//MARK: - Attributes
 
-	@inlinable public func filter(using algorithm: TextureFilter) {
+	/// Set texture scaling filter mode
+	@inlinable func filter(using algorithm: TextureFilter) {
 		SetTextureFilter(rawValue, algorithm.rawValue)
 	}
-	
-	@inlinable public func wrap(using algorithm: TextureWrap) {
+
+	/// Set texture wrapping mode
+	@inlinable func wrap(using algorithm: TextureWrap) {
 		SetTextureWrap(rawValue, algorithm.rawValue)
 	}
-	
-	@inlinable public func update(with image: Image) {
+
+	/// Update GPU texture with new data
+	///
+	/// NOTE: pixels data must match texture.format
+	@inlinable func update(with image: Image) {
 		UpdateTexture(rawValue, image.rawValue.data)
 	}
-	
-	@inlinable public func update(area: Rectangle, with image: Image) {
+
+	/// Update GPU texture rectangle with new data
+	///
+	/// NOTE: pixels data must match texture.format
+	@inlinable func update(area: Rectangle, with image: Image) {
 		UpdateTextureRec(rawValue, area.rawValue, image.rawValue.data)
 	}
 
 	//MARK: - Filesystem Methods
 
-	@inlinable public convenience init(at path: Path) throws {
+	/// Load texture from file into GPU memory (VRAM)
+	@inlinable convenience init(at path: Path) throws {
 		self.init(rawValue: LoadTexture(path.rawValue))
 	}
 
 	//MARK: - Conversion Methods
 
 	/// Retrieve from GPU
-	@inlinable public func retrieve() -> Image {
+	///
+	/// NOTE: Compressed texture formats not supported
+	@inlinable func retrieve() -> Image {
 		Image(rawValue: LoadImageFromTexture(rawValue))
 	}
 	
@@ -61,9 +72,9 @@ extension Texture {
 #if canImport(Foundation)
 import Foundation
 
-extension Texture {
+public extension Texture {
 
-	@inlinable public convenience init(at path: Path, bundle: Bundle) throws {
+	@inlinable convenience init(at path: Path, bundle: Bundle) throws {
 		try self.init(at: Path(bundle: bundle)[path])
 	}
 

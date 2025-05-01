@@ -52,6 +52,11 @@ public extension Music {
 		timePlayed / timeLength
 	}
 
+	/// Update (re-fill) music buffers if data already processed
+	@inlinable func update() {
+		UpdateMusicStream(rawValue)
+	}
+
 	/// Seek music to a position (in seconds)
 	@inlinable func seek(to position: Float) {
 		SeekMusicStream(rawValue, position)
