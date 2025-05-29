@@ -118,8 +118,8 @@ extension Vector3 {
 
 }
 
-#warning("Vector3CrossProduct")
-#warning("Vector3Perpendicular")
+//TODO: Vector3CrossProduct
+//TODO: Vector3Perpendicular
 
 //MARK: - Length Operation
 
@@ -242,9 +242,9 @@ extension Vector3 {
 
 }
 
-#warning("Vector3Project")
-#warning("Vector3Reject")
-#warning("Vector3OrthoNormalize")
+//TODO: Vector3Project
+//TODO: Vector3Reject
+//TODO: Vector3OrthoNormalize
 
 //MARK: - Transformation Operation
 
@@ -264,8 +264,8 @@ extension Vector3 {
 
 extension Vector3 {
 
-	#warning("Vector3RotateByQuaternion")
-	#warning("Vector3RotateByAxisAngle")
+	//TODO: Vector3RotateByQuaternion
+	//TODO: Vector3RotateByAxisAngle
 
 //	@_transparent public func rotated(by angle: Angle) -> Vector3 {
 //		Vector3(rawValue: Vector3Rotate(rawValue, angle.radians))
@@ -309,11 +309,11 @@ extension Vector3 {
 
 }
 
-#warning("Vector3Min")
-#warning("Vector3Max")
+//TODO: Vector3Min
+//TODO: Vector3Max
 
-#warning("Vector3Barycenter")
-#warning("Vector3Unproject")
+//TODO: Vector3Barycenter
+//TODO: Vector3Unproject
 
 //MARK: - Inverse Operation
 
@@ -390,7 +390,7 @@ extension Vector3: Equatable {
 
 }
 
-#warning("Vector3Refract")
+//TODO: Vector3Refract
 
 //MARK: - Movement Operations
 
