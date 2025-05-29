@@ -12,7 +12,8 @@ public struct Trace {}
 public struct TraceLevel: RawRepresentable, Comparable, Sendable {
 	public let rawValue: UInt32
 
-	@inlinable public init(rawValue: UInt32) {
+	@inlinable
+	public init(rawValue: UInt32) {
 		self.rawValue = rawValue
 	}
 }
@@ -71,29 +72,34 @@ public extension Trace {
 }
 
 public extension TraceLevel {
+	@inlinable
+	init(_ traceLogLevel: raylib.TraceLogLevel) {
+		self.init(rawValue: traceLogLevel.rawValue)
+	}
+
 	/// Disables logging
-	static let none = TraceLevel(rawValue: LOG_NONE.rawValue)
+	static let none = TraceLevel(LOG_NONE)
 
 	/// Trace logging, intended for internal use only
-	static let trace = TraceLevel(rawValue: LOG_TRACE.rawValue)
+	static let trace = TraceLevel(LOG_TRACE)
 
 	/// Debug logging, used for internal debugging, it should be disabled on release builds
-	static let debug = TraceLevel(rawValue: LOG_DEBUG.rawValue)
+	static let debug = TraceLevel(LOG_DEBUG)
 
 	/// Info logging, used for program execution info
-	static let info = TraceLevel(rawValue: LOG_INFO.rawValue)
+	static let info = TraceLevel(LOG_INFO)
 
 	/// Warning logging, used on recoverable failures
-	static let warning = TraceLevel(rawValue: LOG_WARNING.rawValue)
+	static let warning = TraceLevel(LOG_WARNING)
 
 	/// Error logging, used on unrecoverable failures
-	static let error = TraceLevel(rawValue: LOG_ERROR.rawValue)
+	static let error = TraceLevel(LOG_ERROR)
 
 	/// Fatal logging, used to abort program
-	static let fatal = TraceLevel(rawValue: LOG_FATAL.rawValue)
+	static let fatal = TraceLevel(LOG_FATAL)
 
 	/// Displays all logs
-	static let all = TraceLevel(rawValue: LOG_ALL.rawValue)
+	static let all = TraceLevel(LOG_ALL)
 
 	static func < (lhs: TraceLevel, rhs: TraceLevel) -> Bool {
 		lhs.rawValue < rhs.rawValue

@@ -1,10 +1,10 @@
 {
-  "originHash" : "ea7bde45e4b8a6bb37c2a5c5c14d7567b69bf402c793c2d6be515ef129a73715",
+  "originHash" : "7f3e3c3cde041a4134c69db307e8a25cf2b64cc583f14b4a3c2c386d2dd3a9e3",
   "pins" : [
     {
-      "identity" : "raylib",
+      "identity" : "raylib-build",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Lancelotbronner/raylib.git",
+      "location" : "https://github.com/Lancelotbronner/raylib-build.git",
       "state" : {
         "revision" : "6cf441e9847ea454d17b18d0f28475ea211acefc",
         "version" : "5.5.1"

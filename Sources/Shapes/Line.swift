@@ -30,7 +30,7 @@ public extension Line {
 	//MARK: Collision Methods
 	
 	@inlinable func collision(with other: Line) -> Vector2? {
-		var tmp = Vector2One()
+		var tmp = raylib.Vector2(x: 1, y: 1)
 		let collision = CheckCollisionLines(start.rawValue, end.rawValue, other.start.rawValue, other.end.rawValue, &tmp) ? tmp : nil
 		guard let collision else { return nil }
 		return Vector2(rawValue: collision)
