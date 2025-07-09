@@ -7,21 +7,23 @@
 
 import raylib
 
-public struct Raylib {
-	
-	@inlinable public static var version: String {
+public struct Raylib {}
+
+public extension Raylib {
+
+	@inlinable static var version: String {
 		RAYLIB_VERSION
 	}
 
-	@inlinable public static var major: Int {
+	@inlinable static var major: Int {
 		RAYLIB_VERSION_MAJOR.toInt
 	}
 
-	@inlinable public static var minor: Int {
+	@inlinable static var minor: Int {
 		RAYLIB_VERSION_MINOR.toInt
 	}
 
-	@inlinable public static var patch: Int {
+	@inlinable static var patch: Int {
 		RAYLIB_VERSION_PATCH.toInt
 	}
 
