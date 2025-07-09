@@ -87,7 +87,7 @@ public extension File {
 	}
 	
 	/// Load file as texture
-	@inlinable func loadAsTexture() -> some Texture {
+	@inlinable func loadAsTexture() -> Texture {
 		// TODO: Error handling
 		Texture(rawValue: LoadTexture(path.rawValue))
 	}

@@ -73,7 +73,7 @@ public extension Image {
 	//MARK: - Conversion Methods
 
 	/// Upload to GPU
-	@inlinable func upload() -> some Texture {
+	@inlinable func upload() -> Texture {
 		Texture(rawValue: LoadTextureFromImage(rawValue))
 	}
 	
