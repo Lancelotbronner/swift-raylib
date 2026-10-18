@@ -21,7 +21,7 @@ public extension WireCanvas {
 
 	/// Draw rectangle lines within an image
 	@inlinable mutating func rectangle(_ shape: Rectangle, thickness: Int, color: Color) {
-		ImageDrawRectangleLines(rawValue, shape.rawValue, thickness.toInt32, color.rawValue)
+		ImageDrawRectangleLinesEx(rawValue, shape.rawValue, thickness.toInt32, color.rawValue)
 	}
 	
 }

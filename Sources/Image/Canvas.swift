@@ -90,7 +90,7 @@ public extension Canvas {
 
 	/// Draw a source image within a destination image
 	@inlinable mutating func image(from source: Rectangle, of other: Image, to destination: Rectangle, tint: Color = Renderer.tint) {
-		ImageDraw(rawValue, other.rawValue, source.rawValue, destination.rawValue, tint.rawValue)
+		ImageDrawImagePro(rawValue, other.rawValue, source.rawValue, destination.rawValue, raylib.Vector2(), 0, tint.rawValue)
 	}
 	
 	//MARK: - Text

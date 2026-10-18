@@ -21,14 +21,6 @@ public final class FilePaths: RawRepresentable, Collection, @unchecked Sendable 
 	}
 }
 
-public extension FilePaths {
-
-	@inlinable var capacity: Int {
-		rawValue.capacity.toInt
-	}
-
-}
-
 //MARK: - Collection Implementation
 
 public extension FilePaths {

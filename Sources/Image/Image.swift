@@ -186,8 +186,8 @@ public extension Image {
 	}
 
 	/// Modify image color: contrast (-100 to 100)
-	@inlinable func contrast(of ratio: Float) {
-		ImageColorContrast(&rawValue, ratio)
+	@inlinable func contrast(of ratio: Int) {
+		ImageColorContrast(&rawValue, ratio.toInt32)
 	}
 
 	/// Modify image color: brightness (-255 to 255)

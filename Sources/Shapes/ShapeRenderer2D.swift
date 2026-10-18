@@ -102,15 +102,15 @@ extension Renderer2D {
 	//MARK: - Circle with Gradient
 	
 	@inlinable public static func circle(at x: Int, _ y: Int, radius: Float, gradient from: Color, _ to: Color) {
-		DrawCircleGradient(x.toInt32, y.toInt32, radius, from.rawValue, to.rawValue)
+		DrawCircleGradient(raylib.Vector2(x: Float(x), y: Float(y)), radius, from.rawValue, to.rawValue)
 	}
 	
 	@inlinable public static func circle(at position: Vector2, radius: Float, gradient from: Color, _ to: Color) {
-		DrawCircleGradient(position.x.toInt32, position.y.toInt32, radius, from.rawValue, to.rawValue)
+		DrawCircleGradient(position.rawValue, radius, from.rawValue, to.rawValue)
 	}
 	
 	@inlinable public static func circle(_ shape: Circle, gradient from: Color, _ to: Color) {
-		DrawCircleGradient(shape.position.x.toInt32, shape.position.y.toInt32, shape.radius, from.rawValue, to.rawValue)
+		DrawCircleGradient(shape.position.rawValue, shape.radius, from.rawValue, to.rawValue)
 	}
 	
 	//MARK: - Sector
